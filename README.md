@@ -1,6 +1,6 @@
 # SARAY Szőnyegház
 ## Description
-A simple webshop for the SARAY Szőnyegház Kft. using Angular as the Frontend and <Unknown> as the backend.
+A simple webshop for the SARAY Szőnyegház Kft. using Angular as the Frontend and Express.js as the backend.
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
