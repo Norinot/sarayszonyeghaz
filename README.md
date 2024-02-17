@@ -7,7 +7,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Frontend Requirements:
  * You have installed the latest version of [Node.js and npm](https://nodejs.org/en/download/). This project was developed with Node.js v18.17.1.
- * You have installed the latest version of [Angular CLI](https://angular.io/cli). This project was developed with Angular CLI v13.0.4 (replace with your Angular version).
+ * You have installed the latest version of [Angular CLI](https://angular.io/cli). This project was developed with Angular CLI v17.0.0
 
 ### Installing SARAY Szőnyegház
 To install SARAY Szőnyegház, follow these steps:
