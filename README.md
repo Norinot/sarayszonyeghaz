@@ -23,8 +23,14 @@ To use SARAY Szőnyegház, follow these steps:
 2. Open your browser and navigate to `http://localhost:4200/`
 
 ## Backend Requirements:
+1. To start the backend you need to have the latest version of [Node.js and npm](https://nodejs.org/en/download/).
 
+## Running the backend: 
+You have a few options such as:
 
+1. `npm run build`: this script compiles your TypeScript code to JavaScript using the TypeScript compiler (tsc). The compiled JavaScript files will be output to the `dist` directory.
+2. `npm start`: This script runs the compiled JavaScript code with Node.js.
+3. `npm run dev`˙: This script starts the server in development mode using `nodemon`, which will automatically restart the server whenever you make changes to the source code.
 
 ## Branch rules:
 1. No direct pushes into main branch
