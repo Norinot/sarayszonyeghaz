@@ -1,1 +1,17 @@
-<p>header works!</p>
+<header>
+  <img class="logo" src="../../../../assets/logo.svg" alt="">
+  <div class="navigation-section">
+    <nav>
+      <p-button label="Főoldal" [text]="true" [plain]="true"></p-button>
+      <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
+      <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true"></p-button>
+    </nav>
+    <div class="icons">
+      <form [formGroup]="formGroup || undefined">
+        <p-autoComplete formControlName="selectedCountry" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"></p-autoComplete>
+      </form>      <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary "></p-button>
+      <p-button icon="pi pi-shopping-cart" [rounded]="true" [text]="true" severity="secondary"></p-button>
+      <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="secondary "></p-button>
+    </div>
+  </div>
+</header>
