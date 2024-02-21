@@ -1,0 +1,21 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.content-container {
+  margin-top: 70px;
+  flex-grow: 1;
+  /* Add any other styles you want for the content container */
+}
+
+app-footer {
+  /* Add your styles for the footer */
+}
