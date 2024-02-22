@@ -1,0 +1,23 @@
+img {
+  width: 98px;
+  height: 98px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+div {
+  width: 188px;
+  height: 188px;
+  border-radius: 15px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div:hover {
+  background-color: #e0e0e0;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}

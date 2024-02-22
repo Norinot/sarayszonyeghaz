@@ -1,0 +1,8 @@
+<div class="category-container">
+  <h2>Kategóriák</h2>
+  <div class="card-container" >
+    @for (item of categories; track $index) {
+        <app-categories-card [description]="item.description" [imgPath]="item.imgPath"></app-categories-card>
+      }
+    </div>
+</div>
