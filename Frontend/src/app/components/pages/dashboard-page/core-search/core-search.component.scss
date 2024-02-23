@@ -1,0 +1,38 @@
+.search-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 1188px;
+  height: 324px;
+  gap: 112px;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.search-input {
+  width: 488px;
+}
+
+.input-and-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-icon {
+  height: 324px;
+  width: 324px;
+}
+
+h1 {
+  margin-bottom: 16px;
+  margin-top: 0px;
+}
+p{
+  margin-bottom: 64px;
+  color: #171717;
+  opacity: 0.7;
+}
+
+.input-container {
+  display: flex;
+  gap: 20px;
+}
