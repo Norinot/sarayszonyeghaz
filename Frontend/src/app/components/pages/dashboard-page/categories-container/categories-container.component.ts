@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CategoriesCardComponent } from '../categories-card/categories-card.component';
-import { Category } from '../category.interface';
+import { ICategory } from '../category.interface';
 
 @Component({
   selector: 'app-categories-container',
@@ -10,7 +10,7 @@ import { Category } from '../category.interface';
   styleUrl: './categories-container.component.scss'
 })
 export class CategoriesContainerComponent {
-  categories: Category[] = [
+  categories: ICategory[] = [
     {
       description: 'Szőnyeg',
       imgPath: 'assets/szonyeg.jpg'

@@ -1,0 +1,5 @@
+<div class="live-special-offers" >
+    @for (item of livespecialoffers; track $index) {
+        <app-special-offers [product_name]="item.productName" [description]="item.description" [imgPath]="item.imgPath"></app-special-offers>
+      }
+    </div>
