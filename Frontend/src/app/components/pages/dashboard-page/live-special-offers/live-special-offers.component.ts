@@ -15,12 +15,14 @@ export class LiveSpecialOffersComponent {
     {
       productName:'asd',
       description: 'asdad',
-      imgPath: 'assets/LiveSpecialOffers_placeholder.jpg'
+      imgPath: 'assets/LiveSpecialOffers_placeholder.jpg',
+      salePercentage: 30,
     },
     {
       productName:'2asd',
       description: '2asdad',
-      imgPath: 'assets/LiveSpecialOffers_placeholder2.jpg'
+      imgPath: 'assets/LiveSpecialOffers_placeholder2.jpg',
+      salePercentage: 45
     }
   ];
 }

@@ -1,7 +1,15 @@
-<div>
-    <div class="padding">
-    <h3 class="h3">{{product_name}}<br>{{description}}</h3>
-    <img [src]="imgPath" alt="">
-    <p-button label="Vedd meg most!" [outlined]="true" severity="secondary"></p-button>
-</div>
+<div class="container">
+    <div class="sale_badge">
+        <h4 class="percent_off">
+            {{sale_percentage}}%<br> OFF
+        </h4>
+    </div>
+    <div class="wrapper">
+        <div class="text">
+            <h3>{{product_name}}</h3>
+            <p>{{description}}</p>
+        </div>
+        <img [src]="imgPath" alt="">
+        <button pButton label="Vedd meg most!" severity="secondary"></button>
+    </div>
 </div>

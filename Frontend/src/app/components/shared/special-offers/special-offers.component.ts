@@ -12,6 +12,7 @@ export class SpecialOffersComponent {
   @Input() product_name: string | undefined;
   @Input() description: string | undefined;
   @Input() imgPath: string | undefined;
+  @Input() sale_percentage: number | undefined;
 
   constructor() {
   }

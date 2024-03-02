@@ -1,27 +1,77 @@
 img {
-    width: 120px;
-    height: 120px;
-    border-radius: 15px;
-  }
-  
-  div {
-    width: 312px;
-    height: 368px;
-    border-radius: 15px;
-    background-color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0px;
-  }
+  width: 120px;
+  height: 120px;
+  border-radius: 15px;
+}
 
-  .padding{
+.container {
+  width: 312px;
+  height: 368px;
+  border-radius: 15px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  padding-left: 37;
+  position: relative;
+}
 
-  }
+.wrapper {
+  padding: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 21px;
+  padding-bottom: 41px;
+  padding-left: 28px;
+  padding-right: 36px;
+}
 
-  p-button {
-    display: flex;
-    background-color: #f0f0f0;
-    position:relative;
-    padding-bottom: 15px;
-  }
+p-button {
+  display: flex;
+  background-color: #f0f0f0;
+}
+
+h3 {
+  margin: 0px;
+}
+
+p {
+  margin: 0px;
+  opacity: 70%;
+}
+
+.text{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sale_badge{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 91px;
+  right: 43px;
+  padding: auto;
+}
+
+button{
+  height: 48px;
+  width: 248px;
+  background-color: white;
+  color: black;
+  border-color: black;
+}
+
+h4{
+  display: flex;
+  justify-content: center;
+  width: 80px;
+  height: 96px;
+  padding-top: 16px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
