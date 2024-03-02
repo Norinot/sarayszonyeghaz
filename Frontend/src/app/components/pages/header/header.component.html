@@ -4,7 +4,7 @@
     <nav>
       <p-button label="Főoldal" [text]="true" [plain]="true"></p-button>
       <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
-      <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true"></p-button>
+      <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" (onClick)="navigateToContact()"></p-button>
     </nav>
     <div class="icons">
       <form [formGroup]="formGroup || undefined">
