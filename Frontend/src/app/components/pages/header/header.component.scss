@@ -10,7 +10,9 @@ header {
   padding: 0 5%;
   box-sizing: border-box;
 }
-
+header {
+  background: white;
+}
 header::after {
   content: '';
   position: absolute;

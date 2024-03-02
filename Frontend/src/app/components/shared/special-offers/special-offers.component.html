@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="sale_badge">
+        <h4 class="percent_off">
+            {{sale_percentage}}%<br> OFF
+        </h4>
+    </div>
+    <div class="wrapper">
+        <div class="text">
+            <h3>{{product_name}}</h3>
+            <p>{{description}}</p>
+        </div>
+        <img [src]="imgPath" alt="">
+        <p-button class="kurva" label="Vedd meg most!" [text]="true" [raised]="true" severity="secondary"></p-button>
+    </div>
+</div>
