@@ -24,16 +24,19 @@ export class MapComponent implements AfterViewInit {
   private initMap(): void {
     const mapContainer = this.elementRef.nativeElement.querySelector('#map');
 
-    const map = L.map(mapContainer).setView(this.coordinates, 20);
+    mapContainer.style.height = '169px';
+    mapContainer.style.width = '533px';
+
+    const map = L.map(mapContainer).setView(this.coordinates, 17);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
 
-    mapContainer.style.height = '300px';
-    mapContainer.style.width = '600px';
+
+
+    L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
   }
 
 }

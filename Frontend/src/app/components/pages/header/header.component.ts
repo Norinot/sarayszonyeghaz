@@ -3,7 +3,7 @@ import { ButtonModule } from 'primeng/button';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { SettingsService } from '../../services/settings.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -18,7 +18,7 @@ export class HeaderComponent {
 
   filteredCountries!: any[];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, public settingsService: SettingsService) {
     this.formGroup = this.fb.group({
       selectedCountry: new FormControl('')
     });

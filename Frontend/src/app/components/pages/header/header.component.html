@@ -1,5 +1,6 @@
 <header>
   <img class="logo" src="assets/logonew.svg" alt="">
+  @if (settingsService.getUnused()) {
   <div class="navigation-section">
     <nav>
       <p-button label="Főoldal" [text]="true" [plain]="true"></p-button>
@@ -8,10 +9,12 @@
     </nav>
     <div class="icons">
       <form [formGroup]="formGroup || undefined">
-        <p-autoComplete formControlName="selectedCountry" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"></p-autoComplete>
-      </form>      <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary "></p-button>
+        <p-autoComplete formControlName="selectedCountry" [suggestions]="filteredCountries"
+          (completeMethod)="filterCountry($event)" field="name"></p-autoComplete>
+      </form> <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary "></p-button>
       <p-button icon="pi pi-shopping-cart" [rounded]="true" [text]="true" severity="secondary"></p-button>
       <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="secondary "></p-button>
     </div>
   </div>
+  }
 </header>

@@ -4,12 +4,12 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class YourService {
+export class SettingsService {
 
   constructor() { }
 
 
-  getUnused() {
+  getUnused(): boolean {
     return environment.show_unused;
   }
 }
