@@ -33,10 +33,13 @@ export class MapComponent implements AfterViewInit {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
+    const MyIcon = L.icon({
+      iconUrl: 'assets/marker-icon-2x.png',
+      iconSize: [20, 30]
+    })
 
 
-
-    L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
+    L.marker(this.coordinates, {icon: MyIcon}).addTo(map).bindPopup('Saray Szönyegház').openPopup();
   }
 
 }
