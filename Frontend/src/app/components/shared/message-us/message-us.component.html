@@ -1,0 +1,27 @@
+<div class="message-container">
+  <h2>Küldjön üzenetet!</h2>
+  <form [formGroup]="messageGroup" (ngSubmit)="onSubmit()">
+    <div class="first-last-name">
+      <span class="p-float-label">
+        <input formControlName="lastName" class="p-inputtext-sm" pInputText id="lastName" />
+        <label for="lastName">Vezetéknév</label>
+      </span>
+      <span class="p-float-label">
+        <input formControlName="firstName" class="p-inputtext-sm" pInputText id="firstName" />
+        <label for="firstName">Keresztnév</label>
+      </span>
+    </div>
+    <span class="p-float-label">
+      <input formControlName="email" class="p-inputtext-sm" pInputText id="email" />
+      <label for="email">Email cím</label>
+    </span>
+
+    <span class="p-float-label">
+      <textarea formControlName="message" id="float-input" rows="5" cols="30" pInputTextarea></textarea>
+      <label for="float-input">Üzenet</label>
+    </span>
+    <div class="submit-button-container">
+      <p-button type="submit" class="submit-button" label="Küldés" [outlined]="true" severity="secondary"></p-button>
+    </div>
+  </form>
+</div>
