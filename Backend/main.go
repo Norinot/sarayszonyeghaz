@@ -8,6 +8,7 @@ import (
 	"net/smtp"
 
 	_ "github.com/go-sql-driver/mysql"
+
 )
 
 func createConnection() (*sql.DB, error) {
@@ -53,7 +54,7 @@ func messageUs(w http.ResponseWriter, r *http.Request) {
 		"smtp.gmail.com", //smtp server address
 	)
 
-	to := []string{m.Email}
+	to := []string{"sendToThisEmail@email.com"}
 	msg := []byte("To: " + m.Email + "\r\n" +
 		"Subject: New message from " + m.FirstName + " " + m.LastName + "\r\n" +
 		"\r\n" +
