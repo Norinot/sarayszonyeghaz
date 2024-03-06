@@ -1,13 +1,21 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
+interface Message {
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Message: string;
+}
+
 @Component({
   selector: 'app-message-us',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule, InputTextareaModule],
+  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule, InputTextareaModule, HttpClientModule],
   templateUrl: './message-us.component.html',
   styleUrl: './message-us.component.scss'
 })
@@ -15,7 +23,7 @@ export class MessageUsComponent implements OnInit {
 
   messageGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private http: HttpClient) {
     this.messageGroup = this.fb.group({
       firstName: '',
       lastName: '',
@@ -27,7 +35,21 @@ export class MessageUsComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    console.log(this.messageGroup.value);
-    //Sending an email is not possible without a servrSide endpoint to handle the request. So for now its just logging.
+    const message: Message = {
+      FirstName: this.messageGroup.value.firstName,
+      LastName: this.messageGroup.value.lastName,
+      Email: this.messageGroup.value.email,
+      Message: this.messageGroup.value.message
+    };
+
+    this.http.post('http://localhost:8080/message-us', message).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
   }
 }

@@ -33,9 +33,6 @@ export class MapComponent implements AfterViewInit {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-
-
-
     L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
   }
 
