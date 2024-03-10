@@ -23,9 +23,19 @@ export class MapComponent implements AfterViewInit {
   coordinates: L.LatLngExpression = [47.5415300, 21.6071800]
   private initMap(): void {
     const mapContainer = this.elementRef.nativeElement.querySelector('#map');
-
-    mapContainer.style.height = '169px';
-    mapContainer.style.width = '533px';
+   
+    if (window.innerHeight < 576) {
+      mapContainer.style.height = '424px';
+    } 
+    else {
+      mapContainer.style.height = '169px'; //Default height
+    }
+    if (window.innerWidth < 576) {
+      mapContainer.style.width = '424px';
+    } 
+    else {
+      mapContainer.style.width = '533px'; //Default width
+    }
 
     const map = L.map(mapContainer).setView(this.coordinates, 17);
 
@@ -34,6 +44,17 @@ export class MapComponent implements AfterViewInit {
     }).addTo(map);
 
     L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 576) {
+        mapContainer.style.width = '424px';
+        mapContainer.style.height = '424px';
+      } 
+      else {
+        mapContainer.style.width = '533px';
+        mapContainer.style.height = '169px';
+      }
+    })
   }
 
 }
