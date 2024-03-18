@@ -19,11 +19,11 @@ jobs:
       with:
         node-version: 14.x
 
-    - name: Navigate to Angular project directory
-      run: cd Frontend
-
     - name: Install Angular CLI
       run: npm install -g @angular/cli@17.0.9
+
+    - name: Navigate to Frontend directory
+      run: cd Frontend
 
     - name: Install dependencies
       run: npm install
