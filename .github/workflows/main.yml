@@ -32,3 +32,4 @@ jobs:
       with:
         branch: gh-pages
         folder: Frontend/dist/sarayszonyeghaz
+        token: ${{secrets.SECRET_TOKEN}}
