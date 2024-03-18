@@ -19,14 +19,9 @@ jobs:
       with:
         node-version: 14.x
 
-    - name: Install Angular CLI
-      run: npm install -g @angular/cli@17.0.9
-
     - name: Navigate to Frontend directory
       run: cd Frontend
-
-    - name: List contents of frontend directory
-      run: ls -la Frontend
+      working-directory: ${{ github.workspace }}/Frontend
 
     - name: Install dependencies
       run: npm install
