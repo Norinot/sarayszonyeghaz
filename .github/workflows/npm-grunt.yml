@@ -25,6 +25,9 @@ jobs:
     - name: Navigate to Frontend directory
       run: cd Frontend
 
+    - name: List contents of frontend directory
+      run: ls -la Frontend
+
     - name: Install dependencies
       run: npm install
 
