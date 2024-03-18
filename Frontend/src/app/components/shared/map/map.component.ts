@@ -23,16 +23,16 @@ export class MapComponent implements AfterViewInit {
   coordinates: L.LatLngExpression = [47.5415300, 21.6071800]
   private initMap(): void {
     const mapContainer = this.elementRef.nativeElement.querySelector('#map');
-   
+
     if (window.innerHeight < 576) {
       mapContainer.style.height = '424px';
-    } 
+    }
     else {
       mapContainer.style.height = '169px'; //Default height
     }
     if (window.innerWidth < 576) {
       mapContainer.style.width = '424px';
-    } 
+    }
     else {
       mapContainer.style.width = '533px'; //Default width
     }
@@ -46,10 +46,12 @@ export class MapComponent implements AfterViewInit {
     L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth < 576) {
+      if (window.innerWidth < 974) {
+        console.log('resize');
+
         mapContainer.style.width = '424px';
         mapContainer.style.height = '424px';
-      } 
+      }
       else {
         mapContainer.style.width = '533px';
         mapContainer.style.height = '169px';

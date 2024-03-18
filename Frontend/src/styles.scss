@@ -10,3 +10,10 @@ body {
   font-style: normal;
   margin: 0;
 }
+
+@media screen and (max-width: 422px) {
+  body{
+    display: flex;
+    justify-content: center;
+  }
+}
