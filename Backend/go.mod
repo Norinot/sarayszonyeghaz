@@ -1,4 +1,4 @@
-module saray.com/sarayszonyeghaz
+module szonyeghaz
 
 go 1.22.0
 

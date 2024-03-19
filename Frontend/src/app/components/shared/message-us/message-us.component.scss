@@ -60,8 +60,25 @@ textarea {
     color: white;
   }
 }
-.p-float-label .p-inputwrapper-filled > input ~ label,
-.p-float-label .p-inputwrapper-filled > textarea ~ label {
+.p-float-label .p-inputwrapper-filled>input~label,
+.p-float-label .p-inputwrapper-filled>textarea~label {
   top: 0;
   font-size: 12px;
+}
+
+@media screen and (max-width: 422px) {
+  .first-last-name {
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .message-container {
+    border-radius: 0px;
+  }
+
+  #lastName,
+  #firstName {
+    width: 100%;
+  }
 }

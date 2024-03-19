@@ -46,7 +46,7 @@ p{
   text-decoration: underline;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 974px) {
   .contact-info-container{
     width: 424px;
     height: 548px;
@@ -61,5 +61,11 @@ p{
   }
   .email-opening{
     gap: 0px;
+  }
+}
+
+@media screen and (max-width: 422px) {
+  .contact-info-container{
+    border-radius: 0px;
   }
 }
