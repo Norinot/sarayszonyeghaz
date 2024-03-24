@@ -34,20 +34,23 @@ nav {
   gap: 10px;
 }
 
-button {
-
-}
-
 .icons {
   display: flex;
   gap: 10px;
 }
 
-.icon {
-
-}
 .navigation-section{
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+
+
+@media screen and (max-width: 974px){
+  .logo{
+    margin: 0px;
+  }
+  header {
+    justify-content: center;
+  }
 }

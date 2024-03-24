@@ -45,3 +45,27 @@ p{
 .actual-email-address{
   text-decoration: underline;
 }
+
+@media screen and (max-width: 974px) {
+  .contact-info-container{
+    width: 424px;
+    height: 548px;
+    align-items: center;
+  }
+  .wrapper{
+    flex-direction: column;
+    gap: 0px;
+  }
+  .phone-location{
+    gap: 0px;
+  }
+  .email-opening{
+    gap: 0px;
+  }
+}
+
+@media screen and (max-width: 422px) {
+  .contact-info-container{
+    border-radius: 0px;
+  }
+}

@@ -1,0 +1,35 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "releaseBranch" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+
+    - name: Install Dependencies
+      run: |
+        cd Frontend
+        npm install
+
+    - name: Build
+      run: |
+        cd Frontend
+        npm run build -- --output-path dist/sarayszonyeghaz --configuration production --base-href https://Norinot.github.io/sarayszonyeghaz/
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        branch: gh-pages
+        folder: Frontend/dist/sarayszonyeghaz
+        token: ${{secrets.SECRET_TOKEN}}
