@@ -53,13 +53,26 @@ a {
   color:black;
 }
 
-@media screen and (max-width: 974px){
-.footer-container{
-  flex-direction: column-reverse;
-  gap: 0px;
-}
-.footer-center{
-  width: 400px;
-  padding-top: 20px;
-}
+@media screen and (max-width: 1150px){
+  .footer-container{
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .logo {
+    height: 240px;
+  }
+
+  .footer-center{
+    width: 400px;
+    padding-top: 20px;
+  }
+
+  .footer-center > div > p {
+    font-size: 0.8rem;
+  }
+
+  .footer-right {
+    display: none;
+  }
 }
