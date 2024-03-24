@@ -12,6 +12,7 @@ app-header {
 
 .content-container {
   margin-top: 70px;
+  margin-bottom: 70px;
   flex-grow: 1;
   /* Add any other styles you want for the content container */
 }
@@ -20,7 +21,7 @@ app-footer {
   /* Add your styles for the footer */
 }
 
-@media screen and (max-width: 974px) {
+@media screen and (max-width: 1150px) {
 
   .content-container {
       margin-bottom: 70px;

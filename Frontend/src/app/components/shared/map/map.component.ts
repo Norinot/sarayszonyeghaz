@@ -43,16 +43,26 @@ export class MapComponent implements AfterViewInit {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    L.marker(this.coordinates).addTo(map).bindPopup('Saray Szönyegház').openPopup();
+    const MyIcon = L.icon({
+      iconUrl: 'assets/marker-icon-2x.png',
+      iconSize: [20, 30]
+    })
+
+
+    L.marker(this.coordinates, {icon: MyIcon}).addTo(map).bindPopup('Saray Szönyegház').openPopup();
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth < 974) {
+      if (window.innerWidth < 680) {
         console.log('resize');
 
-        mapContainer.style.width = '424px';
-        mapContainer.style.height = '424px';
+        mapContainer.style.width = (window.innerWidth * 0.7) + "px";
+        mapContainer.style.height = '240px';
+        setTimeout(function(){ map.invalidateSize()}, 400);
       }
-      else {
+      else if (window.innerWidth < 1150) {
+        mapContainer.style.width = '533px';
+        mapContainer.style.height = '240px';
+      } else {
         mapContainer.style.width = '533px';
         mapContainer.style.height = '169px';
       }
