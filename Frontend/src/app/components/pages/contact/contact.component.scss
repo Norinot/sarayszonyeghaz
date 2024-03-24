@@ -28,13 +28,11 @@
     align-items: center;
     width: 100%;
   }
-
-  .map-contactinfo-wrapper > * {
-    width: 100%;
+  app-contact-info{
+    width: inherit;
   }
-
-  .contact-container > * {
-    width: 100%;
+  app-message-us{
+    width: inherit;
   }
 }
 
