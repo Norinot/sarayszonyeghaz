@@ -66,7 +66,26 @@ textarea {
   font-size: 12px;
 }
 
-@media screen and (max-width: 422px) {
+@media screen and (max-width: 1150px) {
+  .message-container {
+    width: 533px;
+  }
+
+  .first-last-name {
+    width: 450px;
+    justify-content: center;
+  }
+
+  #lastName {
+    width: 225px;
+  }
+
+  #firstName {
+    width: 225px;
+  }
+}
+
+@media screen and (max-width: 680px) {
   .first-last-name {
     flex-direction: column;
     gap: 24px;
@@ -74,7 +93,9 @@ textarea {
   }
 
   .message-container {
-    border-radius: 0px;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 100%;
   }
 
   #lastName,

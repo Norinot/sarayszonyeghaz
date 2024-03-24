@@ -4,18 +4,35 @@
   flex-direction: row;
   gap: 14px;
   justify-content: center;
+  width: 100%;
 }
 .map-contactinfo-wrapper{
+  position: relative;
   display: flex;
   gap: 16px;
   flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
-@media screen and (max-width: 974px) {
+@media screen and (max-width: 1150px) {
   .contact-container{
     align-items: center;
     flex-direction: column;
-    margin-top: 70px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .map-contactinfo-wrapper {
+    align-items: center;
+    width: 100%;
+  }
+  app-contact-info{
+    width: inherit;
+  }
+  app-message-us{
+    width: inherit;
   }
 }
 
