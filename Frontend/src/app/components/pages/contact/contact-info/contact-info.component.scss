@@ -1,5 +1,5 @@
 .contact-info-container {
-  width: 533px;
+  max-width: 533px;
   height: 448px;
   background-color: #f0f0f0;
   border-radius: 10px;
@@ -44,4 +44,35 @@ p{
 }
 .actual-email-address{
   text-decoration: underline;
+}
+
+@media screen and (max-width: 1150px) {
+  .contact-info-container{
+    max-width: 533px;
+    height: 400px;
+    align-items: center;
+  }
+
+  .phone-location{
+    gap: 0px;
+  }
+  .email-opening{
+    gap: 0px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .contact-info-container {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+    align-self: center;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+  }
 }

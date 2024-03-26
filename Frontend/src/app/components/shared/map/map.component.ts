@@ -24,8 +24,18 @@ export class MapComponent implements AfterViewInit {
   private initMap(): void {
     const mapContainer = this.elementRef.nativeElement.querySelector('#map');
 
-    mapContainer.style.height = '169px';
-    mapContainer.style.width = '533px';
+    if (window.innerHeight < 576) {
+      mapContainer.style.height = '424px';
+    }
+    else {
+      mapContainer.style.height = '169px'; //Default height
+    }
+    if (window.innerWidth < 576) {
+      mapContainer.style.width = '424px';
+    }
+    else {
+      mapContainer.style.width = '533px'; //Default width
+    }
 
     const map = L.map(mapContainer).setView(this.coordinates, 17);
 
@@ -39,7 +49,25 @@ export class MapComponent implements AfterViewInit {
     })
 
 
-    L.marker(this.coordinates, {icon: MyIcon}).addTo(map).bindPopup('Saray Szönyegház').openPopup();
+    L.marker(this.coordinates, { icon: MyIcon }).addTo(map).bindPopup('Saray Szönyegház').openPopup();
+
+    window.addEventListener('resize', () => {
+      const minWidth = 300;
+      if (window.innerWidth < 680) {
+        console.log('resize');
+
+        mapContainer.style.width = Math.max(window.innerWidth * 0.7, minWidth) + "px";
+        mapContainer.style.height = '240px';
+        setTimeout(function () { map.invalidateSize() }, 400);
+      }
+      else if (window.innerWidth < 1150) {
+        mapContainer.style.width = '533px';
+        mapContainer.style.height = '240px';
+      } else {
+        mapContainer.style.width = '533px';
+        mapContainer.style.height = '169px';
+      }
+    })
   }
 
 }

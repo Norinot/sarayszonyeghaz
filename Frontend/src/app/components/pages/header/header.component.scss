@@ -27,6 +27,7 @@ header::after {
 .logo {
   height: 70px;
   margin-right: auto;
+  padding: 6px 0 6px 0;
 }
 
 nav {
@@ -34,20 +35,24 @@ nav {
   gap: 10px;
 }
 
-button {
-
-}
-
 .icons {
   display: flex;
   gap: 10px;
 }
 
-.icon {
-
-}
 .navigation-section{
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+
+
+@media screen and (max-width: 1150px){
+  .logo{
+    margin: 0px;
+    padding: 6px 0 6px 0;
+  }
+  header {
+    justify-content: center;
+  }
 }
