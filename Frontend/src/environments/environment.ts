@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  show_unused: false,
+  show_unused: true,
 };

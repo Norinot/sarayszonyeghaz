@@ -34,7 +34,7 @@ func MessageUs(w http.ResponseWriter, r *http.Request) {
 		"smtp.gmail.com", //smtp server address
 	)
 
-	to := []string{"sendToThisEmail@email.com"}
+	to := []string{"info@sarayszonyeghaz.hu"}
 	msg := []byte("To: " + m.Email + "\r\n" +
 		"Subject: New message from " + m.FirstName + " " + m.LastName + "\r\n" +
 		"\r\n" +

@@ -42,11 +42,12 @@ export class MessageUsComponent implements OnInit {
       Message: this.messageGroup.value.message
     };
 
-    this.http.post('http://localhost:8080/message-us', message).subscribe(
+    this.http.post('http://sarayszonyeg.hu:8080/message-us', message).subscribe(
       (response) => {
-        console.log(response);
+        this.messageGroup.reset();
       },
       (error) => {
+        this.messageGroup.reset();
         console.log(error);
       }
     );

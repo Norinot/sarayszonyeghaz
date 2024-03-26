@@ -39,7 +39,8 @@
 }
 
 .logo {
-  height: 180px;
+  width: 200px;
+  height: 100px;
 }
 
 .icon {
@@ -63,6 +64,9 @@ a {
     scale: 0.5;
   }
 
+  .footer-left{
+    display: inline-block;
+  }
   .footer-center{
     padding-top: 20px;
   }
