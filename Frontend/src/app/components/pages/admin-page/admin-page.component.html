@@ -1,0 +1,24 @@
+<form (submit)="login()" [formGroup]="loginForm">
+
+  <h2>Bejelentkezés</h2>
+
+  <span class="p-float-label">
+    <input pInputText id="username" formControlName="username" autocomplete="current-password" />
+    <label for="username">Felhasználónév</label>
+  </span>
+
+  <span class="p-float-label">
+    <input type="password" pInputText id="password" formControlName="password" autocomplete="current-password" />
+    <label for="password">Jelszó</label>
+  </span>
+
+  <div class="button-group">
+    <span class="checkbox-group">
+      <p-checkbox formControlName="rememberMe" value="New York" inputId="rememberMe"></p-checkbox>
+      <label for="rememberMe">Emlékezz rám</label>
+    </span>
+    <p-button label="Bejelentkezés" severity="warning"></p-button>
+  </div>
+
+
+</form>

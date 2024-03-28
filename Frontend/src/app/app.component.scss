@@ -1,32 +1,33 @@
+:host {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+app-header{
+  z-index: 5;
+}
+
 .main-container {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   min-height: 100vh;
 }
 
-app-header {
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-}
-
 .content-container {
+  display: flex;
+  flex-direction: column;
   margin-top: 70px;
   margin-bottom: 70px;
   flex-grow: 1;
-  /* Add any other styles you want for the content container */
-}
-
-app-footer {
-  /* Add your styles for the footer */
+  z-index: 1;
 }
 
 @media screen and (max-width: 1150px) {
-
   .content-container {
-      margin-bottom: 70px;
-      display: flex;
-      justify-content: center;
-    }
-
+    margin-bottom: 70px;
+    display: flex;
+    justify-content: center;
   }
+}
