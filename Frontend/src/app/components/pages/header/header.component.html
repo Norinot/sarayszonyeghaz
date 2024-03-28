@@ -1,20 +1,23 @@
 <header>
-  <img class="logo" src="assets/logonew.svg" alt="">
+  <img class="logo" src="assets/logonew.svg" alt="" routerLink="/">
   @if (settingsService.getUnused()) {
   <div class="navigation-section">
     <nav>
-      <p-button label="Főoldal" [text]="true" [plain]="true"></p-button>
+      <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/"></p-button>
       <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
-      <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" (onClick)="navigateToContact()"></p-button>
+      <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"></p-button>
     </nav>
-    <div class="icons">
-      <form [formGroup]="formGroup || undefined">
-        <p-autoComplete formControlName="selectedCountry" [suggestions]="filteredCountries"
-          (completeMethod)="filterCountry($event)" field="name"></p-autoComplete>
-      </form> <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary "></p-button>
-      <p-button icon="pi pi-shopping-cart" [rounded]="true" [text]="true" severity="secondary"></p-button>
-      <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="secondary "></p-button>
-    </div>
   </div>
+  }
+  <div class="card flex justify-content-center sidebar">
+    <p-sidebar [(visible)]="sidebarVisible">
+        <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/" class="firstButton"></p-button>
+        <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
+        <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"></p-button>
+    </p-sidebar>
+    <p-button severity="warning" class="toggle-sidebar" (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
+  </div>
+  @if (sidebarVisible) {
+  <div class="custom-overlay" (click)="sidebarVisible = false"></div>
   }
 </header>

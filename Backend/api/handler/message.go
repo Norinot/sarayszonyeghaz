@@ -27,6 +27,11 @@ func MessageUs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if m.FirstName == "" || m.LastName == "" || m.Email == "" || m.Message == "" {
+		http.Error(w, "All fields are required", http.StatusBadRequest)
+		return
+	}
+
 	auth := smtp.PlainAuth(
 		"",
 		"",               //your email from which you want to send email
@@ -36,10 +41,10 @@ func MessageUs(w http.ResponseWriter, r *http.Request) {
 
 	to := []string{"info@sarayszonyeghaz.hu"}
 	msg := []byte("To: " + m.Email + "\r\n" +
-		"Subject: New message from " + m.FirstName + " " + m.LastName + "\r\n" +
+		"Subject: Új üzenet érkezett: " + m.FirstName + " " + m.LastName + "\r\n" +
 		"\r\n" +
-		"From: " + m.Email + "\r\n" +
-		"Message: " + m.Message + "\r\n")
+		"Feladó: " + m.Email + "\r\n" +
+		"Üzenet: " + m.Message + "\r\n")
 
 	err = smtp.SendMail("smtp.gmail.com:587", auth, "sender@email", to, msg)
 	if err != nil {

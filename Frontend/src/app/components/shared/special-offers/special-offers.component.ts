@@ -1,10 +1,11 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-special-offers',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [ButtonModule, NgOptimizedImage, CommonModule],
   templateUrl: './special-offers.component.html',
   styleUrl: './special-offers.component.scss'
 })

@@ -1,6 +1,21 @@
+:host {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+
+}
 
 #map {
+  display: flex;
+  flex-grow: 1;
   height: 100%;
   width: 15%;
+}
+
+.map-container,
+.map-frame {
+  display: flex;
+  flex-grow: 1;
   z-index: 0;
 }

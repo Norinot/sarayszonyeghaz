@@ -59,6 +59,7 @@ textarea {
     color: white;
   }
 }
+
 .p-float-label .p-inputwrapper-filled>input~label,
 .p-float-label .p-inputwrapper-filled>textarea~label {
   top: 0;
@@ -85,11 +86,6 @@ textarea {
 }
 
 @media screen and (max-width: 680px) {
-  .first-last-name {
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
-  }
 
   .message-container {
     flex-direction: column;
@@ -97,8 +93,22 @@ textarea {
     width: 100%;
   }
 
+
+}
+
+@media screen and (max-width: 450px) {
+  .first-last-name {
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+
   #lastName,
   #firstName {
     width: 100%;
+  }
+
+  .message-container {
+    border-radius: 0px;
   }
 }

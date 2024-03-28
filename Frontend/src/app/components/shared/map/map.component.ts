@@ -48,13 +48,11 @@ export class MapComponent implements AfterViewInit {
       iconSize: [20, 30]
     })
 
-
     L.marker(this.coordinates, { icon: MyIcon }).addTo(map).bindPopup('Saray Szönyegház').openPopup();
 
     window.addEventListener('resize', () => {
       const minWidth = 300;
       if (window.innerWidth < 680) {
-        console.log('resize');
 
         mapContainer.style.width = Math.max(window.innerWidth * 0.7, minWidth) + "px";
         mapContainer.style.height = '240px';

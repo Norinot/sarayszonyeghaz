@@ -1,5 +1,10 @@
+:host {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
 .contact-info-container {
-  max-width: 533px;
   height: 448px;
   background-color: #f0f0f0;
   border-radius: 10px;
@@ -31,32 +36,39 @@ h2 {
   align-items: center;
   gap: 5px;
 }
-p{
+
+p {
   margin: 0;
 }
-.email, .phone-numbers, .location, .openings{
- width: 213px;
- height: 98px;
+
+.email,
+.phone-numbers,
+.location,
+.openings {
+  width: 213px;
+  height: 98px;
 }
-.openings > div > div{
+
+.openings>div>div {
   display: flex;
   justify-content: space-between;
 }
-.actual-email-address{
+
+.actual-email-address {
   text-decoration: underline;
 }
 
 @media screen and (max-width: 1150px) {
-  .contact-info-container{
-    max-width: 533px;
+  .contact-info-container {
     height: 400px;
     align-items: center;
   }
 
-  .phone-location{
+  .phone-location {
     gap: 0px;
   }
-  .email-opening{
+
+  .email-opening {
     gap: 0px;
   }
 }
@@ -64,15 +76,21 @@ p{
 @media screen and (max-width: 680px) {
   .contact-info-container {
     position: relative;
-    width: 100%;
     border-radius: 10px;
     height: auto;
     align-self: center;
+    flex-grow: 1;
   }
+}
 
+@media screen and (max-width: 450px) {
   .wrapper {
     flex-direction: column;
     align-content: center;
     flex-wrap: wrap;
+  }
+
+  .contact-info-container {
+    border-radius: 0px;
   }
 }
