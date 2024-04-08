@@ -76,10 +76,18 @@ nav {
   z-index: 1006;
 }
 
-::ng-deep .firstButton{
-  button{
-    margin-top: 20px !important;
-  }
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px 0 12px;
+}
+
+.sidebar-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
 }
 
 @media screen and (max-width: 1150px) {

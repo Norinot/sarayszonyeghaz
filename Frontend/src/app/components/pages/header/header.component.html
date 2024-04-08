@@ -6,18 +6,42 @@
       <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/"></p-button>
       <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
       <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"></p-button>
+      @if (true) {
+        <p-button label="Termék feltöltése" [text]="true" [plain]="true" routerLink="/upload-product" [style]="{'width': '100%'}"></p-button>
+      }
     </nav>
   </div>
   }
   <div class="card flex justify-content-center sidebar">
-    <p-sidebar [(visible)]="sidebarVisible">
-        <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/" class="firstButton"></p-button>
-        <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
-        <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"></p-button>
-    </p-sidebar>
     <p-button severity="warning" class="toggle-sidebar" (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
   </div>
   @if (sidebarVisible) {
   <div class="custom-overlay" (click)="sidebarVisible = false"></div>
   }
 </header>
+
+<p-sidebar #sidebarRef [(visible)]="sidebarVisible">
+  <ng-template pTemplate="headless">
+    <div class="flex flex-column h-full">
+      <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
+        <div class="sidebar-header">
+          <span class="inline-flex align-items-center gap-2">
+            <img class="logo" src="assets/logonew.svg" alt="" routerLink="/">
+          </span>
+          <span>
+            <p-button type="button" (click)="sidebarVisible = false" icon="pi pi-times" [outlined]="true"
+              [rounded]="true" severity="warning"></p-button>
+          </span>
+        </div>
+        <div class="sidebar-items">
+          <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/" class="firstButton" [style]="{'width': '100%'}"></p-button>
+          <p-button label="Szolgáltatásaink" [text]="true" [plain]="true" [style]="{'width': '100%'}"></p-button>
+          <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact" [style]="{'width': '100%'}"></p-button>
+          @if (true) {
+            <p-button label="Termék feltöltése" [text]="true" [plain]="true" routerLink="/upload-product" [style]="{'width': '100%'}"></p-button>
+          }
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-sidebar>
