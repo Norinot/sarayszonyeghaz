@@ -1,11 +1,11 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { IMessage } from './message.interface';
-import { MessageUsHttpServiceService } from '../../services/map/messageUs-http-service.service';
+import { MessageUsHttpService } from '../../services/map/messageUs-http-service.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -14,13 +14,16 @@ import { ToastrService } from 'ngx-toastr';
   imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule, InputTextareaModule, HttpClientModule],
   templateUrl: './message-us.component.html',
   styleUrl: './message-us.component.scss',
-  providers: [MessageUsHttpServiceService]
+  providers: [MessageUsHttpService]
 })
 export class MessageUsComponent implements OnInit {
 
-  messageGroup: FormGroup;
+  messageGroup: FormGroup = new FormGroup({});
+  private fb: FormBuilder = inject(FormBuilder);
+  private messageService = inject(MessageUsHttpService);
+  private toastr = inject(ToastrService);
 
-  constructor(private fb: FormBuilder, private messageService: MessageUsHttpServiceService, private toastr: ToastrService) {
+  ngOnInit() {
     this.messageGroup = this.fb.group({
       firstName: '',
       lastName: '',
@@ -28,8 +31,6 @@ export class MessageUsComponent implements OnInit {
       message: ''
     });
   }
-
-  ngOnInit() { }
 
   onSubmit() {
     const message: IMessage = {
