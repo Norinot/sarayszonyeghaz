@@ -1,8 +1,10 @@
-
 .upload-section {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
   gap: 22px;
+
+  margin: 30px;
 }
 
 form {
@@ -10,19 +12,65 @@ form {
   flex-direction: column;
   gap: 40px;
 
+  border-radius: 8px;
+
+  width: 100%;
   max-width: 662px;
-  max-height: 1099px;
   background-color: #0f0f0f0f;
+
+  padding: 45px 64px 45px 64px;
 }
 
 input {
-  width: 534px;
+  width: 100%;
+  border-radius: 12px;
 }
 
-input[required] + label::after {
+input[required]+label::after,
+p-inputNumber[required]+label::after {
   content: "*";
   color: red;
 }
-.red-asterix{
+
+.red-asterix {
   color: red;
+}
+
+.imageAndPreviewWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.preview {
+
+  display: flex;
+
+  background-color: #0f0f0f0f;
+
+  border-radius: 8px;
+
+  width: 698px;
+  height: 496px;
+}
+
+.upload {
+  display: flex;
+
+  background-color: #0f0f0f0f;
+
+  border-radius: 8px;
+
+  width: 698px;
+  height: 590px;
+}
+
+.p-error {
+  position: absolute;
+  margin-left: 12px;
+  margin-top: 2px;
+}
+
+#price {
+  max-width: 100px;
 }
