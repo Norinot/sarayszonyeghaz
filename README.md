@@ -1,6 +1,6 @@
 # SARAY Szőnyegház
 ## Description
-A simple webshop for the SARAY Szőnyegház Kft. using Angular as the Frontend and Express.js as the backend.
+A simple webshop for the SARAY Szőnyegház Kft. using Angular as the Frontend and Golang as the backend.
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
@@ -23,14 +23,13 @@ To use SARAY Szőnyegház, follow these steps:
 2. Open your browser and navigate to `http://localhost:4200/`
 
 ## Backend Requirements:
-1. To start the backend you need to have the latest version of [Node.js and npm](https://nodejs.org/en/download/).
+1. You need to install the latest version of Go (Of if that doesn't work, we use Go1.22.0)
+2. Set up the go workspace, this means you have to set up the `GOPATH` environment variable.
+3. Run the `go get` command to set up any dependencies that the project might have.
+4. If you have done everything correctly, you are done. Hurray!
 
 ## Running the backend: 
-You have a few options such as:
-
-1. `npm run build`: this script compiles your TypeScript code to JavaScript using the TypeScript compiler (tsc). The compiled JavaScript files will be output to the `dist` directory.
-2. `npm start`: This script runs the compiled JavaScript code with Node.js.
-3. `npm run dev`˙: This script starts the server in development mode using `nodemon`, which will automatically restart the server whenever you make changes to the source code.
+You can simply start the run.bat file at the root directory of the Backend folder.
 
 ## Branch rules:
 1. No direct pushes into main branch
