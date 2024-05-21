@@ -56,14 +56,30 @@ func Getproductsbyid(c *gin.Context) {
 }
 
 func CreateproductsHandler(c *gin.Context) {
-	var prod model.Product
-
-	if err := c.BindJSON(&prod); err != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
-	} else {
-		model.CreateProductsHandler(prod)
-		c.IndentedJSON(http.StatusCreated, prod)
+	var product model.Product
+	if err := c.ShouldBindJSON(&product); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
+
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	imagePath := "assets/" + file.Filename
+	if err := c.SaveUploadedFile(file, imagePath); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := model.CreateProductsHandler(product, imagePath); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Product created successfully"})
 }
 
 func Deleteproductsbyid(c *gin.Context) {

@@ -68,7 +68,7 @@ func GetProductsbyID(db *sql.DB, id string) ([]Product, error) {
 
 	return products, nil
 }
-func CreateProductsHandler(products Product) {
+func CreateProductsHandler(products Product, imagePath string) error {
 	database, _ := db.CreateConnection()
 	defer database.Close()
 
@@ -82,12 +82,13 @@ func CreateProductsHandler(products Product) {
 		products.Color,
 		products.Origin,
 		products.Cleaning,
-		products.ImagePath)
+		imagePath)
 
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	defer insert.Close()
+	return nil
 }
 
 func DeleteProductByID(db *sql.DB, id string) error {

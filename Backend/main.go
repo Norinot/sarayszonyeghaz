@@ -11,6 +11,7 @@ import (
 func main() {
 
 	router := gin.Default()
+	router.MaxMultipartMemory = 8 << 20
 	router.GET("/products", handler.ListproductsHandler)
 	router.GET("/products/:id", handler.Getproductsbyid)
 	router.POST("/products", handler.CreateproductsHandler)
