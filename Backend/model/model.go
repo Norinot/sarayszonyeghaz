@@ -10,7 +10,7 @@ type MessageSend struct {
 type Product struct {
 	ID        string `json:"product_id"`
 	Name      string `json:"name"`
-	Price     int    `json:"price"`
+	Price     string `json:"price"`
 	Size      string `json:"size"`
 	Material  string `json:"material"`
 	Color     string `json:"color"`

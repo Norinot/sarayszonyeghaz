@@ -68,9 +68,10 @@ func GetProductsbyID(db *sql.DB, id string) ([]Product, error) {
 
 	return products, nil
 }
+
 func CreateProductsHandler(products Product, imagePath string) error {
 	database, _ := db.CreateConnection()
-	defer database.Close()
+	//defer database.Close()
 
 	insert, err := database.Query(
 		"INSERT INTO products (product_id, name, price,  size, material, color, origin, cleaning, imagePath) VALUES (?,?,?,?,?,?,?,?,?)",

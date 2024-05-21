@@ -3,6 +3,7 @@ package handler
 import (
 	"log"
 	"net/http"
+	"os"
 	"szonyeghaz/model"
 	"szonyeghaz/pkg/db"
 
@@ -56,10 +57,30 @@ func Getproductsbyid(c *gin.Context) {
 }
 
 func CreateproductsHandler(c *gin.Context) {
-	var product model.Product
-	if err := c.ShouldBindJSON(&product); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// Parse the form data
+	if err := c.Request.ParseMultipartForm(10 << 20); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form"})
 		return
+	}
+
+	// Get form values
+	name := c.PostForm("name")
+	price := c.PostForm("price")
+	size := c.PostForm("size")
+	material := c.PostForm("material")
+	color := c.PostForm("color")
+	origin := c.PostForm("origin")
+	cleaning := c.PostForm("cleaning")
+
+	// Construct the product struct
+	product := model.Product{
+		Name:     name,
+		Price:    price,
+		Size:     size,
+		Material: material,
+		Color:    color,
+		Origin:   origin,
+		Cleaning: cleaning,
 	}
 
 	file, err := c.FormFile("file")
@@ -108,6 +129,9 @@ func Deleteproductsbyid(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete product"})
 		return
 	}
+	file, _ := c.FormFile("file")
+	imagePath := "assets/" + file.Filename
+	os.Remove(imagePath)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Product deleted successfully"})
 }
