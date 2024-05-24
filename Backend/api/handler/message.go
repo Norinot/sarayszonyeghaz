@@ -5,20 +5,10 @@ import (
 	"log"
 	"net/http"
 	"net/smtp"
-	"szonyeghaz/api/middleware"
 	"szonyeghaz/model"
 )
 
 func MessageUs(w http.ResponseWriter, r *http.Request) {
-	middleware.SetupCORS(&w, r)
-	if r.Method == "OPTIONS" {
-		return
-	}
-
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
 
 	var m model.MessageSend
 	err := json.NewDecoder(r.Body).Decode(&m)

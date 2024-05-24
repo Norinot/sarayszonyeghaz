@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"szonyeghaz/api/handler"
+	"szonyeghaz/api/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,11 +12,11 @@ import (
 func main() {
 
 	router := gin.Default()
-
-	//router.MaxMultipartMemory = 8 << 20
+	router.Use(middleware.CORSMiddleware())
 	router.GET("/products", handler.ListproductsHandler)
 	router.GET("/products/:id", handler.Getproductsbyid)
 	router.POST("/products", handler.CreateproductsHandler)
+	router.PUT("/products/:id", handler.UpdateProductByID)
 	router.DELETE("/products/:id", handler.Deleteproductsbyid)
 
 	router.Run("localhost:8085")
