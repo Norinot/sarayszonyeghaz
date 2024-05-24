@@ -59,7 +59,6 @@ func CreateproductsHandler(c *gin.Context) {
 		Cleaning: cleaning,
 	}
 
-	// Retrieve files
 	form, err := c.MultipartForm()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to retrieve multipart form: " + err.Error()})
@@ -74,7 +73,6 @@ func CreateproductsHandler(c *gin.Context) {
 
 	imagePaths := make([]string, 0, len(files))
 
-	// Save files
 	for _, file := range files {
 		imagePath := "assets/" + file.Filename
 		if err := c.SaveUploadedFile(file, imagePath); err != nil {
