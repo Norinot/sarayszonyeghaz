@@ -1,111 +1,118 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 	"szonyeghaz/model"
-	"szonyeghaz/pkg/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/segmentio/ksuid"
 )
 
 func ListproductsHandler(c *gin.Context) {
-	products1 := model.ListProductsHandler()
-	if products1 == nil {
-		c.AbortWithStatus(http.StatusNotFound)
-	} else {
-		c.IndentedJSON(http.StatusOK, products1)
-	}
-}
-
-func Getproductsbyid(c *gin.Context) {
-	id := c.Param("id")
-
-	log.Printf("Received ID: %s\n", id)
-
-	_, err := ksuid.Parse(id)
+	products, err := model.ListProductsHandler()
 	if err != nil {
-		log.Printf("Invalid KSUID: %s\n", id)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	db, err := db.CreateConnection()
-	if err != nil {
-		log.Fatal("Failed to connect to the database:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to connect to the database"})
-		return
-	}
-	defer db.Close()
-
-	products, err := model.GetProductsbyID(db, id)
-	if err != nil {
-		log.Fatal("Query execution error:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve products"})
-		return
-	}
-
-	if len(products) == 0 {
-		log.Println("No products found")
-		c.JSON(http.StatusNotFound, gin.H{"message": "No products found"})
-		return
-	}
-
 	c.JSON(http.StatusOK, products)
 }
 
-func CreateproductsHandler(c *gin.Context) {
-	var product model.Product
-	if err := c.ShouldBindJSON(&product); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+func Getproductsbyid(c *gin.Context) {
+	productID := c.Param("id")
 
-	file, err := c.FormFile("file")
+	product, err := model.GetProductByIDHandler(productID)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		if err.Error() == "product not found" {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
 		return
 	}
 
-	imagePath := "assets/" + file.Filename
-	if err := c.SaveUploadedFile(file, imagePath); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	c.JSON(http.StatusOK, product)
+}
+
+func CreateproductsHandler(c *gin.Context) {
+
+	if err := c.Request.ParseMultipartForm(10 << 20); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form: " + err.Error()})
 		return
 	}
 
-	if err := model.CreateProductsHandler(product, imagePath); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	name := c.PostForm("name")
+	price := c.PostForm("price")
+	size := c.PostForm("size")
+	material := c.PostForm("material")
+	color := c.PostForm("color")
+	origin := c.PostForm("origin")
+	cleaning := c.PostForm("cleaning")
+
+	product := model.Product{
+		ID:       ksuid.New().String(),
+		Name:     name,
+		Price:    price,
+		Size:     size,
+		Material: material,
+		Color:    color,
+		Origin:   origin,
+		Cleaning: cleaning,
+	}
+
+	form, err := c.MultipartForm()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to retrieve multipart form: " + err.Error()})
 		return
 	}
 
+	files := form.File["files"]
+	if len(files) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No files found in the request"})
+		return
+	}
+
+	imagePaths := make([]string, 0, len(files))
+
+	for _, file := range files {
+		imagePath := "assets/" + file.Filename
+		if err := c.SaveUploadedFile(file, imagePath); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file: " + err.Error()})
+			return
+		}
+		imagePaths = append(imagePaths, imagePath)
+	}
+
+	if err := model.CreateProductsHandler(product, imagePaths); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create product: " + err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"message": "Product created successfully"})
 }
 
+func UpdateProductByID(c *gin.Context) {
+	productID := c.Param("id")
+
+	var request model.UpdateProductRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	err := model.UpdateProductByIDHandler(productID, request.Product, request.ImagePaths)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Product updated successfully"})
+}
+
 func Deleteproductsbyid(c *gin.Context) {
-	id := c.Param("id")
+	productID := c.Param("id")
 
-	log.Printf("Received ID: %s\n", id)
-
-	_, err := ksuid.Parse(id)
+	err := model.DeleteProductByIDHandler(productID)
 	if err != nil {
-		log.Printf("Invalid KSUID: %s\n", id)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
-		return
-	}
-
-	db, err := db.CreateConnection()
-	if err != nil {
-		log.Fatal("Failed to connect to the database:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to connect to the database"})
-		return
-	}
-	defer db.Close()
-
-	err = model.DeleteProductByID(db, id)
-	if err != nil {
-		log.Fatal("Failed to delete product:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete product"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
