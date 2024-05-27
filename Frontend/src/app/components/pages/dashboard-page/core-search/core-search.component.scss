@@ -9,6 +9,7 @@
 }
 
 .search-input {
+  max-width: 488px;
   width: 488px;
 }
 
@@ -35,11 +36,30 @@ p{
 .input-container {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 
 @media screen and (max-width: 1200px) {
   .search-wrapper {
     width: auto;
+    flex-direction: column-reverse;
+    gap: 0px;
+    padding: 10px;
+    height: auto;
+    margin-top: 0;
+  }
+
+  h1, p{
+    text-align: center;
+  }
+
+  .input-container{
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .search-input{
+    width: 100%;
   }
 }

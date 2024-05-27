@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  max-width: 1400px;
+  width: 100% !important;
+  margin-top: 42px;
+}
+
+.wrapper {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(318px, 1fr));
+  justify-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  row-gap: 25px;
+  align-content: flex-start;
+}

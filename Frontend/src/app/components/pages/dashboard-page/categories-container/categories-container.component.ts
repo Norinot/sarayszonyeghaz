@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CategoriesCardComponent } from '../categories-card/categories-card.component';
 import { ICategory } from '../category.interface';
+import { ProductListComponent } from '../product-list/product-list.component';
 
 @Component({
   selector: 'app-categories-container',
   standalone: true,
-  imports: [CategoriesCardComponent],
+  imports: [CategoriesCardComponent, ProductListComponent],
   templateUrl: './categories-container.component.html',
   styleUrl: './categories-container.component.scss'
 })

@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   bottom: 0;
-  width: 100%;
   height: auto;
   border-top: 1px solid #d8d9da;
   z-index: -1;
@@ -13,8 +12,7 @@
   display: flex;
   justify-content: space-around;
   gap: 20px;
-  align-items: center;
-  width: 95%;
+  align-items: center;;
   padding: 20px 0px 10px 0px;
 }
 
