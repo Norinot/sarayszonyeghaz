@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -11,9 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-message-us',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule, InputTextareaModule, HttpClientModule],
   templateUrl: './message-us.component.html',
   styleUrl: './message-us.component.scss',
+  imports: [ReactiveFormsModule, FormsModule, InputTextModule, ButtonModule, InputTextareaModule],
   providers: [MessageUsHttpService]
 })
 export class MessageUsComponent implements OnInit {
