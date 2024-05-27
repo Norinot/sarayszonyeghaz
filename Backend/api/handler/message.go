@@ -1,24 +1,25 @@
 package handler
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"net/smtp"
 	"szonyeghaz/model"
+
+	"github.com/gin-gonic/gin"
 )
 
-func MessageUs(w http.ResponseWriter, r *http.Request) {
+func MessageUs(c *gin.Context) {
 
 	var m model.MessageSend
-	err := json.NewDecoder(r.Body).Decode(&m)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+
+	if err := c.ShouldBindJSON(&m); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	if m.FirstName == "" || m.LastName == "" || m.Email == "" || m.Message == "" {
-		http.Error(w, "All fields are required", http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "All fields are required"})
 		return
 	}
 
@@ -36,13 +37,12 @@ func MessageUs(w http.ResponseWriter, r *http.Request) {
 		"Feladó: " + m.Email + "\r\n" +
 		"Üzenet: " + m.Message + "\r\n")
 
-	err = smtp.SendMail("smtp.gmail.com:587", auth, "sender@email", to, msg)
+	err := smtp.SendMail("smtp.gmail.com:587", auth, "sender@email", to, msg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	log.Printf("Received a message from: %v\n", m)
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"status": "success"})
+	c.JSON(http.StatusOK, gin.H{"message": "Your message has been sent"})
 }

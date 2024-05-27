@@ -1,10 +1,10 @@
 package model
 
 type MessageSend struct {
-	FirstName string
-	LastName  string
-	Email     string
-	Message   string
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
+	Message   string `json:"message"`
 }
 
 type Product struct {

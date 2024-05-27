@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-	"net/http"
 	"szonyeghaz/api/handler"
 	"szonyeghaz/api/middleware"
 
@@ -16,14 +14,10 @@ func main() {
 	router.GET("/products", handler.ListproductsHandler)
 	router.GET("/products/:id", handler.Getproductsbyid)
 	router.POST("/products", handler.CreateproductsHandler)
+	router.POST("/message-us", handler.MessageUs)
 	router.PUT("/products/:id", handler.UpdateProductByID)
 	router.DELETE("/products/:id", handler.Deleteproductsbyid)
 
 	router.Run("localhost:8085")
 
-	http.HandleFunc("/message-us", handler.MessageUs)
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
 }
