@@ -13,7 +13,6 @@
     </div>
   </div>
 
-
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
     <h2>Szőnyeg tulajdonságok</h2>
 
@@ -76,7 +75,7 @@
     <!--Price -->
     <div>
       <span class="p-float-label">
-        <p-inputNumber [inputStyle]="{'border-radius': '12px'}" [required]="true" id="price"
+        <p-inputNumber size="7" [inputStyle]="{'border-radius': '12px'}" [required]="true" id="price"
           [ngClass]="{'ng-invalid': isInvalid('price')}" formControlName="price" mode="currency" currency="HUF"
           inputId="price"> </p-inputNumber>
         <label for="price">Ár</label>
@@ -92,6 +91,4 @@
     <div>A "<span class="red-asterix">*</span>" jelöli a kötelezően kitöltendő elemeket</div>
 
   </form>
-
-
 </div>

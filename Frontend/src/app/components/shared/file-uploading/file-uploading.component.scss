@@ -64,3 +64,13 @@ p-fileUpload {
 .presentation-picture{
   object-fit: cover;
 }
+
+@media screen and (max-width: 476px){
+  .listed-files {
+    flex-wrap: wrap;
+  }
+
+  .file-name{
+    word-break: break-all;
+  }
+}

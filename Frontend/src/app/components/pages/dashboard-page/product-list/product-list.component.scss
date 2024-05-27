@@ -1,15 +1,17 @@
-:host{
+:host {
+  display: block;
   max-width: 1400px;
+  width: 100% !important;
   margin-top: 42px;
 }
 
-.wrapper{
-  display: flex;
+.wrapper {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(318px, 1fr));
+  justify-items: center;
+  gap: 16px;
   flex-wrap: wrap;
   row-gap: 25px;
   align-content: flex-start;
-  app-product-card{
-    flex: 1 0 auto;
-    min-width: min-content;
-  }
 }
