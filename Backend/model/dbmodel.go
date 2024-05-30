@@ -15,9 +15,10 @@ func ListProductsHandler() ([]ProductWithImages, error) {
 	defer database.Close()
 
 	query := `
-        SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.origin, p.cleaning, pi.image_path
+        SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.design, p.origin, p.cleaning, pi.image_path
         FROM products p
         LEFT JOIN product_images pi ON p.product_id = pi.product_id
+		ORDER BY p.name
     `
 
 	rows, err := database.Query(query)
@@ -36,12 +37,13 @@ func ListProductsHandler() ([]ProductWithImages, error) {
 			size      sql.NullString
 			material  sql.NullString
 			color     sql.NullString
+			design    sql.NullString
 			origin    sql.NullString
 			cleaning  sql.NullString
 			imagePath sql.NullString
 		)
 
-		err := rows.Scan(&productID, &name, &price, &size, &material, &color, &origin, &cleaning, &imagePath)
+		err := rows.Scan(&productID, &name, &price, &size, &material, &color, &design, &origin, &cleaning, &imagePath)
 		if err != nil {
 			return nil, err
 		}
@@ -59,6 +61,7 @@ func ListProductsHandler() ([]ProductWithImages, error) {
 					Size:     size.String,
 					Material: material.String,
 					Color:    color.String,
+					Design:   design.String,
 					Origin:   origin.String,
 					Cleaning: cleaning.String,
 				},
@@ -87,7 +90,7 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 	defer database.Close()
 
 	query := `
-		SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.origin, p.cleaning, pi.image_path
+		SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.design, p.origin, p.cleaning, pi.image_path
 		FROM products p
 		LEFT JOIN product_images pi ON p.product_id = pi.product_id
 		WHERE p.product_id = ?
@@ -109,12 +112,13 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 			size      sql.NullString
 			material  sql.NullString
 			color     sql.NullString
+			design    sql.NullString
 			origin    sql.NullString
 			cleaning  sql.NullString
 			imagePath sql.NullString
 		)
 
-		err := rows.Scan(&id, &name, &price, &size, &material, &color, &origin, &cleaning, &imagePath)
+		err := rows.Scan(&id, &name, &price, &size, &material, &color, &origin, &design, &cleaning, &imagePath)
 		if err != nil {
 			return nil, err
 		}
@@ -129,6 +133,7 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 					Size:     size.String,
 					Material: material.String,
 					Color:    color.String,
+					Design:   design.String,
 					Origin:   origin.String,
 					Cleaning: cleaning.String,
 				},
@@ -161,9 +166,9 @@ func CreateProductsHandler(product Product, imagePaths []string) error {
 	}
 
 	_, err = tx.Exec(`
-		INSERT INTO products (product_id, name, price, size, material, color, origin, cleaning)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-	`, product.ID, product.Name, product.Price, product.Size, product.Material, product.Color, product.Origin, product.Cleaning)
+		INSERT INTO products (product_id, name, price, size, material, color, design, origin, cleaning)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+	`, product.ID, product.Name, product.Price, product.Size, product.Material, product.Color, product.Design, product.Origin, product.Cleaning)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -202,9 +207,9 @@ func UpdateProductByIDHandler(productID string, product Product, imagePaths []st
 
 	_, err = tx.Exec(`
 		UPDATE products
-		SET name = ?, price = ?, size = ?, material = ?, color = ?, origin = ?, cleaning = ?
+		SET name = ?, price = ?, size = ?, material = ?, color = ?, design = ?, origin = ?, cleaning = ?
 		WHERE product_id = ?
-	`, product.Name, product.Price, product.Size, product.Material, product.Color, product.Origin, product.Cleaning, productID)
+	`, product.Name, product.Price, product.Size, product.Material, product.Color, product.Design, product.Origin, product.Cleaning, productID)
 	if err != nil {
 		tx.Rollback()
 		return err

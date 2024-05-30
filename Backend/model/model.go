@@ -14,6 +14,7 @@ type Product struct {
 	Size     string `json:"size" db:"size"`
 	Material string `json:"material" db:"material"`
 	Color    string `json:"color" db:"color"`
+	Design   string `json:"design" db:"design"`
 	Origin   string `json:"origin" db:"origin"`
 	Cleaning string `json:"cleaning" db:"cleaning"`
 }
