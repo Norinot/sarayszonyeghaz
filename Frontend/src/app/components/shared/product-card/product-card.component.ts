@@ -1,9 +1,9 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, inject } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
-import { IProductPreview } from './interfaces/productPreview.interface';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-card',
@@ -14,6 +14,9 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductCardComponent implements OnChanges {
 
+  private productService = inject(ProductService)
+
+  @Input() productId?: string
   @Input() productName?: string
   @Input() productSize?: string
   @Input() productPlaceOfOrigin?: string
@@ -36,15 +39,37 @@ export class ProductCardComponent implements OnChanges {
     }
   }
 
+  removeProduct(id: string | undefined) {
+
+    console.log(this.productId);
+
+
+    if (this.productId != undefined) {
+      this.productService.removeSelectedProduct(this.productId).subscribe(() => {
+        console.log('Termék sikeresen törölve');
+      },
+        error => {
+          console.log(error);
+        }
+      );
+    } else {
+      alert('Hiba történt a termék törlése közben');
+    }
+  }
+
 
   items: MenuItem[] = [
     {
       label: 'Módosítás',
-      icon: 'pi pi-refresh'
+      icon: 'pi pi-refresh',
+      routerLink: ['/edit-product/${this.productId}'],
     },
     {
       label: 'Törlés',
-      icon: 'pi pi-trash'
+      icon: 'pi pi-trash',
+      command: () => {
+        this.removeProduct(this.productId);
+      }
     }
   ];
 }

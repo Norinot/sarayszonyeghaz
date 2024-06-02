@@ -1,9 +1,8 @@
 import { IProductPreview } from "./productPreview.interface";
 
 export interface IProduct extends IProductPreview {
-  id: string;
+  product_id: string;
   material: string;
-  colorAndPattern?:  string;
-  styleAndDesign?: string;
-  cleaningInstructions?: string;
+  color?:  string;
+  cleaning?: string;
 }

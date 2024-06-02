@@ -18,6 +18,9 @@ func main() {
 	router.PUT("/products/:id", handler.UpdateProductByID)
 	router.DELETE("/products/:id", handler.Deleteproductsbyid)
 
+	router.Static("/assets", "./assets")
+	router.StaticFile("/favicon.ico", "./resources/favicon.ico")
+
 	router.Run("localhost:8085")
 
 }

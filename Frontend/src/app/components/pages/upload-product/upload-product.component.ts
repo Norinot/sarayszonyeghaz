@@ -8,8 +8,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 import { FileUploadingComponent } from '../../shared/file-uploading/file-uploading.component';
-import { IProductPreview } from '../../shared/product-card/interfaces/productPreview.interface';
 import { fileUploadService } from '../../services/fileUploading/fileUpload.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-upload-product',
@@ -21,6 +21,7 @@ import { fileUploadService } from '../../services/fileUploading/fileUpload.servi
 export class UploadProductComponent implements OnInit {
 
   public fileUploadService = inject(fileUploadService);
+  private productService = inject(ProductService);
 
   productForm: FormGroup = (() => {
     const fb = inject(FormBuilder);
@@ -29,9 +30,9 @@ export class UploadProductComponent implements OnInit {
       size: [],
       material: [],
       color: [],
-      style: [],
+      //style: [],
       origin: [],
-      cleaningInstructions: [''],
+      cleaning: [''],
       price: [, Validators.required],
     });
   })();
@@ -58,8 +59,27 @@ export class UploadProductComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.productForm.valid) {
 
+    const product = new FormData();
+    product.append('name', this.getControl('name').value);
+    product.append('size', this.getControl('size').value);
+    product.append('material', this.getControl('material').value);
+    product.append('color', this.getControl('color').value);
+    product.append('origin', this.getControl('origin').value);
+    product.append('cleaning', this.getControl('cleaning').value);
+    product.append('price', this.getControl('price').value);
+
+    this.fileUploadService.allFiles.forEach((file) => {
+      product.append('files', file, file.name);
+    });
+
+    if (this.productForm.valid) {
+      this.productService.createNewProduct(product).subscribe(() => {
+        console.log('Product created');
+      },
+        error => {
+          console.error(error);
+        });
     } else {
       this.markAllAsDirty(this.productForm);
     }

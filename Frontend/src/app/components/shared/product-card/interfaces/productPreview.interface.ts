@@ -1,7 +1,7 @@
 export interface IProductPreview {
-  title?: string;
-  imagePath?: string;
+  name?: string;
+  image_paths?: string[];
   size?: string;
-  placeOfOrigin?: string;
+  origin?: string;
   price?: number;
 }

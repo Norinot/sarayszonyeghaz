@@ -6,4 +6,5 @@ import { Injectable } from "@angular/core";
 })
 export class fileUploadService {
   selectedFile: any | null = null;
+  allFiles: any[] = [];
 }
