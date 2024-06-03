@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <p-galleria [value]="product?.image_paths" [thumbnailsPosition]="'left'" [responsiveOptions]="responsiveOptions"
+    [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
+    <ng-template pTemplate="item" let-item>
+      <img [src]="item" class="product-image" />
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item>
+      <div class="grid grid-nogutter justify-content-center">
+        <img [src]="item" class="thumbnail-image" />
+      </div>
+    </ng-template>
+  </p-galleria>
+</div>

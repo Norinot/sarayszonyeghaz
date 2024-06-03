@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -11,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-message-us',
   standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputTextareaModule],
   templateUrl: './message-us.component.html',
   styleUrl: './message-us.component.scss',
   providers: [MessageUsHttpService]
@@ -40,14 +40,16 @@ export class MessageUsComponent implements OnInit {
     };
 
     this.messageService.sendMessage(message).subscribe(
-      (response) => {
-        this.messageGroup.reset();
-      },
-      (error) => {
-        this.messageGroup.reset();
-        this.toastr.error(error.error);
+      {
+        complete: () => {
+          this.toastr.success('Message sent successfully');
+          this.messageGroup.reset();
+        },
+        error: (error) => {
+          this.messageGroup.reset();
+          this.toastr.error('An error occurred while sending the message', error);
+        }
       }
     );
-
   }
 }
