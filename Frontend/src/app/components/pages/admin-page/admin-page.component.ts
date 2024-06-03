@@ -29,8 +29,8 @@ export class AdminPageComponent {
     console.log("here");
 
     this.loginService.login(this.loginForm.value).subscribe({
-      next: () => {
-        console.log('Logged in');
+      next: (response: any) => {
+        localStorage.setItem('token', response.token);
       },
       error: () => {
         console.log('Failed to log in');

@@ -17,13 +17,17 @@ export class ProductService {
     console.log(product);
     return this.httpClient.post("http://localhost:8085/products", product, {
       headers: {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc0MjM0MTgsImlkIjoxLCJvcmlnX2lhdCI6MTcxNzQxOTgxOH0.SPXRHeX3Q7e4Pa2D57hIb4MVAzIFgb_SSv7G6l5I82Q`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
   }
 
   removeSelectedProduct(id: string) {
-    return this.httpClient.delete(`http://localhost:8085/products/${id}`)
+    return this.httpClient.delete(`http://localhost:8085/products/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
   }
 
   getSpecificProductById(id: string): Observable<IProduct> {
