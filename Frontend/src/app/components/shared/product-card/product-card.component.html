@@ -4,7 +4,7 @@
     <p-button class="more-button-inner" icon="pi pi-ellipsis-h" [rounded]="true" [text]="true" severity="secondary"
       (click)="menu.toggle($event)" />
   </div>
-  <div class="image-container">
+  <div class="image-container" [routerLink]="['/details', productId]">
     <img [src]="productImagePath" alt="">
   </div>
   <div>

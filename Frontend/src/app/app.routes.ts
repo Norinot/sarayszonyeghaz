@@ -9,4 +9,5 @@ export const routes: Routes = [
   { path: 'upload-product', loadComponent: () => import('./components/pages/upload-product/upload-product.component').then(mod => mod.UploadProductComponent), canActivate: [adminGuardGuard] },
   { path: '', component: DashboardPageComponent, canActivate: [defaultRouteGuard] },
   { path: 'contact', component: ContactComponent },
+  { path: 'details/:id', loadComponent: () => import('./components/pages/product-details-page/product-details-page.component').then(mod => mod.ProductDetailsPageComponent) },
 ];

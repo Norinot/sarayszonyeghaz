@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ProductCardComponent } from '../../../shared/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
-import { IProductPreview } from '../../../shared/product-card/interfaces/productPreview.interface';
+import { ProductService } from '../../../services/product.service';
+import { IProduct } from '../../../shared/product-card/interfaces/product.interface';
 
 @Component({
   selector: 'app-product-list',
@@ -10,111 +11,26 @@ import { IProductPreview } from '../../../shared/product-card/interfaces/product
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
-export class ProductListComponent {
-  items: IProductPreview[] = [
-    {
-      title: 'Product 1',
-      price: 100,
-      size: 'M',
-      placeOfOrigin: 'Hungary',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 2',
-      price: 200,
-      size: 'L',
-      placeOfOrigin: 'Germany',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 3',
-      price: 300,
-      size: 'S',
-      placeOfOrigin: 'France',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 1',
-      price: 100,
-      size: 'M',
-      placeOfOrigin: 'Hungary',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 2',
-      price: 200,
-      size: 'L',
-      placeOfOrigin: 'Germany',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 3',
-      price: 300,
-      size: 'S',
-      placeOfOrigin: 'France',
-      imagePath: 'assets/futoszonyeg.jpg'
-    }, {
-      title: 'Product 1',
-      price: 100,
-      size: 'M',
-      placeOfOrigin: 'Hungary',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 2',
-      price: 200,
-      size: 'L',
-      placeOfOrigin: 'Germany',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 3',
-      price: 300,
-      size: 'S',
-      placeOfOrigin: 'France',
-      imagePath: 'assets/futoszonyeg.jpg'
-    }, {
-      title: 'Product 1',
-      price: 100,
-      size: 'M',
-      placeOfOrigin: 'Hungary',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 2',
-      price: 200,
-      size: 'L',
-      placeOfOrigin: 'Germany',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 3',
-      price: 300,
-      size: 'S',
-      placeOfOrigin: 'France',
-      imagePath: 'assets/futoszonyeg.jpg'
-    }, {
-      title: 'Product 1',
-      price: 100,
-      size: 'M',
-      placeOfOrigin: 'Hungary',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 2',
-      price: 200,
-      size: 'L',
-      placeOfOrigin: 'Germany',
-      imagePath: 'assets/futoszonyeg.jpg'
-    },
-    {
-      title: 'Product 3',
-      price: 300,
-      size: 'S',
-      placeOfOrigin: 'France',
-      imagePath: 'assets/futoszonyeg.jpg'
-    }
+export class ProductListComponent implements OnInit {
+  items: IProduct[] = [];
+  private productListService = inject(ProductService);
 
-  ];
+  ngOnInit(): void {
+    this.productListService.getAllProducts().subscribe(data => {
+      this.items = this.transformProductData(data);
+    },
+      error => {
+        console.log(error);
+      });
+  }
+
+  private transformProductData(data: IProduct[]) {
+    return data.map(product => (
+      {
+        ...product,
+        image_paths: product.image_paths?.map((path: string) => `http://localhost:8085/${path}`)
+      }
+    ))
+  }
 
 }

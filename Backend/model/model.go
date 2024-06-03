@@ -27,3 +27,14 @@ type UpdateProductRequest struct {
 	Product    Product  `json:"product"`
 	ImagePaths []string `json:"image_paths"`
 }
+
+type User struct {
+	ID       float64 `json:"id" db:"id"`
+	Username string  `json:"username" db:"username"`
+	Password string  `json:"password"`
+}
+
+type AuthInput struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}

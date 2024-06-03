@@ -55,6 +55,8 @@ export class FileUploadingComponent {
   }
 
   onSelectedFiles(event: any) {
+    this.fileUploadService.allFiles = event.currentFiles;
+
     this.files = event.currentFiles;
     this.files.forEach((file: any) => {
       this.totalSize += parseInt(this.formatSize(file.size));
@@ -65,11 +67,6 @@ export class FileUploadingComponent {
       this.fileUploadService.selectedFile = this.files[0];
     }
   }
-
-  uploadEvent(callback: any) {
-    callback();
-  }
-
   setPrimaryPicture(file: File) {
     this.fileUploadService.selectedFile = file;
   }

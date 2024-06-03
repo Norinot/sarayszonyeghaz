@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -14,7 +15,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class AdminPageComponent {
   loginForm: FormGroup;
-
+  private loginService = inject(LoginService);
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -25,6 +26,15 @@ export class AdminPageComponent {
   }
 
   login() {
-    console.log(this.loginForm.value);
+    console.log("here");
+
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (response: any) => {
+        localStorage.setItem('token', response.token);
+      },
+      error: () => {
+        console.log('Failed to log in');
+      }
+    });
   }
 }
