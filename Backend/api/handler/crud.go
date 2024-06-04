@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"path"
 	"szonyeghaz/model"
 
 	"github.com/gin-gonic/gin"
@@ -76,7 +77,9 @@ func CreateproductsHandler(c *gin.Context) {
 	imagePaths := make([]string, 0, len(files))
 
 	for _, file := range files {
-		imagePath := "assets/" + ksuid.New().String() //file.Filename
+		ext := path.Ext(file.Filename)
+
+		imagePath := "assets/" + ksuid.New().String() + ext
 		if err := c.SaveUploadedFile(file, imagePath); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file: " + err.Error()})
 			return

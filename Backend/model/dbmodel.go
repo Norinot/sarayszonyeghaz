@@ -118,7 +118,7 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 			imagePath sql.NullString
 		)
 
-		err := rows.Scan(&id, &name, &price, &size, &material, &color, &origin, &design, &cleaning, &imagePath)
+		err := rows.Scan(&id, &name, &price, &size, &material, &color, &design, &origin, &cleaning, &imagePath)
 		if err != nil {
 			return nil, err
 		}
