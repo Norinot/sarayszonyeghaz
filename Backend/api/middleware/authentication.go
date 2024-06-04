@@ -18,7 +18,8 @@ func AuthMiddleware() (*jwt.GinJWTMiddleware, error) {
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(*model.User); ok {
 				return jwt.MapClaims{
-					"id": v.ID,
+					"id":       v.ID,
+					"username": v.Username,
 				}
 			}
 			return jwt.MapClaims{}
@@ -26,7 +27,8 @@ func AuthMiddleware() (*jwt.GinJWTMiddleware, error) {
 		IdentityHandler: func(c *gin.Context) interface{} {
 			claims := jwt.ExtractClaims(c)
 			return &model.User{
-				ID: claims["id"].(float64),
+				ID:       claims["id"].(float64),
+				Username: claims["username"].(string),
 			}
 		},
 		Authenticator: func(c *gin.Context) (interface{}, error) {
