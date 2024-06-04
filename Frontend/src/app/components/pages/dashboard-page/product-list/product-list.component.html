@@ -1,0 +1,7 @@
+<div class="wrapper">
+  @for (item of items; track $index) {
+  <app-product-card [productId]="item.product_id" [productName]="item.name" [productPlaceOfOrigin]="item.origin" [productSize]="item.size"
+    [productPrice]="item.price"
+    [productImagePath]="item.image_paths?.[0]" ></app-product-card>
+  }
+</div>

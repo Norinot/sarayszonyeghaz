@@ -1,0 +1,94 @@
+<div class="upload-section">
+
+  <div class="imageAndPreviewWrapper">
+    <div class="upload">
+      <app-file-uploading></app-file-uploading>
+    </div>
+    <div class="preview">
+      <app-product-card [productName]="productForm.get('name')?.value ?? '<Példa cím>'"
+        [productPlaceOfOrigin]="productForm.get('origin')?.value ?? '<Példa származási hely>'"
+        [productSize]="productForm.get('size')?.value ?? '<Példa méret>'"
+        [productPrice]="productForm.get('price')?.value ?? 0"
+        [productImagePath]="this.fileUploadService.selectedFile?.objectURL ?? 'https://via.placeholder.com/150'"></app-product-card>
+    </div>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <h2>Szőnyeg tulajdonságok</h2>
+
+    <!-- Name -->
+    <div>
+      <span class="p-float-label">
+        <ng-container>
+          <input formControlName="name" [ngClass]="{'ng-invalid': isInvalid('name')}" pInputText id="name"
+            required="true" />
+          <label for="name">Név</label>
+        </ng-container>
+      </span>
+      @if (isInvalid('name')) {
+      <small id="name-help" class="p-error">A fenti mező kitöltése kötelező</small>
+      }
+    </div>
+
+    <!-- Size -->
+    <div>
+      <span class="p-float-label">
+        <input formControlName="size" [ngClass]="{'ng-invalid': isInvalid('size')}" pInputText id="size"
+          required="true" />
+        <label for="size">Méret</label>
+      </span>
+      @if (isInvalid('size')) {
+      <small id="name-help" class="p-error">A fenti mező kitöltése kötelező</small>
+      }
+    </div>
+
+    <!-- Material -->
+    <span class="p-float-label">
+      <input formControlName="material" pInputText id="material" />
+      <label for="material">Anyag</label>
+    </span>
+
+    <!-- Color -->
+    <span class="p-float-label">
+      <input formControlName="color" pInputText id="color" />
+      <label for="color">Szín és minta</label>
+    </span>
+
+    <!-- Style
+    <span class="p-float-label">
+      <input formControlName="style" pInputText id="style" />
+      <label for="style">Stílus és design</label>
+    </span> -->
+
+    <!-- Origin -->
+    <span class="p-float-label">
+      <input formControlName="origin" pInputText id="origin" />
+      <label for="origin">Származási hely</label>
+    </span>
+
+    <!-- Cleaning instructions -->
+    <span class="p-float-label">
+      <input formControlName="cleaning" pInputText id="cleaning" />
+      <label for="cleaning">Tisztítási utasítások</label>
+    </span>
+
+    <!--Price -->
+    <div>
+      <span class="p-float-label">
+        <p-inputNumber size="7" [inputStyle]="{'border-radius': '12px'}" [required]="true" id="price"
+          [ngClass]="{'ng-invalid': isInvalid('price')}" formControlName="price" mode="currency" currency="HUF"
+          inputId="price"> </p-inputNumber>
+        <label for="price">Ár</label>
+      </span>
+      @if (isInvalid('price')) {
+      <small id="name-help" class="p-error">A fenti mező kitöltése kötelező</small>
+      }
+    </div>
+
+    <div class="submit-button-container">
+      <p-button type="submit" class="submit-button" label="Feltöltés" [outlined]="true" severity="secondary"></p-button>
+    </div>
+    <div>A "<span class="red-asterix">*</span>" jelöli a kötelezően kitöltendő elemeket</div>
+
+  </form>
+</div>

@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MessageUsHttpServiceService {
+export class MessageUsHttpService {
 
   constructor(private http: HttpClient) { }
 
   sendMessage(message: IMessage) : Observable<Object> {
-    return this.http.post('http://sarayszonyeg.hu:8080/message-us', message)
+    return this.http.post('/api/message-us', message)
   }
 }

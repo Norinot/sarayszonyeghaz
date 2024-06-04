@@ -1,0 +1,95 @@
+.upload-section {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 22px;
+
+  margin: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  border-radius: 8px;
+
+  width: 100%;
+  max-width: 662px;
+  background-color: #0f0f0f0f;
+
+  padding: 45px 64px 45px 64px;
+}
+
+input {
+  width: 100%;
+  border-radius: 12px;
+}
+
+input[required]+label::after,
+p-inputNumber[required]+label::after {
+  content: "*";
+  color: red;
+}
+
+.red-asterix {
+  color: red;
+}
+
+.imageAndPreviewWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.preview {
+
+  display: flex;
+
+  background-color: #0f0f0f0f;
+
+  border-radius: 8px;
+
+  width: 698px;
+  height: 496px;
+}
+
+.upload {
+  display: flex;
+
+  background-color: #0f0f0f0f;
+
+  border-radius: 8px;
+
+  width: 698px;
+  height: 590px;
+}
+
+.p-error {
+  position: absolute;
+  margin-left: 12px;
+  margin-top: 2px;
+}
+
+#price {
+  max-width: 100px;
+}
+
+@media screen and (max-width: 1150px) {
+  .upload-section {
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  form {
+    max-width: 100%;
+  }
+
+  .preview {
+    width: 100%;
+  }
+
+  .upload {
+    width: 100%;
+  }
+}

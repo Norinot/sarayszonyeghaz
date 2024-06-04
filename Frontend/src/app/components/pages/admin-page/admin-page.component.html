@@ -3,7 +3,7 @@
   <h2>Bejelentkezés</h2>
 
   <span class="p-float-label">
-    <input pInputText id="username" formControlName="username" autocomplete="current-password" />
+    <input pInputText id="username" formControlName="username" autocomplete="current-username" />
     <label for="username">Felhasználónév</label>
   </span>
 
@@ -17,8 +17,6 @@
       <p-checkbox formControlName="rememberMe" value="New York" inputId="rememberMe"></p-checkbox>
       <label for="rememberMe">Emlékezz rám</label>
     </span>
-    <p-button label="Bejelentkezés" severity="warning"></p-button>
+    <p-button type="submit" label="Bejelentkezés" severity="warning"></p-button>
   </div>
-
-
 </form>

@@ -1,0 +1,76 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: inherit;
+}
+
+p-fileUpload {
+  height: inherit;
+  flex-grow: 1;
+}
+
+::ng-deep .p-fileupload-content {
+  height: calc(100% - 89px);
+  overflow: auto;
+}
+
+::ng-deep .p-fileupload {
+  height: inherit;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.listed-files {
+  transition: ease-in-out 0.3s;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px;
+  border-radius: 8px;
+
+  background-color: #f4f4f4;
+
+  /* Adjust the box-shadow to create the double border effect */
+  box-shadow:
+    0 0 0 1px #f4f4f4,
+}
+
+.listed-files:hover {
+  transition: ease-in-out 0.3s;
+  background-color: #e9f5ff;
+}
+
+.nested-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.selected {
+  background-color: #e9f5ff;
+  box-shadow:
+    0 0 0 1px #f4f4f4,
+    0 0 0 3px #ffffff,
+    0 0 0 5px #BFDBFE;
+}
+.presentation-picture{
+  object-fit: cover;
+}
+
+@media screen and (max-width: 476px){
+  .listed-files {
+    flex-wrap: wrap;
+  }
+
+  .file-name{
+    word-break: break-all;
+  }
+}

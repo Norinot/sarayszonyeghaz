@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="more-button">
+    <p-menu #menu [model]="items" [popup]="true" />
+    <p-button class="more-button-inner" icon="pi pi-ellipsis-h" [rounded]="true" [text]="true" severity="secondary"
+      (click)="menu.toggle($event)" />
+  </div>
+  <div class="image-container" [routerLink]="['/details', productId]">
+    <img [src]="productImagePath" alt="">
+  </div>
+  <div>
+    <div class="title-and-details-wrapper">
+      <h3>{{productName}}</h3>
+    </div>
+    <div class="size-and-origin">
+      <small>Származási hely: {{productPlaceOfOrigin}}</small>
+      <small>Méret: {{productSize}}</small>
+    </div>
+  </div>
+  <div class="price">
+    {{productPrice | number: '1.0-0'}} Ft
+  </div>
+
+</div>
