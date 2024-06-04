@@ -30,7 +30,7 @@ export class UploadProductComponent implements OnInit {
       size: [],
       material: [],
       color: [],
-      style: [],
+      design: [],
       origin: [],
       cleaning: [''],
       price: [, Validators.required],
@@ -65,7 +65,7 @@ export class UploadProductComponent implements OnInit {
     product.append('size', this.getControl('size').value);
     product.append('material', this.getControl('material').value);
     product.append('color', this.getControl('color').value);
-    product.append('style', this.getControl('style').value);
+    product.append('design', this.getControl('design').value);
     product.append('origin', this.getControl('origin').value);
     product.append('cleaning', this.getControl('cleaning').value);
     product.append('price', this.getControl('price').value);
