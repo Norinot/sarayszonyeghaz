@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-card',
@@ -15,6 +16,7 @@ import { ProductService } from '../../services/product.service';
 export class ProductCardComponent implements OnChanges {
 
   private productService = inject(ProductService)
+  private toastrService = inject(ToastrService)
 
   @Input() productId?: string
   @Input() productName?: string
@@ -40,20 +42,15 @@ export class ProductCardComponent implements OnChanges {
   }
 
   removeProduct(id: string | undefined) {
-
-    console.log(this.productId);
-
-
-    if (this.productId != undefined) {
-      this.productService.removeSelectedProduct(this.productId).subscribe(() => {
-        console.log('Termék sikeresen törölve');
-      },
-        error => {
-          console.log(error);
+    if (id != undefined) {
+      this.productService.removeSelectedProduct(id).subscribe({
+        next: () => {
+          this.toastrService.success('Termék törölve!', 'Siker!');
+        },
+        error: () => {
+          this.toastrService.error('Hiba történt a termék törlése közben!', 'Hiba!');
         }
-      );
-    } else {
-      alert('Hiba történt a termék törlése közben');
+      });
     }
   }
 
