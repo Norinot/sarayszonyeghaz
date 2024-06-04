@@ -45,6 +45,7 @@ func CreateproductsHandler(c *gin.Context) {
 	size := c.PostForm("size")
 	material := c.PostForm("material")
 	color := c.PostForm("color")
+	design := c.PostForm("design")
 	origin := c.PostForm("origin")
 	cleaning := c.PostForm("cleaning")
 
@@ -55,6 +56,7 @@ func CreateproductsHandler(c *gin.Context) {
 		Size:     size,
 		Material: material,
 		Color:    color,
+		Design:   design,
 		Origin:   origin,
 		Cleaning: cleaning,
 	}
@@ -74,7 +76,7 @@ func CreateproductsHandler(c *gin.Context) {
 	imagePaths := make([]string, 0, len(files))
 
 	for _, file := range files {
-		imagePath := "assets/" + file.Filename
+		imagePath := "assets/" + ksuid.New().String() //file.Filename
 		if err := c.SaveUploadedFile(file, imagePath); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file: " + err.Error()})
 			return
