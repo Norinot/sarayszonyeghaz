@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -12,20 +12,21 @@ import { SidebarModule } from 'primeng/sidebar';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+
+  private fb = inject(FormBuilder);
+  public settingsService = inject(SettingsService);
+
   countries: any[] | undefined;
   sidebarVisible: boolean = false;
-  formGroup: FormGroup;
-
+  formGroup: FormGroup = new FormGroup({});
   filteredCountries!: any[];
 
-  constructor(private fb: FormBuilder, public settingsService: SettingsService) {
+  ngOnInit() {
     this.formGroup = this.fb.group({
       selectedCountry: new FormControl('')
     });
   }
-
-  ngOnInit() { }
 
   filterCountry(event: AutoCompleteCompleteEvent) { }
 }

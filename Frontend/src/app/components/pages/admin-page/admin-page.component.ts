@@ -40,6 +40,7 @@ export class AdminPageComponent {
 
         this.loginService.login(this.loginForm.value).subscribe({
             next: (response: any) => {
+                this.loginService.setToken(response.token)
                 localStorage.setItem('token', response.token)
             },
             error: () => {

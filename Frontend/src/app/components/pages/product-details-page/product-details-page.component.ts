@@ -3,11 +3,12 @@ import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from '../../shared/product-card/interfaces/product.interface';
 import { GalleriaModule } from 'primeng/galleria';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-product-details-page',
   standalone: true,
-  imports: [GalleriaModule],
+  imports: [GalleriaModule, ImageModule],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss'
 })
@@ -40,7 +41,6 @@ export class ProductDetailsPageComponent implements OnInit {
       next: (response: IProduct) => {
         this.product = response;
         console.log(this.product);
-
       },
       error: () => {
         this.router.navigate(['/']);
