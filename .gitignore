@@ -1,1 +1,3 @@
-/Backend/assets/
+[lib]
+Backend/assets
+Backend/.env
