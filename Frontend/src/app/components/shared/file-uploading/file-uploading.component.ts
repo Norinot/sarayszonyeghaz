@@ -1,5 +1,8 @@
 import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
+    DoCheck,
     Input,
     OnChanges,
     OnInit,
@@ -15,6 +18,7 @@ import { ProgressBarModule } from 'primeng/progressbar'
 import { ToastModule } from 'primeng/toast'
 import { fileUploadService } from '../../services/fileUploading/fileUpload.service'
 import { BehaviorSubject } from 'rxjs'
+import { ResolveStart } from '@angular/router'
 
 @Component({
     selector: 'app-file-uploading',
@@ -36,6 +40,7 @@ export class FileUploadingComponent implements OnInit, OnChanges {
     files: any[] = []
 
     public fileUploadService = inject(fileUploadService)
+    private cd = inject(ChangeDetectorRef)
 
     totalSize: number = 0
 
@@ -44,24 +49,17 @@ export class FileUploadingComponent implements OnInit, OnChanges {
     private config = inject(PrimeNGConfig)
 
     ngOnInit() {
-        this.updateFilesArray()
+        this.files = this.existingFiles
+        console.log('files on init: ', this.files)
+        console.log('existingFiles on init: ', this.existingFiles)
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['existingFiles']) {
-            this.updateFilesArray()
+            this.files = this.existingFiles
         }
-    }
-    private updateFilesArray(): void {
-        if (this.existingFiles && this.existingFiles.length > 0) {
-            this.files = [...this.existingFiles]
-            this.calculateTotalSize()
-            console.log('Updated files array:', this.files)
-        } else {
-            this.files = []
-            this.totalSize = 0
-            this.totalSizePercent = 0
-        }
+        console.log('files on changes: ', this.files)
+        console.log('existingFiles on changes: ', this.existingFiles)
     }
 
     choose(event: Event, callback: any) {
@@ -88,7 +86,9 @@ export class FileUploadingComponent implements OnInit, OnChanges {
         this.totalSizePercent = 0
     }
 
-    onTemplatedUpload() {}
+    onTemplatedUpload() {
+        
+    }
 
     onSelectedFiles(event: any) {
         this.fileUploadService.allFiles = event.currentFiles

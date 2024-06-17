@@ -12,7 +12,7 @@ import { ButtonModule } from 'primeng/button'
 import { MenuItem } from 'primeng/api'
 import { CommonModule } from '@angular/common'
 import { ProductService } from '../../services/product.service'
-import { Router, RouterLink } from '@angular/router'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 
 @Component({
     selector: 'app-product-card',
@@ -24,6 +24,7 @@ import { Router, RouterLink } from '@angular/router'
 export class ProductCardComponent implements OnChanges {
     private productService = inject(ProductService)
     private router = inject(Router)
+    private activatedRoute = inject(ActivatedRoute)
     @Input() productId?: string
     @Input() productName?: string
     @Input() productSize?: string

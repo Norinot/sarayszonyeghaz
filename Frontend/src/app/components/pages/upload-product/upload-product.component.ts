@@ -90,9 +90,6 @@ export class UploadProductComponent implements OnInit {
                                 })
                         })
                     }
-
-                    console.log('Product details:', response)
-                    console.log('Existing files:', this.existingFiles)
                 },
                 error: (error) => {
                     console.error('Error fetching product details:', error)
