@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { IProduct } from '../shared/product-card/interfaces/product.interface'
-import { Observable } from 'rxjs'
+import { Observable, map } from 'rxjs'
 
 @Injectable({
     providedIn: 'root',
@@ -46,5 +46,20 @@ export class ProductService {
         return this.httpClient.get<IProduct>(
             `http://localhost:8085/products/${id}`
         )
+    }
+
+    getFileSize(path: string): Observable<number> {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' })
+        return this.httpClient
+            .head(`${'http://localhost:8085/' + encodeURIComponent(path)}`, {
+                headers,
+                observe: 'response',
+            })
+            .pipe(
+                map((response) => {
+                    const contentLength = response.headers.get('Content-Length')
+                    return contentLength ? +contentLength : 0
+                })
+            )
     }
 }

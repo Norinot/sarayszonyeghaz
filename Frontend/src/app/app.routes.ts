@@ -11,5 +11,5 @@ export const routes: Routes = [
   { path: '', component: DashboardPageComponent, canActivate: [defaultRouteGuard] },
   { path: 'contact', component: ContactComponent },
   { path: 'details/:id', loadComponent: () => import('./components/pages/product-details-page/product-details-page.component').then(mod => mod.ProductDetailsPageComponent) },
-  { path: 'edit-product/:id', loadComponent: () => import('./components/pages/edit-product/edit-product.component').then(mod => mod.EditProductComponent) },
+  { path: 'upload-product/:id', loadComponent: () => import('./components/pages/upload-product/upload-product.component').then(mod => mod.UploadProductComponent) },
 ];

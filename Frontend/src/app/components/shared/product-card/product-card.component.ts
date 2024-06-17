@@ -83,7 +83,7 @@ export class ProductCardComponent implements OnChanges {
             label: 'Módosítás',
             icon: 'pi pi-refresh',
             command: () => {
-                this.router.navigate([`/edit-product/${this.productId}`])
+                this.router.navigate([`/upload-product/${this.productId}`])
             },
         },
         {

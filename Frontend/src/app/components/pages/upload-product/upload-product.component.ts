@@ -16,6 +16,8 @@ import { ProductCardComponent } from '../../shared/product-card/product-card.com
 import { FileUploadingComponent } from '../../shared/file-uploading/file-uploading.component'
 import { fileUploadService } from '../../services/fileUploading/fileUpload.service'
 import { ProductService } from '../../services/product.service'
+import { IProduct } from '../../shared/product-card/interfaces/product.interface'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
     selector: 'app-upload-product',
@@ -37,6 +39,12 @@ import { ProductService } from '../../services/product.service'
 export class UploadProductComponent implements OnInit {
     public fileUploadService = inject(fileUploadService)
     private productService = inject(ProductService)
+    private router = inject(Router)
+    private activatedRoute = inject(ActivatedRoute)
+
+    private id: string = ''
+    private product?: IProduct
+    existingFiles: any[] = []
 
     productForm: FormGroup = (() => {
         const fb = inject(FormBuilder)
@@ -57,9 +65,41 @@ export class UploadProductComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getControl('name').valueChanges.subscribe((value) => {
-            console.log(value)
-        })
+        this.id = this.activatedRoute.snapshot.params['id']
+
+        if (this.id) {
+            this.productService.getSpecificProductById(this.id).subscribe({
+                next: (response: IProduct) => {
+                    this.productForm.patchValue(response)
+
+                    if (
+                        response.image_paths &&
+                        response.image_paths.length > 0
+                    ) {
+                        response.image_paths.forEach((path: string) => {
+                            const objectURL = `http://localhost:8085/${path}`
+
+                            this.productService
+                                .getFileSize(path)
+                                .subscribe((size: number) => {
+                                    this.existingFiles.push({
+                                        name: path.split('/').pop(),
+                                        objectURL,
+                                        size,
+                                    })
+                                })
+                        })
+                    }
+
+                    console.log('Product details:', response)
+                    console.log('Existing files:', this.existingFiles)
+                },
+                error: (error) => {
+                    console.error('Error fetching product details:', error)
+                    this.router.navigate(['/'])
+                },
+            })
+        }
     }
 
     markAllAsDirty(formGroup: FormGroup): void {
