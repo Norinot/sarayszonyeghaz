@@ -95,17 +95,91 @@ func CreateproductsHandler(c *gin.Context) {
 }
 
 func UpdateProductByID(c *gin.Context) {
-	productID := c.Param("id")
 
-	var request model.UpdateProductRequest
-	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	if err := c.Request.ParseMultipartForm(10 << 20); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to parse multipart form: " + err.Error()})
 		return
 	}
 
-	err := model.UpdateProductByIDHandler(productID, request.Product, request.ImagePaths)
+	productID := c.Param("id")
+
+	existingProduct, err := model.GetProductByIDHandler(productID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found: " + err.Error()})
+		return
+	}
+
+	if name := c.PostForm("name"); name != "" {
+		existingProduct.Name = name
+	}
+	if price := c.PostForm("price"); price != "" {
+		existingProduct.Price = price
+	}
+	if size := c.PostForm("size"); size != "" {
+		existingProduct.Size = size
+	}
+	if material := c.PostForm("material"); material != "" {
+		existingProduct.Material = material
+	}
+	if color := c.PostForm("color"); color != "" {
+		existingProduct.Color = color
+	}
+	if design := c.PostForm("design"); design != "" {
+		existingProduct.Design = design
+	}
+	if origin := c.PostForm("origin"); origin != "" {
+		existingProduct.Origin = origin
+	}
+	if cleaning := c.PostForm("cleaning"); cleaning != "" {
+		existingProduct.Cleaning = cleaning
+	}
+
+	form, err := c.MultipartForm()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to retrieve multipart form: " + err.Error()})
+		return
+	}
+
+	var imagePaths []string
+	files := form.File["files"]
+	if len(files) > 0 {
+
+		if err := model.ClearProductImages(productID); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to clear existing product images: " + err.Error()})
+			return
+		}
+
+		imagePaths = make([]string, 0, len(files))
+		for _, file := range files {
+			ext := path.Ext(file.Filename)
+			imagePath := "assets/" + ksuid.New().String() + ext
+			if err := c.SaveUploadedFile(file, imagePath); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file: " + err.Error()})
+				return
+			}
+			imagePaths = append(imagePaths, imagePath)
+		}
+
+		if err := model.SaveProductImages(productID, imagePaths); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save product images: " + err.Error()})
+			return
+		}
+	}
+
+	product := model.Product{
+		ID:       existingProduct.ID,
+		Name:     existingProduct.Name,
+		Price:    existingProduct.Price,
+		Size:     existingProduct.Size,
+		Material: existingProduct.Material,
+		Color:    existingProduct.Color,
+		Design:   existingProduct.Design,
+		Origin:   existingProduct.Origin,
+		Cleaning: existingProduct.Cleaning,
+	}
+
+	if err := model.UpdateProductByIDHandler(productID, product, imagePaths); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update product: " + err.Error()})
 		return
 	}
 

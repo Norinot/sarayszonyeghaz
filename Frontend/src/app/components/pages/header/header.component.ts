@@ -1,31 +1,46 @@
-import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { SettingsService } from '../../services/settings.service';
-import { SidebarModule } from 'primeng/sidebar';
+import { Component, OnInit, inject } from '@angular/core'
+import { ButtonModule } from 'primeng/button'
+import {
+    AutoCompleteCompleteEvent,
+    AutoCompleteModule,
+} from 'primeng/autocomplete'
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule,
+} from '@angular/forms'
+import { RouterModule } from '@angular/router'
+import { SettingsService } from '../../services/settings.service'
+import { SidebarModule } from 'primeng/sidebar'
+
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [ButtonModule, AutoCompleteModule, ReactiveFormsModule, RouterModule, SidebarModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'app-header',
+    standalone: true,
+    imports: [
+        ButtonModule,
+        AutoCompleteModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SidebarModule,
+    ],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
-  countries: any[] | undefined;
-  sidebarVisible: boolean = false;
-  formGroup: FormGroup;
+export class HeaderComponent implements OnInit {
+    private fb = inject(FormBuilder)
+    public settingsService = inject(SettingsService)
+    countries: any[] | undefined
+    sidebarVisible: boolean = false
+    formGroup!: FormGroup
+    filteredCountries!: any[]
+    isLoggedIn: boolean = this.settingsService.isLoggedIn()
 
-  filteredCountries!: any[];
+    ngOnInit(): void {
+        this.formGroup = this.fb.group({
+            selectedCountry: new FormControl(''),
+        })
+    }
 
-  constructor(private fb: FormBuilder, public settingsService: SettingsService) {
-    this.formGroup = this.fb.group({
-      selectedCountry: new FormControl('')
-    });
-  }
-
-  ngOnInit() { }
-
-  filterCountry(event: AutoCompleteCompleteEvent) { }
+    filterCountry(event: AutoCompleteCompleteEvent) {}
 }
