@@ -16,6 +16,8 @@ import { ProductCardComponent } from '../../shared/product-card/product-card.com
 import { FileUploadingComponent } from '../../shared/file-uploading/file-uploading.component'
 import { fileUploadService } from '../../services/fileUploading/fileUpload.service'
 import { ProductService } from '../../services/product.service'
+import { IProduct } from '../../shared/product-card/interfaces/product.interface'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
     selector: 'app-upload-product',
@@ -37,28 +39,64 @@ import { ProductService } from '../../services/product.service'
 export class UploadProductComponent implements OnInit {
     public fileUploadService = inject(fileUploadService)
     private productService = inject(ProductService)
+    private router = inject(Router)
+    private activatedRoute = inject(ActivatedRoute)
 
-  productForm: FormGroup = (() => {
-    const fb = inject(FormBuilder);
-    return fb.group({
-      name: [, Validators.required],
-      size: [],
-      material: [],
-      color: [],
-      design: [],
-      origin: [],
-      cleaning: [''],
-      price: [, Validators.required],
-    });
-  })();
+    private id: string = ''
+    private product?: IProduct
+    existingFiles: any[] = []
+
+    productForm: FormGroup = (() => {
+        const fb = inject(FormBuilder)
+        return fb.group({
+            name: [, Validators.required],
+            size: [],
+            material: [],
+            color: [],
+            design: [],
+            origin: [],
+            cleaning: [''],
+            price: [, Validators.required],
+        })
+    })()
 
     getControl(name: string): FormControl {
         return this.productForm.get(name) as FormControl
     }
 
     ngOnInit(): void {
-        this.getControl('name').valueChanges.subscribe((value) => {
-        })
+        this.id = this.activatedRoute.snapshot.params['id']
+
+        if (this.id) {
+            this.productService.getSpecificProductById(this.id).subscribe({
+                next: (response: IProduct) => {
+                    this.productForm.patchValue(response)
+
+                    if (
+                        response.image_paths &&
+                        response.image_paths.length > 0
+                    ) {
+                        response.image_paths.forEach((path: string) => {
+                            const objectURL = `http://localhost:8085/${path}`
+
+                            this.productService
+                                .getFileSize(path)
+                                .subscribe((size: number) => {
+                                    this.existingFiles.push({
+                                        name: path.split('/').pop(),
+                                        objectURL,
+                                        size,
+                                    })
+                                })
+                        })
+                    }
+                },
+                error: (error) => {
+                    console.error('Error fetching product details:', error)
+                    this.router.navigate(['/'])
+                },
+            })
+        }
     }
 
     markAllAsDirty(formGroup: FormGroup): void {
@@ -70,24 +108,38 @@ export class UploadProductComponent implements OnInit {
         })
     }
 
-  onSubmit(): void {
-    const product = new FormData();
-    product.append('name', this.getControl('name').value);
-    product.append('size', this.getControl('size').value);
-    product.append('material', this.getControl('material').value);
-    product.append('color', this.getControl('color').value);
-    product.append('design', this.getControl('design').value);
-    product.append('origin', this.getControl('origin').value);
-    product.append('cleaning', this.getControl('cleaning').value);
-    product.append('price', this.getControl('price').value);
+    onSubmit(): void {
+        const product = new FormData()
+        product.append('name', this.getControl('name').value)
+        product.append('size', this.getControl('size').value)
+        product.append('material', this.getControl('material').value)
+        product.append('color', this.getControl('color').value)
+        product.append('design', this.getControl('design').value)
+        product.append('origin', this.getControl('origin').value)
+        product.append('cleaning', this.getControl('cleaning').value)
+        product.append('price', this.getControl('price').value)
 
         this.fileUploadService.allFiles.forEach((file) => {
             product.append('files', file, file.name)
         })
 
-        if (this.productForm.valid) {
+        if (this.id != null) {
+            this.productService
+                .updateSelectedProduct(product, this.id)
+                .subscribe(
+                    () => {
+                        console.log('Product updated')
+                        console.log(this.productForm)
+                    },
+                    (error) => {
+                        console.error(error)
+                    }
+                )
+        } else if (this.productForm.valid) {
             this.productService.createNewProduct(product).subscribe(
                 () => {
+                    console.log('Product created')
+                    console.log(this.productForm)
                 },
                 (error) => {
                     console.error(error)

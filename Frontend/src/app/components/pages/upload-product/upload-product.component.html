@@ -2,7 +2,7 @@
 
   <div class="imageAndPreviewWrapper">
     <div class="upload">
-      <app-file-uploading></app-file-uploading>
+      <app-file-uploading [existingFiles]="existingFiles"></app-file-uploading>
     </div>
     <div class="preview">
       <app-product-card [productName]="productForm.get('name')?.value ?? '<Példa cím>'"

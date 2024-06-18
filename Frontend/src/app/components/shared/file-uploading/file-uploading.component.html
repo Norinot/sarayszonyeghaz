@@ -1,22 +1,25 @@
-<p-fileUpload name="myfile[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true" accept="image/*"
-  maxFileSize="2097152" (onUpload)="onTemplatedUpload()" (onSelect)="onSelectedFiles($event)">
+<p-fileUpload name="myFiles[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true" accept="image/*"
+  maxFileSize="2097152" (onUpload)="onTemplatedUpload()" (onProgress)="onTemplatedUpload()"
+  (onSelect)="onSelectedFiles($event)">
+
   <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback"
     let-uploadCallback="uploadCallback">
     <div>
       <div>
-        <p-button (onClick)="choose($event, chooseCallback)" icon="pi pi-images" [rounded]="true" [outlined]="true" />
+        <p-button (onClick)="choose($event, chooseCallback)" icon="pi pi-images" [rounded]="true"
+          [outlined]="true"></p-button>
         <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true" [outlined]="true" severity="danger"
-          [disabled]="!files || files.length === 0" />
+          [disabled]="!files || files.length === 0"></p-button>
       </div>
     </div>
   </ng-template>
+
   <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles"
     let-removeFileCallback="removeFileCallback" let-removeUploadedFileCallback="removeUploadedFileCallback">
     <div class="content" *ngIf="files?.length > 0">
       <div class="content-wrapper">
-        @for (file of files; track $index) {
-        <div class="listed-files" [class.selected]="file === this.fileUploadService.selectedFile"
-          (click)="setPrimaryPicture(file)">
+        <div *ngFor="let file of files; let i = index" class="listed-files"
+          [class.selected]="file === this.fileUploadService.selectedFile" (click)="setPrimaryPicture(file)">
           <div class="nested-div">
             <div>
               <img class="presentation-picture" role="presentation" [alt]="file.name" [src]="file.objectURL" width="100"
@@ -26,37 +29,56 @@
             <div>{{ formatSize(file.size) }}</div>
           </div>
           <div class="nested-div">
-            <p-badge value="Függőben" severity="warning" />
-            <p-button icon="pi pi-times" (click)="onRemoveTemplatingFile($event, file, $index)" [outlined]="true"
-              [rounded]="true" severity="danger" />
+            <p-button icon="pi pi-times" (click)="onRemoveTemplatingFile($event, file, i)" [outlined]="true"
+              [rounded]="true" severity="danger"></p-button>
           </div>
         </div>
-        }
       </div>
     </div>
+
+    <div class="content" *ngIf="existingFiles.length > 0">
+      <div class="content-wrapper">
+        <div *ngFor="let file of existingFiles; let i = index" class="listed-files"
+          [class.selected]="file === this.fileUploadService.selectedFile" (click)="setPrimaryPicture(file)">
+          <div class="nested-div">
+            <div>
+              <img class="presentation-picture" role="presentation" [alt]="file.name" [src]="file.objectURL" width="100"
+                height="50" />
+            </div>
+            <span class="file-name">{{ file.name }}</span>
+            <div>{{ formatSize(file.size) }}</div>
+          </div>
+          <div class="nested-div">
+            <p-button icon="pi pi-times" (click)="onRemoveTemplatingFile($event, file, i)" [outlined]="true"
+              [rounded]="true" severity="danger"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div *ngIf="uploadedFiles?.length > 0">
       <h5>Completed</h5>
       <div>
-        @for (file of files; track $index) {
-        <div>
+        <div *ngFor="let file of uploadedFiles; let i = index">
           <div>
             <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="100" height="50" />
           </div>
           <span>{{ file.name }}</span>
           <div>{{ formatSize(file.size) }}</div>
-          <p-badge value="Completed" severity="success" />
-          <p-button icon="pi pi-times" (onClick)="removeUploadedFileCallback($index)" [outlined]="true" [rounded]="true"
-            severity="danger" />
+          <p-button icon="pi pi-times" (click)="removeUploadedFileCallback(i)" [outlined]="true" [rounded]="true"
+            severity="danger"></p-button>
         </div>
-        }
       </div>
     </div>
   </ng-template>
+
   <ng-template pTemplate="file"> </ng-template>
+
   <ng-template pTemplate="empty">
     <div>
       <i class="pi pi-cloud-upload"></i>
       <p>Kattintson a feltöltés ikonra, vagy húzza a ide a feltölteni kívánt fájlokat.</p>
     </div>
   </ng-template>
+
 </p-fileUpload>

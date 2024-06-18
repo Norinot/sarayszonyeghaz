@@ -30,6 +30,7 @@ func main() {
 	authRoutes := router.Group("")
 	authRoutes.Use(authMiddleware.MiddlewareFunc())
 	{
+		authRoutes.GET("/checkToken", middleware.CheckToken)
 		authRoutes.POST("/products", handler.CreateproductsHandler)
 		authRoutes.PUT("/products/:id", handler.UpdateProductByID)
 		authRoutes.DELETE("/products/:id", handler.Deleteproductsbyid)

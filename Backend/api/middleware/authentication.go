@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"net/http"
 	"szonyeghaz/model"
 	"time"
 
@@ -67,4 +68,10 @@ func AuthMiddleware() (*jwt.GinJWTMiddleware, error) {
 	})
 
 	return authMiddleware, err
+}
+
+func CheckToken(c *gin.Context) {
+
+	c.JSON(http.StatusOK, gin.H{"message": "Authorized"})
+
 }
