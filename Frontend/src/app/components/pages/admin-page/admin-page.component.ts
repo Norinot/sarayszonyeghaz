@@ -40,10 +40,9 @@ export class AdminPageComponent {
     }
 
     login() {
-        console.log('Bejelentkezve: ', this.loginForm.value)
-
         this.loginService.login(this.loginForm.value).subscribe({
             next: (response: any) => {
+                this.loginService.setToken(response.token)
                 localStorage.setItem('token', response.token)
                 localStorage.setItem('expire', response.expire)
                 this.toaster.success('Sikeres bejelentkezeés')

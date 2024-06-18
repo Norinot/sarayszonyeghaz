@@ -6,7 +6,7 @@
       <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/"></p-button>
       <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
       <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"></p-button>
-      @if (isLoggedIn) {
+      @if (settingsService.isLoggedIn()) {
       <p-button label="Termék feltöltése" [text]="true" [plain]="true" routerLink="/upload-product"
         [style]="{'width': '100%'}"></p-button>
       }
@@ -40,9 +40,10 @@
           <p-button label="Szolgáltatásaink" [text]="true" [plain]="true" [style]="{'width': '100%'}"></p-button>
           <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"
             [style]="{'width': '100%'}"></p-button>
-          @if (true) {
+          @if (settingsService.isLoggedIn()) {
           <p-button label="Termék feltöltése" [text]="true" [plain]="true" routerLink="/upload-product"
-            [style]="{'width': '100%'}"></p-button>
+            [style]="{'width': '100%'}">
+          </p-button>
           }
         </div>
       </div>

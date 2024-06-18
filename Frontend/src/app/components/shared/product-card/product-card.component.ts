@@ -13,6 +13,7 @@ import { MenuItem } from 'primeng/api'
 import { CommonModule } from '@angular/common'
 import { ProductService } from '../../services/product.service'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
     selector: 'app-product-card',
@@ -25,6 +26,8 @@ export class ProductCardComponent implements OnChanges {
     private productService = inject(ProductService)
     private router = inject(Router)
     private activatedRoute = inject(ActivatedRoute)
+    private toastrService = inject(ToastrService)
+
     @Input() productId?: string
     @Input() productName?: string
     @Input() productSize?: string
@@ -63,19 +66,18 @@ export class ProductCardComponent implements OnChanges {
     }
 
     removeProduct(id: string | undefined) {
-        console.log(this.productId)
-
-        if (this.productId != undefined) {
-            this.productService.removeSelectedProduct(this.productId).subscribe(
-                () => {
-                    console.log('Termék sikeresen törölve')
+        if (id != undefined) {
+            this.productService.removeSelectedProduct(id).subscribe({
+                next: () => {
+                    this.toastrService.success('Termék törölve!', 'Siker!')
                 },
-                (error) => {
-                    console.log(error)
-                }
-            )
-        } else {
-            alert('Hiba történt a termék törlése közben')
+                error: () => {
+                    this.toastrService.error(
+                        'Hiba történt a termék törlése közben!',
+                        'Hiba!'
+                    )
+                },
+            })
         }
     }
 

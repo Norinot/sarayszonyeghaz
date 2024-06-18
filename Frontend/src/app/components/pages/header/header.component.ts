@@ -30,13 +30,13 @@ import { SidebarModule } from 'primeng/sidebar'
 export class HeaderComponent implements OnInit {
     private fb = inject(FormBuilder)
     public settingsService = inject(SettingsService)
+
     countries: any[] | undefined
     sidebarVisible: boolean = false
-    formGroup!: FormGroup
+    formGroup: FormGroup = new FormGroup({})
     filteredCountries!: any[]
-    isLoggedIn: boolean = this.settingsService.isLoggedIn()
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.formGroup = this.fb.group({
             selectedCountry: new FormControl(''),
         })
