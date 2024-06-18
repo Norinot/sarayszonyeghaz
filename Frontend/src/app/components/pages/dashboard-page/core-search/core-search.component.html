@@ -1,3 +1,4 @@
+<!-- In your component.html -->
 <div class="search-wrapper">
   <div class="input-and-title">
     <div class="title-container">
@@ -5,11 +6,15 @@
       <p>Keress stílus, méret vagy anyag szerint!</p>
     </div>
     <div class="input-container">
-      <span class="p-input-icon-right">
-        <i class="pi pi-search"></i>
-        <input class="search-input" placeholder="Keresés..." type="text" pInputText [(ngModel)]="value" />
-      </span>
-      <p-button label="Keresés" [text]="true" [raised]="true" [plain]="true"></p-button>
+      <p-autoComplete [(ngModel)]="searchInput.value" [suggestions]="filteredProducts"
+        (completeMethod)="onSearch($event)" field="name" placeholder="Keresés...">
+        <ng-template let-product pTemplate="item">
+          <a [routerLink]="['/details', product.product_id]"
+            style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+            <img [src]="product.image_paths[0]" alt="{{product.name}}" style="width: 50px; height: 50px; margin-right: 10px;">
+            <span>{{product.name}}</span>
+          </a> </ng-template>
+      </p-autoComplete>
     </div>
   </div>
   <div>

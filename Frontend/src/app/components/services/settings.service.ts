@@ -12,4 +12,8 @@ export class SettingsService {
   getUnused(): boolean {
     return environment.show_unused;
   }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
 }

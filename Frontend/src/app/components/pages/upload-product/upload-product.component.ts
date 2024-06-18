@@ -38,19 +38,19 @@ export class UploadProductComponent implements OnInit {
     public fileUploadService = inject(fileUploadService)
     private productService = inject(ProductService)
 
-    productForm: FormGroup = (() => {
-        const fb = inject(FormBuilder)
-        return fb.group({
-            name: [, Validators.required],
-            size: [],
-            material: [],
-            color: [],
-            design: [],
-            origin: [],
-            cleaning: [''],
-            price: [, Validators.required],
-        })
-    })()
+  productForm: FormGroup = (() => {
+    const fb = inject(FormBuilder);
+    return fb.group({
+      name: [, Validators.required],
+      size: [],
+      material: [],
+      color: [],
+      design: [],
+      origin: [],
+      cleaning: [''],
+      price: [, Validators.required],
+    });
+  })();
 
     getControl(name: string): FormControl {
         return this.productForm.get(name) as FormControl
@@ -58,7 +58,6 @@ export class UploadProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.getControl('name').valueChanges.subscribe((value) => {
-            console.log(value)
         })
     }
 
@@ -71,16 +70,16 @@ export class UploadProductComponent implements OnInit {
         })
     }
 
-    onSubmit(): void {
-        const product = new FormData()
-        product.append('name', this.getControl('name').value)
-        product.append('size', this.getControl('size').value)
-        product.append('material', this.getControl('material').value)
-        product.append('color', this.getControl('color').value)
-        product.append('design', this.getControl('design').value)
-        product.append('origin', this.getControl('origin').value)
-        product.append('cleaning', this.getControl('cleaning').value)
-        product.append('price', this.getControl('price').value)
+  onSubmit(): void {
+    const product = new FormData();
+    product.append('name', this.getControl('name').value);
+    product.append('size', this.getControl('size').value);
+    product.append('material', this.getControl('material').value);
+    product.append('color', this.getControl('color').value);
+    product.append('design', this.getControl('design').value);
+    product.append('origin', this.getControl('origin').value);
+    product.append('cleaning', this.getControl('cleaning').value);
+    product.append('price', this.getControl('price').value);
 
         this.fileUploadService.allFiles.forEach((file) => {
             product.append('files', file, file.name)
@@ -89,7 +88,6 @@ export class UploadProductComponent implements OnInit {
         if (this.productForm.valid) {
             this.productService.createNewProduct(product).subscribe(
                 () => {
-                    console.log('Product created')
                 },
                 (error) => {
                     console.error(error)
