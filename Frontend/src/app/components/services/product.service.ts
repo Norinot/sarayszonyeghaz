@@ -8,6 +8,7 @@ import { Observable, map } from 'rxjs'
 })
 export class ProductService {
     private httpClient = inject(HttpClient)
+    allProducts: IProduct[] = []
 
     getAllProducts(): Observable<IProduct[]> {
         return this.httpClient.get<IProduct[]>('http://localhost:8085/products')
