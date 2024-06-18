@@ -58,8 +58,6 @@ export class FileUploadingComponent implements OnInit, OnChanges {
         if (changes['existingFiles']) {
             this.files = this.existingFiles
         }
-        console.log('files on changes: ', this.files)
-        console.log('existingFiles on changes: ', this.existingFiles)
     }
 
     choose(event: Event, callback: any) {
@@ -86,9 +84,7 @@ export class FileUploadingComponent implements OnInit, OnChanges {
         this.totalSizePercent = 0
     }
 
-    onTemplatedUpload() {
-        
-    }
+    onTemplatedUpload() {}
 
     onSelectedFiles(event: any) {
         this.fileUploadService.allFiles = event.currentFiles

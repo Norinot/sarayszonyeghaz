@@ -123,10 +123,23 @@ export class UploadProductComponent implements OnInit {
             product.append('files', file, file.name)
         })
 
-        if (this.productForm.valid) {
+        if (this.id != null) {
+            this.productService
+                .updateSelectedProduct(product, this.id)
+                .subscribe(
+                    () => {
+                        console.log('Product updated')
+                        console.log(this.productForm)
+                    },
+                    (error) => {
+                        console.error(error)
+                    }
+                )
+        } else if (this.productForm.valid) {
             this.productService.createNewProduct(product).subscribe(
                 () => {
                     console.log('Product created')
+                    console.log(this.productForm)
                 },
                 (error) => {
                     console.error(error)

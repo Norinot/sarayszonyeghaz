@@ -339,13 +339,11 @@ func ClearProductImages(productID string) error {
 	}
 	defer database.Close()
 
-	// Begin a transaction
 	tx, err := database.Begin()
 	if err != nil {
 		return err
 	}
 
-	// Retrieve all image paths for the given product
 	rows, err := tx.Query("SELECT image_path FROM product_images WHERE product_id = ?", productID)
 	if err != nil {
 		tx.Rollback()
@@ -363,7 +361,6 @@ func ClearProductImages(productID string) error {
 		imagePaths = append(imagePaths, imagePath)
 	}
 
-	// Delete images from the filesystem
 	for _, imagePath := range imagePaths {
 		if err := os.Remove(imagePath); err != nil {
 			tx.Rollback()
@@ -371,14 +368,12 @@ func ClearProductImages(productID string) error {
 		}
 	}
 
-	// Delete image paths from the database
 	_, err = tx.Exec("DELETE FROM product_images WHERE product_id = ?", productID)
 	if err != nil {
 		tx.Rollback()
 		return fmt.Errorf("failed to delete image paths from database: %w", err)
 	}
 
-	// Commit the transaction
 	if err := tx.Commit(); err != nil {
 		tx.Rollback()
 		return fmt.Errorf("failed to commit transaction: %w", err)
