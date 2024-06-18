@@ -58,7 +58,6 @@ export class UploadProductComponent implements OnInit {
 
     ngOnInit(): void {
         this.getControl('name').valueChanges.subscribe((value) => {
-            console.log(value)
         })
     }
 
@@ -72,7 +71,6 @@ export class UploadProductComponent implements OnInit {
     }
 
   onSubmit(): void {
-
     const product = new FormData();
     product.append('name', this.getControl('name').value);
     product.append('size', this.getControl('size').value);
@@ -90,7 +88,6 @@ export class UploadProductComponent implements OnInit {
         if (this.productForm.valid) {
             this.productService.createNewProduct(product).subscribe(
                 () => {
-                    console.log('Product created')
                 },
                 (error) => {
                     console.error(error)

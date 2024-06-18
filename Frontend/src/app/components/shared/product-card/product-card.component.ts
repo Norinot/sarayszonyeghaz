@@ -27,7 +27,6 @@ export class ProductCardComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['productName'] && changes['productName'].currentValue === "") {
-      console.log('productName is null');
       this.productName = 'Példa cím';
     }
     if (changes['productSize'] && changes['productSize'].currentValue === "") {

@@ -36,7 +36,6 @@ export class AdminPageComponent {
     }
 
     login() {
-        console.log('Bejelentkezve: ', this.loginForm.value)
 
         this.loginService.login(this.loginForm.value).subscribe({
             next: (response: any) => {
@@ -44,7 +43,6 @@ export class AdminPageComponent {
                 localStorage.setItem('token', response.token)
             },
             error: () => {
-                console.log('Failed to log in')
             },
         })
     }

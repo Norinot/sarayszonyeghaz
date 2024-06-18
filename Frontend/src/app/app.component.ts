@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/contact']);
     }
 
-    console.log(this.activatedRoute.url);
     this.subscribeToRouteEvents();
   }
 
@@ -40,7 +39,6 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       const currentRoute = event.url;
-      console.log('Current Route:', currentRoute);
     });
   }
 }

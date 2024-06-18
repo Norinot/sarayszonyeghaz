@@ -9,12 +9,13 @@ import { Observable } from 'rxjs';
 export class ProductService {
   private httpClient = inject(HttpClient);
 
+  allProducts: IProduct[] = [];
+
   getAllProducts(): Observable<IProduct[]> {
     return this.httpClient.get<IProduct[]>("http://localhost:8085/products");
   }
 
   createNewProduct(product: FormData) {
-    console.log(product);
     return this.httpClient.post("http://localhost:8085/products", product, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

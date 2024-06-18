@@ -16,12 +16,17 @@ export class ProductListComponent implements OnInit {
   private productListService = inject(ProductService);
 
   ngOnInit(): void {
-    this.productListService.getAllProducts().subscribe(data => {
-      this.items = this.transformProductData(data);
-    },
-      error => {
-        console.log(error);
-      });
+    this.productListService.getAllProducts().subscribe({
+      next: (response: IProduct[]) => {
+        this.items = this.transformProductData(response);
+        this.productListService.allProducts = this.transformProductData(response);
+        console.log(this.productListService.allProducts);
+
+      },
+      error: () => {
+        this.items = [];
+      }
+    })
   }
 
   private transformProductData(data: IProduct[]) {

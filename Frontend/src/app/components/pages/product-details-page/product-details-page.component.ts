@@ -40,7 +40,6 @@ export class ProductDetailsPageComponent implements OnInit {
     this.productService.getSpecificProductById(id).subscribe({
       next: (response: IProduct) => {
         this.product = response;
-        console.log(this.product);
       },
       error: () => {
         this.router.navigate(['/']);
