@@ -5,25 +5,6 @@
   height: inherit;
 }
 
-p-fileUpload {
-  height: inherit;
-  flex-grow: 1;
-}
-
-::ng-deep .p-fileupload-content {
-  height: calc(100% - 89px);
-  overflow: auto;
-}
-
-::ng-deep .p-fileupload {
-  height: inherit;
-}
-
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
 
 .listed-files {
   transition: ease-in-out 0.3s;

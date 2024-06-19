@@ -20,7 +20,6 @@ export class ProductListComponent implements OnInit {
       next: (response: IProduct[]) => {
         this.items = this.transformProductData(response);
         this.productListService.allProducts = this.transformProductData(response);
-        console.log(this.productListService.allProducts);
 
       },
       error: () => {
