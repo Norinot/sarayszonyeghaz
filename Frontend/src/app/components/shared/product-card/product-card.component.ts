@@ -2,8 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
-  SimpleChange,
   SimpleChanges,
   inject,
 } from '@angular/core'
@@ -12,8 +10,9 @@ import { ButtonModule } from 'primeng/button'
 import { MenuItem } from 'primeng/api'
 import { CommonModule } from '@angular/common'
 import { ProductService } from '../../services/product.service'
-import { ActivatedRoute, Router, RouterLink } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { SettingsService } from '../../services/settings.service'
 
 @Component({
   selector: 'app-product-card',
@@ -25,8 +24,8 @@ import { ToastrService } from 'ngx-toastr'
 export class ProductCardComponent implements OnChanges {
   private productService = inject(ProductService)
   private router = inject(Router)
-  private activatedRoute = inject(ActivatedRoute)
   private toastrService = inject(ToastrService)
+  public settingsService = inject(SettingsService)
 
   @Input() productId?: string
   @Input() productName?: string

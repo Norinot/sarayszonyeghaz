@@ -1,9 +1,11 @@
 <div class="container">
+  @if (settingsService.isLoggedIn()) {
   <div class="more-button">
     <p-menu #menu [model]="items" [popup]="true" />
     <p-button class="more-button-inner" icon="pi pi-ellipsis-h" [rounded]="true" [text]="true" severity="secondary"
       (click)="menu.toggle($event)" />
   </div>
+  }
   <div class="image-container" [routerLink]="['/details', productId]">
     <img [src]="productImagePath" alt="">
   </div>

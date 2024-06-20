@@ -28,6 +28,28 @@ export class ProductDetailsPageComponent implements OnInit {
 
   public product?: IProduct
 
+
+  items: any[] = [
+    {
+      size: '100x150'
+    },
+    {
+      size: '150x225'
+    },
+    {
+      size: '200x300'
+    },
+    {
+      size: '300x450'
+    },
+    {
+      size: '400x600'
+    },
+    {
+      size: '600x900'
+    },
+  ]
+
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
