@@ -123,8 +123,10 @@ export class UploadProductComponent implements OnInit {
     product.append('cleaning', this.getControl('cleaning').value)
     product.append('price', this.getControl('price').value)
 
+
     this.fileUploadService.allFiles.forEach((file) => {
-      product.append('files', file, file.name)
+      const fileToUpload = file.file ? file.file : file
+      product.append('files', fileToUpload, fileToUpload.name)
     })
 
     if (this.id != null) {

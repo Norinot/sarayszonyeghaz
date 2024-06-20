@@ -41,20 +41,28 @@ export class FileUploadingComponent implements OnInit {
 
   ngOnInit() {
     this.files = this.existingFiles
-    console.log(this.files);
-
+    this.fileUploadService.allFiles = this.existingFiles
+    this.fileUploadService.selectedFile = this.existingFiles[0]
   }
 
   onFileSelected(event: any) {
-    console.log(event.target.files);
-    this.files.push(...event.target.files)
+    const files = Array.from(event.target.files) as File[]
+
+    const updatedFiles = files.map((file: File) => {
+      const objectURL = URL.createObjectURL(file)
+      return { file, objectURL }
+    })
+
+    const nonDuplicateFiles = updatedFiles.filter(file =>
+      !this.files.some(existingFile => existingFile.file && existingFile.file.name === file.file.name));
+
+    this.files = [...this.files, ...nonDuplicateFiles]
+    this.fileUploadService.allFiles = this.files
   }
 
-  onRemoveTemplatingFile(event: any, file: any, index: number) {
+  onRemoveTemplatingFile(file: any, index: number) {
     this.files.splice(index, 1)
     this.fileUploadService.allFiles = this.files
-    this.totalSize -= parseInt(this.formatSize(file.size))
-    this.totalSizePercent = this.totalSize / 10
 
     if (this.fileUploadService.selectedFile === file) {
       if (this.files.length > 0) {
@@ -64,13 +72,6 @@ export class FileUploadingComponent implements OnInit {
       }
     }
   }
-
-  onClearTemplatingUpload(clear: any) {
-    clear()
-    this.totalSize = 0
-    this.totalSizePercent = 0
-  }
-
 
   setPrimaryPicture(file: File) {
     this.fileUploadService.selectedFile = file
@@ -88,13 +89,5 @@ export class FileUploadingComponent implements OnInit {
     const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm))
 
     return `${formattedSize} ${sizes[i]}`
-  }
-
-  private calculateTotalSize() {
-    this.totalSize = 0
-    this.files.forEach((file: any) => {
-      this.totalSize += parseInt(this.formatSize(file.size))
-    })
-    this.totalSizePercent = this.totalSize / 10
   }
 }

@@ -9,7 +9,7 @@
         [productPlaceOfOrigin]="productForm.get('origin')?.value ?? '<Példa származási hely>'"
         [productSize]="productForm.get('size')?.value ?? '<Példa méret>'"
         [productPrice]="productForm.get('price')?.value ?? 0"
-        [productImagePath]="this.fileUploadService.selectedFile?.objectURL ?? 'https://via.placeholder.com/150'"></app-product-card>
+        [productImagePath]="this.fileUploadService.selectedFile?.objectURL ?? (this.fileUploadService.selectedFile?.name ? 'http://localhost:8085/assets/' + this.fileUploadService.selectedFile?.name : 'https://via.placeholder.com/150')"></app-product-card>
     </div>
   </div>
 
