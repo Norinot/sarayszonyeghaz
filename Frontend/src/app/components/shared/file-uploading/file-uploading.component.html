@@ -1,8 +1,8 @@
-<div>
-  <p-button (click)="fileInput.click()" icon="pi pi-images" [rounded]="true" [outlined]="true"></p-button>
+<div class="header">
+  <p-button (click)="fileInput.click()" icon="pi pi-images" [rounded]="true" ></p-button>
   <input type="file" (change)="onFileSelected($event)" [multiple]="true" hidden #fileInput>
 </div>
-<div>
+<div class="wrapper">
   @for (file of files; track $index) {
   <div class="listed-files" [class.selected]="file === this.fileUploadService.selectedFile"
     (click)="setPrimaryPicture(file)">
@@ -18,6 +18,12 @@
       <p-button icon="pi pi-times" (click)="onRemoveTemplatingFile(file, $index)" [outlined]="true" [rounded]="true"
         severity="danger"></p-button>
     </div>
+  </div>
+  }
+  @if (this.files.length === 0) {
+  <div>
+    <i class="pi pi-cloud-upload"></i>
+    <p>Kattintson a feltöltés ikonra, hogy kiválassza a feltölteni kívánt fájlokat.</p>
   </div>
   }
 </div>

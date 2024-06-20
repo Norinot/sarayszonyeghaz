@@ -41,8 +41,8 @@ export class FileUploadingComponent implements OnInit {
 
   ngOnInit() {
     this.files = this.existingFiles
-    this.fileUploadService.allFiles = this.existingFiles
-    this.fileUploadService.selectedFile = this.existingFiles[0]
+    this.fileUploadService.allFiles = this.files
+    this.fileUploadService.selectedFile = this.files[0]
   }
 
   onFileSelected(event: any) {

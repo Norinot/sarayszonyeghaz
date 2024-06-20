@@ -5,6 +5,23 @@
   height: inherit;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 9px;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+  overflow: auto;
+  padding: 10px;
+}
 
 .listed-files {
   transition: ease-in-out 0.3s;
@@ -18,7 +35,6 @@
 
   background-color: #f4f4f4;
 
-  /* Adjust the box-shadow to create the double border effect */
   box-shadow:
     0 0 0 1px #f4f4f4,
 }
@@ -42,16 +58,17 @@
     0 0 0 3px #ffffff,
     0 0 0 5px #BFDBFE;
 }
-.presentation-picture{
+
+.presentation-picture {
   object-fit: cover;
 }
 
-@media screen and (max-width: 476px){
+@media screen and (max-width: 476px) {
   .listed-files {
     flex-wrap: wrap;
   }
 
-  .file-name{
+  .file-name {
     word-break: break-all;
   }
 }

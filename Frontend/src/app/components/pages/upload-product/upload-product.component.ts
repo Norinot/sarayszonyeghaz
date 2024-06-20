@@ -133,10 +133,14 @@ export class UploadProductComponent implements OnInit {
       this.productService
         .updateSelectedProduct(product, this.id)
         .subscribe(
-          () => {
-
-          },
-          (error) => {
+          {
+            next: () => {
+              this.toastr.success('Product updated')
+              this.router.navigate(['/'])
+            },
+            error: (error) => {
+              this.toastr.error(`Error updating product, ${error}`)
+            },
           }
         )
     } else if (this.productForm.valid) {
