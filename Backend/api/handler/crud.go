@@ -142,7 +142,7 @@ func UpdateProductByID(c *gin.Context) {
 
 	var imagePaths []string
 	files := form.File["files"]
-	if len(files) > 0 {
+	if len(files) >= 0 {
 
 		if err := model.ClearProductImages(productID); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to clear existing product images: " + err.Error()})

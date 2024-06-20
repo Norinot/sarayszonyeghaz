@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common'
 import { Component, OnInit, inject } from '@angular/core'
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
 } from '@angular/forms'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
@@ -21,147 +21,146 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  selector: 'app-upload-product',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    MessagesModule,
-    CommonModule,
-    InputNumberModule,
-    FloatLabelModule,
-    ProductCardComponent,
-    FileUploadingComponent,
-  ],
-  templateUrl: './upload-product.component.html',
-  styleUrl: './upload-product.component.scss',
+    selector: 'app-upload-product',
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        ButtonModule,
+        InputTextModule,
+        MessagesModule,
+        CommonModule,
+        InputNumberModule,
+        FloatLabelModule,
+        ProductCardComponent,
+        FileUploadingComponent,
+    ],
+    templateUrl: './upload-product.component.html',
+    styleUrl: './upload-product.component.scss',
 })
 export class UploadProductComponent implements OnInit {
-  public fileUploadService = inject(fileUploadService)
-  private productService = inject(ProductService)
-  private router = inject(Router)
-  private activatedRoute = inject(ActivatedRoute)
-  private toastr = inject(ToastrService)
-  private id: string = ''
-  private product?: IProduct
-  existingFiles: any[] = []
+    public fileUploadService = inject(fileUploadService)
+    private productService = inject(ProductService)
+    private router = inject(Router)
+    private activatedRoute = inject(ActivatedRoute)
+    private toastr = inject(ToastrService)
+    private id: string = ''
+    private product?: IProduct
+    existingFiles: any[] = []
 
-  productForm: FormGroup = (() => {
-    const fb = inject(FormBuilder)
-    return fb.group({
-      name: [, Validators.required],
-      size: [],
-      material: [],
-      color: [],
-      design: [],
-      origin: [],
-      cleaning: [''],
-      price: [, Validators.required],
-    })
-  })()
+    productForm: FormGroup = (() => {
+        const fb = inject(FormBuilder)
+        return fb.group({
+            name: [, Validators.required],
+            size: [],
+            material: [],
+            color: [],
+            design: [],
+            origin: [],
+            cleaning: [''],
+            price: [, Validators.required],
+        })
+    })()
 
-  getControl(name: string): FormControl {
-    return this.productForm.get(name) as FormControl
-  }
+    getControl(name: string): FormControl {
+        return this.productForm.get(name) as FormControl
+    }
 
-  ngOnInit(): void {
-    this.id = this.activatedRoute.snapshot.params['id']
+    ngOnInit(): void {
+        this.id = this.activatedRoute.snapshot.params['id']
 
-    if (this.id) {
-      this.productService.getSpecificProductById(this.id).subscribe({
-        next: async (response: IProduct) => {
-          this.productForm.patchValue(response)
-          if (response.image_paths) {
-            for (const path of response.image_paths) {
-              const objectURL = `http://localhost:8085/${path}`
-              try {
-                const response = await fetch(objectURL)
-                const imageBlob = await response.blob()
-                const fileName = path.split('/').pop()
-                if (fileName) {
-                  const file = new File(
-                    [imageBlob],
-                    fileName,
-                    {
-                      type: 'image/png',
+        if (this.id) {
+            this.productService.getSpecificProductById(this.id).subscribe({
+                next: async (response: IProduct) => {
+                    this.productForm.patchValue(response)
+                    if (response.image_paths) {
+                        for (const path of response.image_paths) {
+                            const objectURL = `http://localhost:8085/${path}`
+                            try {
+                                const response = await fetch(objectURL)
+                                const imageBlob = await response.blob()
+                                const fileName = path.split('/').pop()
+                                if (fileName) {
+                                    const file = new File(
+                                        [imageBlob],
+                                        fileName,
+                                        {
+                                            type: 'image/png',
+                                        }
+                                    )
+                                    this.existingFiles.push(file)
+                                }
+                            } catch (error) {
+                                this.toastr.error('Error fetching image')
+                            }
+                        }
                     }
-                  )
-                  this.existingFiles.push(file)
-                }
-              } catch (error) {
-                this.toastr.error('Error fetching image')
-              }
-            }
-          }
-        },
-        error: (error) => {
-          this.toastr.error('Error fetching product')
-          this.router.navigate(['/'])
-        },
-      })
-    }
-  }
-
-  markAllAsDirty(formGroup: FormGroup): void {
-    Object.values(formGroup.controls).forEach((control) => {
-      control.markAsDirty()
-      if (control instanceof FormGroup) {
-        this.markAllAsDirty(control)
-      }
-    })
-  }
-
-  onSubmit(): void {
-    const product = new FormData()
-    product.append('name', this.getControl('name').value)
-    product.append('size', this.getControl('size').value)
-    product.append('material', this.getControl('material').value)
-    product.append('color', this.getControl('color').value)
-    product.append('design', this.getControl('design').value)
-    product.append('origin', this.getControl('origin').value)
-    product.append('cleaning', this.getControl('cleaning').value)
-    product.append('price', this.getControl('price').value)
-
-
-    this.fileUploadService.allFiles.forEach((file) => {
-      const fileToUpload = file.file ? file.file : file
-      product.append('files', fileToUpload, fileToUpload.name)
-    })
-
-    if (this.id != null) {
-      this.productService
-        .updateSelectedProduct(product, this.id)
-        .subscribe(
-          {
-            next: () => {
-              this.toastr.success('Product updated')
-              this.router.navigate(['/'])
-            },
-            error: (error) => {
-              this.toastr.error(`Error updating product, ${error}`)
-            },
-          }
-        )
-    } else if (this.productForm.valid) {
-      this.productService.createNewProduct(product).subscribe(
-        () => {
-
-        },
-        (error) => {
+                },
+                error: (error) => {
+                    this.toastr.error('Error fetching product')
+                    this.router.navigate(['/'])
+                },
+            })
         }
-      )
-    } else {
-      this.markAllAsDirty(this.productForm)
     }
-  }
 
-  getFormControl(name: string): FormControl {
-    return this.productForm.get(name) as FormControl
-  }
+    markAllAsDirty(formGroup: FormGroup): void {
+        Object.values(formGroup.controls).forEach((control) => {
+            control.markAsDirty()
+            if (control instanceof FormGroup) {
+                this.markAllAsDirty(control)
+            }
+        })
+    }
 
-  isInvalid(name: string): boolean {
-    const control = this.getFormControl(name)
-    return control.invalid && control.dirty
-  }
+    onSubmit(): void {
+        const product = new FormData()
+        product.append('name', this.getControl('name').value)
+        product.append('size', this.getControl('size').value)
+        product.append('material', this.getControl('material').value)
+        product.append('color', this.getControl('color').value)
+        product.append('design', this.getControl('design').value)
+        product.append('origin', this.getControl('origin').value)
+        product.append('cleaning', this.getControl('cleaning').value)
+        product.append('price', this.getControl('price').value)
+
+        this.fileUploadService.allFiles.forEach((file) => {
+            const fileToUpload = file.file ? file.file : file
+            product.append('files', fileToUpload, fileToUpload.name)
+        })
+
+        if (this.id != null) {
+            this.productService
+                .updateSelectedProduct(product, this.id)
+                .subscribe({
+                    next: () => {
+                        this.toastr.success('Termék sikeresen frissítve!')
+                        this.router.navigate(['/'])
+                    },
+                    error: (error) => {
+                        this.toastr.error(`Error updating product, ${error}`)
+                    },
+                })
+        } else if (this.productForm.valid) {
+            this.productService.createNewProduct(product).subscribe({
+                next: () => {
+                    this.toastr.success('Termék sikeresen hozzáadva!')
+                    this.router.navigate(['/'])
+                },
+                error: (error) => {
+                    this.toastr.error(`Error creating product, ${error}`)
+                },
+            })
+        } else {
+            this.markAllAsDirty(this.productForm)
+        }
+    }
+
+    getFormControl(name: string): FormControl {
+        return this.productForm.get(name) as FormControl
+    }
+
+    isInvalid(name: string): boolean {
+        const control = this.getFormControl(name)
+        return control.invalid && control.dirty
+    }
 }
