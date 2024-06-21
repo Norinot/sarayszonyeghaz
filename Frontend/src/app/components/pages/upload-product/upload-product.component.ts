@@ -64,7 +64,7 @@ export class UploadProductComponent implements OnInit {
         return fb.group({
             category: [, Validators.required],
             name: [, Validators.required],
-            size: [],
+            size: [[], Validators.required],
             material: [],
             color: [],
             design: [],
@@ -130,7 +130,7 @@ export class UploadProductComponent implements OnInit {
         const product = new FormData()
         product.append('category', this.getControl('category').value.code)
         product.append('name', this.getControl('name').value)
-        product.append('size', this.getControl('size').value)
+        product.append('size', JSON.stringify(this.getControl('size').value))
         product.append('material', this.getControl('material').value)
         product.append('color', this.getControl('color').value)
         product.append('design', this.getControl('design').value)
@@ -150,6 +150,7 @@ export class UploadProductComponent implements OnInit {
                     next: () => {
                         this.toastr.success('Termék sikeresen frissítve!')
                         this.router.navigate(['/'])
+                        console.log(product)
                     },
                     error: (error) => {
                         this.toastr.error(`Error updating product, ${error}`)
@@ -163,6 +164,7 @@ export class UploadProductComponent implements OnInit {
                 },
                 error: (error) => {
                     this.toastr.error(`Error creating product, ${error}`)
+                    console.log(product.forEach((item) => console.log(item)))
                 },
             })
         } else {

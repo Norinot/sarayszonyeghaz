@@ -1,9 +1,9 @@
 import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  inject,
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    inject,
 } from '@angular/core'
 import { MenuModule } from 'primeng/menu'
 import { ButtonModule } from 'primeng/button'
@@ -15,87 +15,86 @@ import { ToastrService } from 'ngx-toastr'
 import { SettingsService } from '../../services/settings.service'
 
 @Component({
-  selector: 'app-product-card',
-  standalone: true,
-  imports: [MenuModule, ButtonModule, CommonModule],
-  templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.scss',
+    selector: 'app-product-card',
+    standalone: true,
+    imports: [MenuModule, ButtonModule, CommonModule],
+    templateUrl: './product-card.component.html',
+    styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent implements OnChanges {
-  private productService = inject(ProductService)
-  private router = inject(Router)
-  private toastrService = inject(ToastrService)
-  public settingsService = inject(SettingsService)
+    private productService = inject(ProductService)
+    private router = inject(Router)
+    private toastrService = inject(ToastrService)
+    public settingsService = inject(SettingsService)
 
-  @Input() productId?: string
-  @Input() productName?: string
-  @Input() productSize?: string[]
-  @Input() productPlaceOfOrigin?: string
-  @Input() productImagePath?: string
-  @Input() productPrice?: number
+    @Input() productId?: string
+    @Input() productName?: string
+    @Input() productSize?: string[]
+    @Input() productPlaceOfOrigin?: string
+    @Input() productImagePath?: string
+    @Input() productPrice?: number
 
-  private iProduct = inject(ProductService)
+    private iProduct = inject(ProductService)
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes['productName'] &&
-      changes['productName'].currentValue === ''
-    ) {
-      this.productName = 'Példa cím'
+    ngOnChanges(changes: SimpleChanges) {
+        if (
+            changes['productName'] &&
+            changes['productName'].currentValue === ''
+        ) {
+            this.productName = 'Példa cím'
+        }
+        if (
+            changes["productSize"] &&
+            changes["productSize"].currentValue === ""
+        ) {
+            this.productSize?.push('Példa méret')
+        }
+        if (
+            changes['productPlaceOfOrigin'] &&
+            changes['productPlaceOfOrigin'].currentValue === ''
+        ) {
+            this.productPlaceOfOrigin = 'Példa hely'
+        }
+        if (
+            changes['productImagePath'] &&
+            changes['productImagePath'].currentValue === ''
+        ) {
+            this.productImagePath = 'https://via.placeholder.com/150'
+        }
+
+        console.log(this.productSize)
     }
-    if (
-      changes['productSize'] &&
-      changes['productSize'].currentValue === ''
-    ) {
-      this.productSize?.push('Példa méret')
-    }
-    if (
-      changes['productPlaceOfOrigin'] &&
-      changes['productPlaceOfOrigin'].currentValue === ''
-    ) {
-      this.productPlaceOfOrigin = 'Példa hely'
-    }
-    if (
-      changes['productImagePath'] &&
-      changes['productImagePath'].currentValue === ''
-    ) {
-      this.productImagePath = 'https://via.placeholder.com/150'
+
+    removeProduct(id: string | undefined) {
+        if (id != undefined) {
+            this.productService.removeSelectedProduct(id).subscribe({
+                next: () => {
+                    this.toastrService.success('Termék törölve!', 'Siker!')
+                },
+                error: () => {
+                    this.toastrService.error(
+                        'Hiba történt a termék törlése közben!',
+                        'Hiba!'
+                    )
+                },
+            })
+        }
     }
 
-    console.log(this.productSize);
-
-  }
-
-  removeProduct(id: string | undefined) {
-    if (id != undefined) {
-      this.productService.removeSelectedProduct(id).subscribe({
-        next: () => {
-          this.toastrService.success('Termék törölve!', 'Siker!')
+    items: MenuItem[] = [
+        {
+            label: 'Módosítás',
+            icon: 'pi pi-refresh',
+            command: () => {
+                this.router.navigate([`/upload-product/${this.productId}`])
+            },
         },
-        error: () => {
-          this.toastrService.error(
-            'Hiba történt a termék törlése közben!',
-            'Hiba!'
-          )
+        {
+            label: 'Törlés',
+            icon: 'pi pi-trash',
+            command: () => {
+                this.removeProduct(this.productId)
+            },
         },
-      })
-    }
-  }
-
-  items: MenuItem[] = [
-    {
-      label: 'Módosítás',
-      icon: 'pi pi-refresh',
-      command: () => {
-        this.router.navigate([`/upload-product/${this.productId}`])
-      },
-    },
-    {
-      label: 'Törlés',
-      icon: 'pi pi-trash',
-      command: () => {
-        this.removeProduct(this.productId)
-      },
-    },
-  ]
+    ]
 }
