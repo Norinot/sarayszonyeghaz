@@ -6,9 +6,16 @@
       (click)="menu.toggle($event)" />
   </div>
   }
+  @if (productId) {
   <div class="image-container" [routerLink]="['/details', productId]">
     <img [src]="productImagePath" alt="">
   </div>
+  }@else {
+  <div class="image-container">
+    <img [src]="productImagePath" alt="">
+  </div>
+  }
+
   <div>
     <div class="title-and-details-wrapper">
       <h3>{{productName}}</h3>

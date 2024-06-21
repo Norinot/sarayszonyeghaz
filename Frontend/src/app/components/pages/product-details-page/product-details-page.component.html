@@ -16,14 +16,14 @@
   @if (product) {
   <div class="product-details">
     <div>
-      <small class="category-font">Kategória</small>
+      <small class="category-font">{{product.category}}</small>
       <h1>{{ product.name }}</h1>
     </div>
     <div class="product-info">
       <div class="size-container">
-        @for (item of items; track $index) {
+        @for (item of product.size; track $index) {
         <div class="size-box">
-          {{item.size}}
+          {{item}}
         </div>
         }
       </div>

@@ -47,7 +47,7 @@ export class ProductCardComponent implements OnChanges {
             changes["productSize"] &&
             changes["productSize"].currentValue === ""
         ) {
-            this.productSize?.push('Példa méret')
+            this.productSize = ["Példa méret"]
         }
         if (
             changes['productPlaceOfOrigin'] &&
@@ -61,8 +61,6 @@ export class ProductCardComponent implements OnChanges {
         ) {
             this.productImagePath = 'https://via.placeholder.com/150'
         }
-
-        console.log(this.productSize)
     }
 
     removeProduct(id: string | undefined) {

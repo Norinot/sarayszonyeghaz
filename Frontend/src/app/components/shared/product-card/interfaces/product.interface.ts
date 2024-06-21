@@ -6,4 +6,5 @@ export interface IProduct extends IProductPreview {
     color?: string
     design?: string
     cleaning?: string
+    category?: string
 }
