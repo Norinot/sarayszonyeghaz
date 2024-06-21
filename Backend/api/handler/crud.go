@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"path"
 	"szonyeghaz/model"
@@ -43,12 +44,18 @@ func CreateproductsHandler(c *gin.Context) {
 
 	name := c.PostForm("name")
 	price := c.PostForm("price")
-	size := c.PostForm("size")
+	sizeJSON := c.PostForm("size")
+	var size []string
+	if err := json.Unmarshal([]byte(sizeJSON), &size); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size format: " + err.Error()})
+		return
+	}
 	material := c.PostForm("material")
 	color := c.PostForm("color")
 	design := c.PostForm("design")
 	origin := c.PostForm("origin")
 	cleaning := c.PostForm("cleaning")
+	category := c.PostForm("category")
 
 	product := model.Product{
 		ID:       ksuid.New().String(),
@@ -60,6 +67,7 @@ func CreateproductsHandler(c *gin.Context) {
 		Design:   design,
 		Origin:   origin,
 		Cleaning: cleaning,
+		Category: category,
 	}
 
 	form, err := c.MultipartForm()
@@ -115,8 +123,12 @@ func UpdateProductByID(c *gin.Context) {
 	if price := c.PostForm("price"); price != "" {
 		existingProduct.Price = price
 	}
-	if size := c.PostForm("size"); size != "" {
-		existingProduct.Size = size
+	if sizeJSON := c.PostForm("size"); sizeJSON != "" {
+		var size []string
+		if err := json.Unmarshal([]byte(sizeJSON), &size); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size format: " + err.Error()})
+			return
+		}
 	}
 	if material := c.PostForm("material"); material != "" {
 		existingProduct.Material = material
@@ -133,6 +145,9 @@ func UpdateProductByID(c *gin.Context) {
 	if cleaning := c.PostForm("cleaning"); cleaning != "" {
 		existingProduct.Cleaning = cleaning
 	}
+	if category := c.PostForm("category"); category != "" {
+		existingProduct.Category = category
+	}
 
 	form, err := c.MultipartForm()
 	if err != nil {
@@ -142,7 +157,7 @@ func UpdateProductByID(c *gin.Context) {
 
 	var imagePaths []string
 	files := form.File["files"]
-	if len(files) > 0 {
+	if len(files) >= 0 {
 
 		if err := model.ClearProductImages(productID); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to clear existing product images: " + err.Error()})
@@ -176,6 +191,7 @@ func UpdateProductByID(c *gin.Context) {
 		Design:   existingProduct.Design,
 		Origin:   existingProduct.Origin,
 		Cleaning: existingProduct.Cleaning,
+		Category: existingProduct.Category,
 	}
 
 	if err := model.UpdateProductByIDHandler(productID, product, imagePaths); err != nil {

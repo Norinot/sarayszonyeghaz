@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -16,7 +17,7 @@ func ListProductsHandler() ([]ProductWithImages, error) {
 	defer database.Close()
 
 	query := `
-        SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.design, p.origin, p.cleaning, pi.image_path
+        SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.design, p.origin, p.cleaning, p.category, pi.image_path
         FROM products p
         LEFT JOIN product_images pi ON p.product_id = pi.product_id
 		ORDER BY p.name
@@ -41,12 +42,21 @@ func ListProductsHandler() ([]ProductWithImages, error) {
 			design    sql.NullString
 			origin    sql.NullString
 			cleaning  sql.NullString
+			category  sql.NullString
 			imagePath sql.NullString
 		)
 
-		err := rows.Scan(&productID, &name, &price, &size, &material, &color, &design, &origin, &cleaning, &imagePath)
+		err := rows.Scan(&productID, &name, &price, &size, &material, &color, &design, &origin, &cleaning, &category, &imagePath)
 		if err != nil {
 			return nil, err
+		}
+
+		var sizeArray []string
+		if size.Valid {
+			err = json.Unmarshal([]byte(size.String), &sizeArray)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		if product, exists := productsMap[productID]; exists {
@@ -59,12 +69,13 @@ func ListProductsHandler() ([]ProductWithImages, error) {
 					ID:       productID,
 					Name:     name.String,
 					Price:    price.String,
-					Size:     size.String,
+					Size:     sizeArray,
 					Material: material.String,
 					Color:    color.String,
 					Design:   design.String,
 					Origin:   origin.String,
 					Cleaning: cleaning.String,
+					Category: category.String,
 				},
 				ImagePaths: []string{},
 			}
@@ -91,7 +102,7 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 	defer database.Close()
 
 	query := `
-		SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.design, p.origin, p.cleaning, pi.image_path
+		SELECT p.product_id, p.name, p.price, p.size, p.material, p.color, p.design, p.origin, p.cleaning, p.category, pi.image_path
 		FROM products p
 		LEFT JOIN product_images pi ON p.product_id = pi.product_id
 		WHERE p.product_id = ?
@@ -116,12 +127,21 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 			design    sql.NullString
 			origin    sql.NullString
 			cleaning  sql.NullString
+			category  sql.NullString
 			imagePath sql.NullString
 		)
 
-		err := rows.Scan(&id, &name, &price, &size, &material, &color, &design, &origin, &cleaning, &imagePath)
+		err := rows.Scan(&id, &name, &price, &size, &material, &color, &design, &origin, &cleaning, &category, &imagePath)
 		if err != nil {
 			return nil, err
+		}
+
+		var sizeArray []string
+		if size.Valid {
+			err = json.Unmarshal([]byte(size.String), &sizeArray)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		if product == nil {
@@ -131,12 +151,13 @@ func GetProductByIDHandler(productID string) (*ProductWithImages, error) {
 					ID:       productID,
 					Name:     name.String,
 					Price:    price.String,
-					Size:     size.String,
+					Size:     sizeArray,
 					Material: material.String,
 					Color:    color.String,
 					Design:   design.String,
 					Origin:   origin.String,
 					Cleaning: cleaning.String,
+					Category: category.String,
 				},
 				ImagePaths: []string{},
 			}
@@ -166,10 +187,16 @@ func CreateProductsHandler(product Product, imagePaths []string) error {
 		return err
 	}
 
+	sizeJson, err := json.Marshal(product.Size)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
 	_, err = tx.Exec(`
-		INSERT INTO products (product_id, name, price, size, material, color, design, origin, cleaning)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-	`, product.ID, product.Name, product.Price, product.Size, product.Material, product.Color, product.Design, product.Origin, product.Cleaning)
+		INSERT INTO products (product_id, name, price, size, material, color, design, origin, cleaning, category)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	`, product.ID, product.Name, product.Price, sizeJson, product.Material, product.Color, product.Design, product.Origin, product.Cleaning, product.Category)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -206,11 +233,17 @@ func UpdateProductByIDHandler(productID string, product Product, imagePaths []st
 		return err
 	}
 
+	sizeJson, err := json.Marshal(product.Size)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
 	_, err = tx.Exec(`
 		UPDATE products
-		SET name = ?, price = ?, size = ?, material = ?, color = ?, design = ?, origin = ?, cleaning = ?
+		SET name = ?, price = ?, size = ?, material = ?, color = ?, design = ?, origin = ?, cleaning = ?, category = ?
 		WHERE product_id = ?
-	`, product.Name, product.Price, product.Size, product.Material, product.Color, product.Design, product.Origin, product.Cleaning, productID)
+	`, product.Name, product.Price, sizeJson, product.Material, product.Color, product.Design, product.Origin, product.Cleaning, product.Category, productID)
 	if err != nil {
 		tx.Rollback()
 		return err
