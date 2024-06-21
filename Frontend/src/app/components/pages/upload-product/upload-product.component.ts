@@ -19,6 +19,8 @@ import { ProductService } from '../../services/product.service'
 import { IProduct } from '../../shared/product-card/interfaces/product.interface'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { DropdownModule } from 'primeng/dropdown';
+import { ChipsModule } from 'primeng/chips';
 
 @Component({
   selector: 'app-upload-product',
@@ -33,6 +35,8 @@ import { ToastrService } from 'ngx-toastr'
     FloatLabelModule,
     ProductCardComponent,
     FileUploadingComponent,
+    DropdownModule,
+    ChipsModule
   ],
   templateUrl: './upload-product.component.html',
   styleUrl: './upload-product.component.scss',
@@ -47,9 +51,18 @@ export class UploadProductComponent implements OnInit {
   private product?: IProduct
   existingFiles: any[] = []
 
+  categories: any[] = [
+    { name: 'Szőnyeg', code: 'Szőnyeg' },
+    { name: 'Futószőnyeg', code: 'Futószőnyeg' },
+    { name: 'Padlószőnyeg', code: 'Padlószőnyeg' },
+    { name: 'Kiegészítő', code: 'Kiegészítő' },
+    { name: 'Műfű', code: 'Műfű' }
+  ]
+
   productForm: FormGroup = (() => {
     const fb = inject(FormBuilder)
     return fb.group({
+      category: [, Validators.required],
       name: [, Validators.required],
       size: [],
       material: [],
@@ -113,7 +126,9 @@ export class UploadProductComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.productForm.invalid) return
     const product = new FormData()
+    product.append('category', this.getControl('category').value.code)
     product.append('name', this.getControl('name').value)
     product.append('size', this.getControl('size').value)
     product.append('material', this.getControl('material').value)

@@ -29,7 +29,7 @@ export class ProductCardComponent implements OnChanges {
 
   @Input() productId?: string
   @Input() productName?: string
-  @Input() productSize?: string
+  @Input() productSize?: string[]
   @Input() productPlaceOfOrigin?: string
   @Input() productImagePath?: string
   @Input() productPrice?: number
@@ -47,7 +47,7 @@ export class ProductCardComponent implements OnChanges {
       changes['productSize'] &&
       changes['productSize'].currentValue === ''
     ) {
-      this.productSize = 'Példa méret'
+      this.productSize?.push('Példa méret')
     }
     if (
       changes['productPlaceOfOrigin'] &&
@@ -61,6 +61,9 @@ export class ProductCardComponent implements OnChanges {
     ) {
       this.productImagePath = 'https://via.placeholder.com/150'
     }
+
+    console.log(this.productSize);
+
   }
 
   removeProduct(id: string | undefined) {
