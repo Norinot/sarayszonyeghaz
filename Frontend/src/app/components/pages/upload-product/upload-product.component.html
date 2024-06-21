@@ -9,14 +9,21 @@
         [productPlaceOfOrigin]="productForm.get('origin')?.value ?? '<Példa származási hely>'"
         [productSize]="productForm.get('size')?.value ?? '<Példa méret>'"
         [productPrice]="productForm.get('price')?.value ?? 0"
-        [productImagePath]="this.fileUploadService.selectedFile?.objectURL ?? 'https://via.placeholder.com/150'"></app-product-card>
+        [productImagePath]="this.fileUploadService.selectedFile?.objectURL ?? (this.fileUploadService.selectedFile?.name ? 'http://localhost:8085/assets/' + this.fileUploadService.selectedFile?.name : 'https://via.placeholder.com/150')"></app-product-card>
     </div>
   </div>
 
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
     <h2>Szőnyeg tulajdonságok</h2>
 
-    <!-- Name -->
+    <p-floatLabel>
+      <p-dropdown [showClear]="true" required="true" [options]="categories" [checkmark]="true" optionLabel="name" inputId="float-label"
+        formControlName="category" />
+      <label for="float-label">Kategória</label>
+      @if (isInvalid('category')) {
+      <small id="name-help" class="p-error">A fenti mező kitöltése kötelező</small>
+      }
+    </p-floatLabel>
     <div>
       <span class="p-float-label">
         <ng-container>
@@ -32,11 +39,11 @@
 
     <!-- Size -->
     <div>
-      <span class="p-float-label">
-        <input formControlName="size" [ngClass]="{'ng-invalid': isInvalid('size')}" pInputText id="size"
+      <p-floatLabel>
+        <p-chips id="size" formControlName="size" [style]="{'width': '100%'}" [ngClass]="{'ng-invalid': isInvalid('size')}" id="size"
           required="true" />
-        <label for="size">Méret</label>
-      </span>
+        <label for="size">Méretek</label>
+      </p-floatLabel>
       @if (isInvalid('size')) {
       <small id="name-help" class="p-error">A fenti mező kitöltése kötelező</small>
       }

@@ -26,8 +26,13 @@ input {
   border-radius: 12px;
 }
 
+::ng-deep .p-chips-multiple-container {
+  border-radius: 12px;
+  width: 100%;
+}
+
 input[required]+label::after,
-p-inputNumber[required]+label::after {
+p-inputNumber[required]+label::after, p-chips[required]+label::after, p-dropdown[required]+label::after {
   content: "*";
   color: red;
 }

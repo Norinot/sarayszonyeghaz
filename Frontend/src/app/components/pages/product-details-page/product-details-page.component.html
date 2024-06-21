@@ -1,11 +1,7 @@
-<div class="back-button">
-  <p-button label="Vissza" [text]="true" [plain]="true" routerLink="/"></p-button>
-</div>
-
 <div class="product-container">
   <div class="image-gallery">
     <p-galleria [value]="product?.image_paths" [thumbnailsPosition]="'left'" [responsiveOptions]="responsiveOptions"
-      [containerStyle]="{ 'max-width': '100%' }" [numVisible]="5">
+      [containerStyle]="{ 'max-width': '100%', 'gap': '15px'}" [numVisible]="5">
       <ng-template pTemplate="item" let-item>
         <p-image [src]="item" [imageStyle]="{ 'width': '500px', 'height': '430px', 'object-fit': 'fill' }"
           [style]="{'display':'flex'}" [preview]="true" />
@@ -17,17 +13,47 @@
   </div>
 
 
-
-  <div class="product-details" *ngIf="product">
-    <h1 class="product-name">{{ product.name }}</h1>
-    <div class="product-info">
-      <p><strong>Méret:</strong> {{ product.size }} cm</p>
-      <p><strong>Anyag:</strong> {{ product.material }}</p>
-      <p><strong>Szín:</strong> {{ product.color }}</p>
-      <p><strong>Stílus és design:</strong> {{ product.design }}</p>
-      <p><strong>Származási hely:</strong> {{ product.origin }}</p>
-      <p><strong>Tisztítási utasítások:</strong> {{ product.cleaning }}</p>
-      <h2 class="product-price">{{ product.price | currency:' ' : 'symbol' : '1.0-0' }} Ft </h2>
+  @if (product) {
+  <div class="product-details">
+    <div>
+      <small class="category-font">Kategória</small>
+      <h1>{{ product.name }}</h1>
     </div>
+    <div class="product-info">
+      <div class="size-container">
+        @for (item of items; track $index) {
+        <div class="size-box">
+          {{item.size}}
+        </div>
+        }
+      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td>Anyag:</td>
+            <td>{{product.material}}</td>
+          </tr>
+          <tr>
+            <td>Szín:</td>
+            <td>{{product.color}}</td>
+          </tr>
+          <tr>
+            <td>Stílus és design:</td>
+            <td>{{product.design}}</td>
+          </tr>
+          <tr>
+            <td>Származási hely:</td>
+            <td>{{product.origin}}</td>
+          </tr>
+          <tr>
+            <td>Tisztítási utasítások:</td>
+            <td>{{product.cleaning}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-part">{{ product.price | currency:' ' : 'symbol' : '1.0-0' }} Ft </div>
+    <small>*A fent látható ár csak tájékoztató jellegű, készletünk eltérhet az oldalon látott termékekről.</small>
   </div>
+  }
 </div>

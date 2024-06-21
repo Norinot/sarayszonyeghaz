@@ -30,7 +30,6 @@ export class CoreSearchComponent implements OnInit {
       .pipe(debounceTime(300))
       .subscribe((value) => {
         this.filteredProducts = this.filterProducts(value);
-        console.log(this.filteredProducts);
 
       });
   }
