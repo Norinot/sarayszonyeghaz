@@ -44,10 +44,10 @@ export class ProductCardComponent implements OnChanges {
             this.productName = 'Példa cím'
         }
         if (
-            changes["productSize"] &&
-            changes["productSize"].currentValue === ""
+            changes['productSize'] &&
+            changes['productSize'].currentValue === ''
         ) {
-            this.productSize = ["Példa méret"]
+            this.productSize = ['Példa méret']
         }
         if (
             changes['productPlaceOfOrigin'] &&

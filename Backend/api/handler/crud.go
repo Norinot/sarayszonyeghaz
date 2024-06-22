@@ -129,6 +129,7 @@ func UpdateProductByID(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid size format: " + err.Error()})
 			return
 		}
+		existingProduct.Size = size
 	}
 	if material := c.PostForm("material"); material != "" {
 		existingProduct.Material = material
