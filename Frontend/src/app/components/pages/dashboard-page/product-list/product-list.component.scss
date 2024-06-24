@@ -1,5 +1,6 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   max-width: 1400px;
   width: 100% !important;
   margin-top: 42px;
@@ -14,4 +15,24 @@
   flex-wrap: wrap;
   row-gap: 25px;
   align-content: flex-start;
+}
+
+.empty-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50%;
+
+  border: 1px solid #bebebe;
+
+  border-radius: 12px;
+  align-self: center;
+  padding: 12px;
+
+  box-shadow: #bebebe 0px 0px 10px;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
 }

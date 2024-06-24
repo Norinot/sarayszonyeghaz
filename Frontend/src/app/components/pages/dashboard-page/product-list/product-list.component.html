@@ -5,7 +5,8 @@
   }
 </div>
 @if (productService.filteredProducts.length === 0) {
-<div>
-  Az Ön által megadott keresési feltételeknek nem felel meg egyetlen termék sem.
+<div class="empty-search">
+  <p>Az Ön által megadott keresési feltételeknek nem felel meg egyetlen termék sem.</p>
+  <img src="assets/no-results.svg" alt="">
 </div>
 }
