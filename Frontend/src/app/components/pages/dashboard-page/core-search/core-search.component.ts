@@ -7,7 +7,7 @@ import { IProduct } from '../../../shared/product-card/interfaces/product.interf
 import { debounceTime } from 'rxjs';
 import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-core-search',
@@ -21,6 +21,7 @@ export class CoreSearchComponent implements OnInit {
   searchInput: FormControl = new FormControl();
 
   private productListService = inject(ProductService);
+  private router = inject(Router);
   filteredProducts: any[] = [];
 
 
@@ -34,7 +35,12 @@ export class CoreSearchComponent implements OnInit {
       });
   }
 
+  stuff(event: AutoCompleteSelectEvent): void {
+    this.router.navigate(['/details', event.value.product_id]);
+  }
+
   onSearch(event: AutoCompleteCompleteEvent): void {
+
     this.filteredProducts = this.filterProducts(event.query);
   }
 

@@ -1,5 +1,5 @@
 <div class="container">
-  @if (settingsService.isLoggedIn()) {
+  @if (showButtons && settingsService.isLoggedIn() ) {
   <div class="more-button">
     <p-menu #menu [model]="items" [popup]="true" />
     <p-button class="more-button-inner" icon="pi pi-ellipsis-h" [rounded]="true" [text]="true" severity="secondary"
@@ -8,7 +8,7 @@
   }
   @if (productId) {
   <div class="image-container" [routerLink]="['/details', productId]">
-    <img [src]="productImagePath" alt="">
+    <img [srcset]="productImagePath ?? 'local'" alt="" width="287" height="270">
   </div>
   }@else {
   <div class="image-container">

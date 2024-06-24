@@ -12,29 +12,31 @@ import { IProduct } from '../../../shared/product-card/interfaces/product.interf
   styleUrl: './product-list.component.scss'
 })
 export class ProductListComponent implements OnInit {
-  items: IProduct[] = [];
-  private productListService = inject(ProductService);
+  public productService = inject(ProductService);
 
   ngOnInit(): void {
-    this.productListService.getAllProducts().subscribe({
-      next: (response: IProduct[]) => {
-        this.items = this.transformProductData(response);
-        this.productListService.allProducts = this.transformProductData(response);
+    this.productService.selectedCategory$.subscribe((category: string | null) => {
+      this.productService.allProducts.filter((product: IProduct) => {
+        if (category === null) {
+          this.productService.filteredProducts = [];
+        } else {
+          this.productService.filteredProducts = this.productService.allProducts.filter(
+            (product: IProduct) => product.category === category
+          );
+        }
+      });
+    });
 
-      },
-      error: () => {
-        this.items = [];
-      }
-    })
+    this.productService.getAllProducts().subscribe((data: IProduct[]) => {
+      this.productService.allProducts = this.transformProductData(data);
+      this.productService.filteredProducts = this.productService.allProducts;
+    });
   }
 
   private transformProductData(data: IProduct[]) {
-    return data.map(product => (
-      {
-        ...product,
-        image_paths: product.image_paths?.map((path: string) => `http://localhost:8085/${path}`)
-      }
-    ))
+    return data.map(product => ({
+      ...product,
+      image_paths: product.image_paths?.map((path: string) => `http://localhost:8085/${path}`)
+    }));
   }
-
 }

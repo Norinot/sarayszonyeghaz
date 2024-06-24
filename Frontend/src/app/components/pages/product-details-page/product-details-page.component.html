@@ -3,7 +3,7 @@
     <p-galleria [value]="product?.image_paths" [thumbnailsPosition]="'left'" [responsiveOptions]="responsiveOptions"
       [containerStyle]="{ 'max-width': '100%', 'gap': '15px'}" [numVisible]="5">
       <ng-template pTemplate="item" let-item>
-        <p-image [src]="item" [imageStyle]="{ 'width': '500px', 'height': '430px', 'object-fit': 'fill' }"
+        <p-image [src]="item" [imageStyle]="{ 'width': '500px', 'height': '430px', 'object-fit': 'cover' }"
           [style]="{'display':'flex'}" [preview]="true" />
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
@@ -55,5 +55,14 @@
     <div class="price-part">{{ product.price | currency:' ' : 'symbol' : '1.0-0' }} Ft </div>
     <small>*A fent látható ár csak tájékoztató jellegű, készletünk eltérhet az oldalon látott termékekről.</small>
   </div>
+  }
+</div>
+
+<div class="suggestions">
+  @for (product of allProducts; track $index) {
+  <app-product-card [showButtons]="false" [productId]="product.product_id" [productName]="product.name"
+    [productSize]="product.size" [productPlaceOfOrigin]="product.origin"
+    [productImagePath]="product.image_paths?.[0]" [productPrice]="product.price">
+  </app-product-card>
   }
 </div>

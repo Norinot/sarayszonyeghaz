@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  gap: 6rem;
 }
 
 p {
@@ -55,9 +56,10 @@ h1 {
   font-size: 1.1rem;
 }
 
-.category-font{
+.category-font {
   color: #b3b3b3;
 }
+
 .price-part:hover {
   transition: ease-in-out 0.3s;
   background-color: #ffd8ab;
@@ -110,12 +112,25 @@ table tbody tr:not(:last-child) td {
   cursor: pointer;
 }
 
-@media (max-width: 1024px) {
+
+.suggestions {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+@media (max-width: 1232px) {
   .product-container {
     flex-direction: column;
   }
 
   .product-info {
     text-align: center;
+  }
+}
+
+@media (max-width: 711px) {
+  .suggestions {
+    flex-direction: column;
   }
 }

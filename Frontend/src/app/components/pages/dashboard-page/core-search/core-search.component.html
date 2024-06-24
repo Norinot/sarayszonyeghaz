@@ -6,7 +6,7 @@
       <p>Keress stílus, méret vagy anyag szerint!</p>
     </div>
     <div class="input-container">
-      <p-autoComplete [(ngModel)]="searchInput.value" [suggestions]="filteredProducts"
+      <p-autoComplete (onSelect)="stuff($event)" [(ngModel)]="searchInput.value" [suggestions]="filteredProducts"
         (completeMethod)="onSearch($event)" field="name" placeholder="Keresés...">
         <ng-template let-product pTemplate="item">
           <a [routerLink]="['/details', product.product_id]"
