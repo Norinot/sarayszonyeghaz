@@ -3,8 +3,8 @@
     <p-galleria [value]="product?.image_paths" [thumbnailsPosition]="'left'" [responsiveOptions]="responsiveOptions"
       [containerStyle]="{ 'max-width': '100%', 'gap': '15px'}" [numVisible]="5">
       <ng-template pTemplate="item" let-item>
-        <p-image [src]="item" [imageStyle]="{ 'width': '500px', 'height': '430px', 'object-fit': 'fill' }"
-          [style]="{'display':'flex'}" [preview]="true" />
+        <p-image [src]="item" [imageStyle]="{ 'width': '100%', 'height': '100%','max-width': '500px',
+        'max-height' : '470px','object-fit': 'fill' }" [preview]="true" />
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <img [src]="item" class="thumbnail-image" />
