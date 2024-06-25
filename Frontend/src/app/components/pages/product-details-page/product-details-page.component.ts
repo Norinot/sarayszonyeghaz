@@ -34,7 +34,7 @@ export class ProductDetailsPageComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
   private router = inject(Router)
   private toastrSerivice = inject(ToastrService)
-
+  visible: boolean = false
   selectedImage: string = ''
 
   product?: IProduct
@@ -136,5 +136,9 @@ export class ProductDetailsPageComponent implements OnInit {
 
   selectImage(imgUrl: string) {
     this.selectedImage = imgUrl;
+  }
+
+  showDialog(imageUrl: string){
+    this.visible = !this.visible
   }
 }
