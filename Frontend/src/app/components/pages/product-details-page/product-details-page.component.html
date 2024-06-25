@@ -57,3 +57,13 @@
   </div>
   }
 </div>
+
+<h2>Hasonló termékek</h2>
+<div class="suggestions">
+  @for (product of allProducts | slice:0:3; track $index) {
+  <app-product-card [showButtons]="false" [productId]="product.product_id" [productName]="product.name"
+    [productSize]="product.size" [productPlaceOfOrigin]="product.origin" [productImagePath]="product.image_paths?.[0]"
+    [productPrice]="product.price">
+  </app-product-card>
+  }
+</div>

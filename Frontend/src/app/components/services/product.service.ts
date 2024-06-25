@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { IProduct } from '../shared/product-card/interfaces/product.interface'
-import { Observable, map } from 'rxjs'
+import { BehaviorSubject, Observable, map } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,18 @@ import { Observable, map } from 'rxjs'
 export class ProductService {
   private httpClient = inject(HttpClient)
   allProducts: IProduct[] = []
+  filteredProducts: IProduct[] = []
+
+  private selectedCategorySource = new BehaviorSubject<string | null>(null);
+  selectedCategory$ = this.selectedCategorySource.asObservable();
+
+  resetCategory() {
+    this.selectedCategorySource.next(null);
+  }
+
+  selectCategory(category: string) {
+    this.selectedCategorySource.next(category);
+  }
 
   getAllProducts(): Observable<IProduct[]> {
     return this.httpClient.get<IProduct[]>('http://localhost:8085/products')

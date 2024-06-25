@@ -1,7 +1,12 @@
 <div class="wrapper">
-  @for (item of items; track $index) {
-  <app-product-card [productId]="item.product_id" [productName]="item.name" [productPlaceOfOrigin]="item.origin" [productSize]="item.size"
-    [productPrice]="item.price"
-    [productImagePath]="item.image_paths?.[0]" ></app-product-card>
+  @for (item of productService.filteredProducts; track $index) {
+  <app-product-card [productId]="item.product_id" [productName]="item.name" [productPlaceOfOrigin]="item.origin"
+    [productSize]="item.size" [productPrice]="item.price" [productImagePath]="item.image_paths?.[0]"></app-product-card>
   }
 </div>
+@if (productService.filteredProducts.length === 0) {
+<div class="empty-search">
+  <p>Az Ön által megadott keresési feltételeknek nem felel meg egyetlen termék sem.</p>
+  <img src="assets/no-results.svg" alt="">
+</div>
+}

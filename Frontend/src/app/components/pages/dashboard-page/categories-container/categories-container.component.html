@@ -1,8 +1,14 @@
 <div class="category-container">
   <h2>Kategóriák</h2>
+  @if (this.productService.selectedCategory$ | async) {
+  <div class="filter-remove-button" (click)="removeFilters()">
+    <p-button size="small" label="Szűrők törlése" [text]="true" [raised]="true" severity="info" />
+  </div>
+  }
   <div class="card-container">
     @for (item of categories; track $index) {
-    <app-categories-card [description]="item.description" [imgPath]="item.imgPath"></app-categories-card>
+    <app-categories-card [description]="item.description" [imgPath]="item.imgPath"
+      (click)="filterByCategory(item.description)"></app-categories-card>
     }
   </div>
   <app-product-list></app-product-list>
