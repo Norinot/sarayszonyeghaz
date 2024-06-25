@@ -1,15 +1,24 @@
 <div class="product-container">
-  <div class="image-gallery">
+  <!-- <div class="image-gallery">
     <p-galleria [value]="product?.image_paths" [thumbnailsPosition]="'left'" [responsiveOptions]="responsiveOptions"
       [containerStyle]="{ 'max-width': '100%', 'gap': '15px'}" [numVisible]="5">
       <ng-template pTemplate="item" let-item>
-        <p-image [src]="item" [imageStyle]="{ 'width': '500px', 'height': '430px', 'object-fit': 'cover' }"
-          [style]="{'display':'flex'}" [preview]="true" />
+        <img [src]="item" style="width: 100%;" />
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <img [src]="item" class="thumbnail-image" />
       </ng-template>
     </p-galleria>
+  </div> -->
+  <div class="custom-gallery">
+    <div class="thumbnail-container">
+      @for (item of product?.image_paths; track $index) {
+        <img (click)="selectImage(item)" [srcset]="item" alt="" class="thumbnail-images">
+      }
+    </div>
+    <div class="main-image">
+      <img [srcset]="selectedImage" alt="">
+    </div>
   </div>
 
 
@@ -62,8 +71,8 @@
 <div class="suggestions">
   @for (product of allProducts | slice:0:3; track $index) {
   <app-product-card [showButtons]="false" [productId]="product.product_id" [productName]="product.name"
-    [productSize]="product.size" [productPlaceOfOrigin]="product.origin"
-    [productImagePath]="product.image_paths?.[0]" [productPrice]="product.price">
+    [productSize]="product.size" [productPlaceOfOrigin]="product.origin" [productImagePath]="product.image_paths?.[0]"
+    [productPrice]="product.price">
   </app-product-card>
   }
 </div>

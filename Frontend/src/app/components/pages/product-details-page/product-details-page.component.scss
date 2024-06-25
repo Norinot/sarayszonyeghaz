@@ -134,7 +134,50 @@ table tbody tr:not(:last-child) td {
     flex-direction: column;
   }
 }
-h2{
+
+h2 {
   margin: 0;
 }
 
+.thumbnail-images {
+  width: 50px;
+  height: 50px;
+}
+
+.main-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  max-width: 100%;
+  max-height: 100%;
+
+  img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.custom-gallery {
+  display: flex;
+  gap: 16px;
+  margin-right: 6rem;
+}
+
+.thumbnail-container {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  align-self: center;
+
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
