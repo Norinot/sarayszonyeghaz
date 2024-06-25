@@ -10,7 +10,8 @@ import { ButtonModule } from 'primeng/button'
 import { CarouselModule } from 'primeng/carousel';
 import { ProductCardComponent } from '../../shared/product-card/product-card.component'
 import { ToastrService } from 'ngx-toastr'
-import { Observable, filter, of, switchMap, tap } from 'rxjs'
+import { Observable, of, switchMap, tap } from 'rxjs'
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-product-details-page',
@@ -22,7 +23,8 @@ import { Observable, filter, of, switchMap, tap } from 'rxjs'
     ButtonModule,
     RouterModule,
     CarouselModule,
-    ProductCardComponent
+    ProductCardComponent,
+    DialogModule
   ],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss',
@@ -32,6 +34,8 @@ export class ProductDetailsPageComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute)
   private router = inject(Router)
   private toastrSerivice = inject(ToastrService)
+  visible: boolean = false
+  selectedImage: string = ''
 
   product?: IProduct
   allProducts: IProduct[] = []
@@ -110,6 +114,7 @@ export class ProductDetailsPageComponent implements OnInit {
             this.product.image_paths = this.product.image_paths.map(
               (path: string) => `http://localhost:8085/${path}`
             );
+            this.selectImage(this.product.image_paths[0]);
           }
         },
         error: () => {
@@ -127,5 +132,13 @@ export class ProductDetailsPageComponent implements OnInit {
         image_paths: product.image_paths?.map((path: string) => `http://localhost:8085/${path}`)
       }
     ))
+  }
+
+  selectImage(imgUrl: string) {
+    this.selectedImage = imgUrl;
+  }
+
+  showDialog(imageUrl: string){
+    this.visible = !this.visible
   }
 }

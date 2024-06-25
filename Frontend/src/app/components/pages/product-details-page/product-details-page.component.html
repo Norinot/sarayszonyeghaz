@@ -1,17 +1,19 @@
-<div class="product-container">
-  <div class="image-gallery">
-    <p-galleria [value]="product?.image_paths" [thumbnailsPosition]="'left'" [responsiveOptions]="responsiveOptions"
-      [containerStyle]="{ 'max-width': '100%', 'gap': '15px'}" [numVisible]="5">
-      <ng-template pTemplate="item" let-item>
-        <p-image [src]="item" [imageStyle]="{ 'width': '100%', 'height': '100%','max-width': '500px',
-        'max-height' : '470px','object-fit': 'fill' }" [preview]="true" />
-      </ng-template>
-      <ng-template pTemplate="thumbnail" let-item>
-        <img [src]="item" class="thumbnail-image" />
-      </ng-template>
-    </p-galleria>
+<p-dialog [style]="{ width: '50vw' }" [(visible)]="visible" [modal]="true" [draggable]="false" [resizable]="false">
+  <div class="image-preview">
+    <img [src]="selectedImage" alt="">
   </div>
-
+</p-dialog>
+<div class="product-container">
+  <div class="custom-gallery">
+    <div class="thumbnail-container">
+      @for (item of product?.image_paths; track $index) {
+      <img (click)="selectImage(item)" [srcset]="item" alt="" class="thumbnail-images">
+      }
+    </div>
+    <div class="main-image">
+      <img (click)="showDialog(selectedImage)" [srcset]="selectedImage" alt="">
+    </div>
+  </div>
 
   @if (product) {
   <div class="product-details">
