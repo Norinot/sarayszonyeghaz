@@ -45,7 +45,7 @@ h1 {
     flex-direction: row;
     max-width: 1200px;
     width: 100%;
-    gap: 20px;
+    align-items: center;
 }
 
 .product-details {
@@ -87,20 +87,10 @@ table tbody tr:not(:last-child) td {
     cursor: pointer;
 }
 
-@media (max-width: 1024px) {
-    .product-container {
-        flex-direction: column;
-    }
-
-    .product-info {
-        text-align: center;
-    }
-}
-
-@media (max-width: 711px) {
-    .suggestions {
-        flex-direction: column;
-    }
+.suggestions {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
 }
 
 h2 {
@@ -116,10 +106,10 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    height: 500px;
     max-width: 100%;
     max-height: 100%;
+    width: 500px;
+    height: 500px;
 
     img {
         transition: ease-in-out 0.3s;
@@ -131,7 +121,7 @@ h2 {
 
     img:hover {
         transition: ease-in-out 0.3s;
-        filter: contrast(0.5);
+        filter: drop-shadow(2px 4px 6px black);
     }
 }
 
@@ -149,11 +139,28 @@ h2 {
 
     align-self: center;
 
+    background-color: #ededed;
+
     overflow-y: auto;
     scrollbar-width: none;
 
+    align-items: center;
+
+    padding: 5px;
+    border-radius: 12px;
+
     &::-webkit-scrollbar {
         display: none;
+    }
+
+    img {
+        padding: 4px;
+        transition: ease-in-out 0.3s;
+    }
+
+    img:hover {
+        transition: ease-in-out 0.3s;
+        filter: drop-shadow(2px 4px 6px black);
     }
 }
 
@@ -162,5 +169,34 @@ h2 {
         object-fit: contain;
         max-width: 100%;
         max-height: 100%;
+    }
+}
+
+@media (max-width: 1232px) {
+    .product-container {
+        flex-direction: column;
+    }
+
+    .product-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 711px) {
+    .suggestions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 711px) {
+    .custom-gallery {
+        flex-direction: column;
+    }
+
+    .thumbnail-container {
+        height: unset;
+        width: 250px;
+        flex-direction: row;
+        overflow-x: auto;
     }
 }

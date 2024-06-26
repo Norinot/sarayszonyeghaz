@@ -5,7 +5,7 @@
       <app-file-uploading [existingFiles]="existingFiles"></app-file-uploading>
     </div>
     <div class="preview">
-      <app-product-card [productName]="productForm.get('name')?.value ?? '<Példa cím>'"
+      <app-product-card [showButtons]="false" [productName]="productForm.get('name')?.value ?? '<Példa cím>'"
         [productPlaceOfOrigin]="productForm.get('origin')?.value ?? '<Példa származási hely>'"
         [productSize]="productForm.get('size')?.value ?? '<Példa méret>'"
         [productPrice]="productForm.get('price')?.value ?? 0"
