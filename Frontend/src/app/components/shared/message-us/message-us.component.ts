@@ -1,55 +1,72 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { IMessage } from './message.interface';
-import { MessageUsHttpService } from '../../services/map/messageUs-http-service.service';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, inject } from '@angular/core'
+import {
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms'
+import { ButtonModule } from 'primeng/button'
+import { InputTextModule } from 'primeng/inputtext'
+import { InputTextareaModule } from 'primeng/inputtextarea'
+import { IMessage } from './message.interface'
+import { MessageUsHttpService } from '../../services/map/messageUs-http-service.service'
+import { ToastrService } from 'ngx-toastr'
+import { CommonModule } from '@angular/common'
 
 @Component({
-  selector: 'app-message-us',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputTextareaModule],
-  templateUrl: './message-us.component.html',
-  styleUrl: './message-us.component.scss',
-  providers: [MessageUsHttpService]
+    selector: 'app-message-us',
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        ButtonModule,
+        InputTextModule,
+        InputTextareaModule,
+        CommonModule,
+    ],
+    templateUrl: './message-us.component.html',
+    styleUrl: './message-us.component.scss',
+    providers: [MessageUsHttpService],
 })
 export class MessageUsComponent implements OnInit {
+    messageGroup: FormGroup = new FormGroup({})
+    private fb: FormBuilder = inject(FormBuilder)
+    private messageService = inject(MessageUsHttpService)
+    private toastr = inject(ToastrService)
 
-  messageGroup: FormGroup = new FormGroup({});
-  private fb: FormBuilder = inject(FormBuilder);
-  private messageService = inject(MessageUsHttpService);
-  private toastr = inject(ToastrService);
+    ngOnInit() {
+        this.messageGroup = this.fb.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            email: ['', Validators.email],
+            phone: ['', Validators.pattern('[- +()0-9]{10,12}')],
+            message: ['', Validators.required],
+            terms: [false, Validators.requiredTrue],
+        })
+    }
 
-  ngOnInit() {
-    this.messageGroup = this.fb.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      message: ''
-    });
-  }
-
-  onSubmit() {
-    const message: IMessage = {
-      FirstName: this.messageGroup.value.firstName,
-      LastName: this.messageGroup.value.lastName,
-      Email: this.messageGroup.value.email,
-      Message: this.messageGroup.value.message
-    };
-
-    this.messageService.sendMessage(message).subscribe(
-      {
-        complete: () => {
-          this.toastr.success('Message sent successfully');
-          this.messageGroup.reset();
-        },
-        error: (error) => {
-          this.messageGroup.reset();
-          this.toastr.error('An error occurred while sending the message', error);
+    onSubmit() {
+        const message: IMessage = {
+            FirstName: this.messageGroup.value.firstName,
+            LastName: this.messageGroup.value.lastName,
+            Email: this.messageGroup.value.email,
+            Message: this.messageGroup.value.message,
         }
-      }
-    );
-  }
+        if (this.messageGroup.get('terms')?.value === false) {
+            return this.messageGroup.get('terms')?.setErrors({
+                error: 'A felhasználási feltételek elfogadása kötelező',
+            })
+        }
+
+        this.messageService.sendMessage(message).subscribe({
+            complete: () => {
+                this.toastr.success('Üzenet elküldve!')
+                this.messageGroup.reset()
+            },
+            error: (error) => {
+                this.toastr.error('Probléma történt az üzenet küldése során')
+            },
+        })
+    }
 }

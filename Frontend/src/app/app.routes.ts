@@ -12,4 +12,7 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'details/:id', loadComponent: () => import('./components/pages/product-details-page/product-details-page.component').then(mod => mod.ProductDetailsPageComponent) },
   { path: 'upload-product/:id', loadComponent: () => import('./components/pages/upload-product/upload-product.component').then(mod => mod.UploadProductComponent) },
+  { path: 'facilities', loadComponent: () => import('./components/pages/facilities/facilities.component').then(mod => mod.FacilitiesComponent) },
+  { path: 'privacy-policy', loadComponent: () => import('./components/pages/privacy-policy/privacy-policy.component').then(mod => mod.PrivacyPolicyComponent) },
+  
 ];

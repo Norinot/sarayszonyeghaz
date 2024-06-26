@@ -4,7 +4,7 @@
   <div class="navigation-section">
     <nav>
       <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/"></p-button>
-      <p-button label="Szolgáltatásaink" [text]="true" [plain]="true"></p-button>
+      <p-button label="Szolgáltatásaink" [text]="true" [plain]="true" routerLink="/facilities"></p-button>
       <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"></p-button>
       @if (settingsService.isLoggedIn()) {
       <p-button label="Termék feltöltése" [text]="true" [plain]="true" routerLink="/upload-product"
