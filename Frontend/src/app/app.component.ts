@@ -18,7 +18,8 @@ const routeLabels: { [key: string]: string } = {
   '': 'Főoldal',
   'contact': 'Üzletünk elérhetőségei',
   'details': 'Termék részletek',
-  'facilities': "Szolgáltatásaink"
+  'facilities': "Szolgáltatásaink",
+  'privacy-policy': "Adatkezelési tájékoztató"
 }
 
 @Component({
