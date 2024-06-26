@@ -21,6 +21,22 @@ h2 {
   width: 100%;
 }
 
-.filter-remove-button{
+.filter-remove-button {
   margin-bottom: 8px;
+}
+
+.wrapper {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+p-button {
+  scale: 0.5;
+}
+
+@media (max-width: 865px) {
+  .wrapper {
+    flex-direction: column;
+  }
 }

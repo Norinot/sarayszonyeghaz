@@ -196,6 +196,14 @@ h2 {
 @media (max-width: 711px) {
   .custom-gallery {
     flex-direction: column;
+    margin: 0;
+  }
+
+  .main-image{
+    max-width: unset;
+    max-height: unset;
+    width: unset;
+    height: unset;
   }
 
   .thumbnail-container {
