@@ -32,9 +32,15 @@
       </label>
     </span>
 
+    <div class="email-container">
+
+
+    </div>
+
     <div class="submit-button-container">
 
-      <p-button type="submit" class="submit-button" label="Küldés" [outlined]="true" severity="secondary"></p-button>
+      <p-button type="submit" class="submit-button" label="Küldés" [outlined]="true" [disabled]="!messageGroup.valid"
+        severity="secondary"></p-button>
     </div>
   </form>
 </div>

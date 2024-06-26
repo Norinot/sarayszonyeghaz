@@ -12,6 +12,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea'
 import { IMessage } from './message.interface'
 import { MessageUsHttpService } from '../../services/map/messageUs-http-service.service'
 import { ToastrService } from 'ngx-toastr'
+import { CommonModule } from '@angular/common'
 
 @Component({
     selector: 'app-message-us',
@@ -22,6 +23,7 @@ import { ToastrService } from 'ngx-toastr'
         ButtonModule,
         InputTextModule,
         InputTextareaModule,
+        CommonModule,
     ],
     templateUrl: './message-us.component.html',
     styleUrl: './message-us.component.scss',
@@ -51,6 +53,11 @@ export class MessageUsComponent implements OnInit {
             Email: this.messageGroup.value.email,
             Message: this.messageGroup.value.message,
         }
+        if (this.messageGroup.get('terms')?.value === false) {
+            return this.messageGroup.get('terms')?.setErrors({
+                error: 'A felhasználási feltételek elfogadása kötelező',
+            })
+        }
 
         this.messageService.sendMessage(message).subscribe({
             complete: () => {
@@ -58,7 +65,6 @@ export class MessageUsComponent implements OnInit {
                 this.messageGroup.reset()
             },
             error: (error) => {
-                this.messageGroup.reset()
                 this.toastr.error('Probléma történt az üzenet küldése során')
             },
         })
