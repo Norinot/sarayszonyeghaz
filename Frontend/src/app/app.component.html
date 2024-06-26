@@ -1,7 +1,7 @@
 <div class="main-container">
   <app-header></app-header>
   <div class="content-container">
-    <p-breadcrumb [style]="{'border': 'none', 'padding': '0'}" [model]="items" [home]="home" />
+    <p-breadcrumb [style]="{'border': 'none', 'padding': '4px'}" [model]="items" [home]="home" />
     <router-outlet></router-outlet>
   </div>
   @if (!isAdminRoute()) {
