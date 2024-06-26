@@ -1,56 +1,47 @@
-:host {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  bottom: 0;
-  height: auto;
-  border-top: 1px solid #d8d9da;
-}
-
 .footer-container {
   display: flex;
-  justify-content: space-around;
-  gap: 20px;
-  align-items: center;;
-  padding: 20px 0px 10px 0px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+  border-top: 1px solid #d8d9da;
+  font-size: 0.9rem;
+}
+
+.footer-left {
+  flex: 1;
+  text-align: left;
 }
 
 .footer-center {
+  flex: 1;
   text-align: center;
-  font-size: smaller;
-  opacity: 0.4;
-}
-
-.footer-center > div > p {
-  align-self: flex-end;
-  margin: 0 0 0 0;
+  opacity: 0.7;
+  div{
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .footer-right {
-  justify-content: flex-end;
-}
-
-.footer-right > div > p {
-  display: flex;
-  align-content: center;
-  margin: 0 0 0 0;
+  flex: 1;
+  text-align: right;
 }
 
 .logo {
-  width: 200px;
-  height: 100px;
+  width: 150px;
+  /* Adjust size as necessary */
+  height: auto;
+  /* Maintain aspect ratio */
 }
 
 .icon {
-  display: inline;
-  height: 20px;
+  height: 16px;
   margin-right: 5px;
 }
 
 
-
-@media screen and (max-width: 1150px){
-  .footer-container{
+@media screen and (max-width: 1150px) {
+  .footer-container {
     flex-direction: column;
     gap: 0px;
   }
@@ -59,18 +50,15 @@
     scale: 0.5;
   }
 
-  .footer-left{
+  .footer-left {
     display: inline-block;
   }
-  .footer-center{
+
+  .footer-center {
     padding-top: 20px;
   }
 
-  .footer-center > div > p {
+  .footer-center>div>p {
     font-size: 0.8rem;
-  }
-
-  .footer-right {
-    display: none;
   }
 }
