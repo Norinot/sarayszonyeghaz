@@ -137,7 +137,7 @@ h2 {
 
   img:hover {
     transition: ease-in-out 0.3s;
-    filter: contrast(0.5);
+    filter: drop-shadow(2px 4px 6px black);
   }
 }
 
@@ -157,15 +157,34 @@ h2 {
 
   align-self: center;
 
+  background-color: #ededed;
+
   overflow-y: auto;
   scrollbar-width: none;
+
+  align-items: center;
+
+  padding: 5px;
+  border-radius: 12px;
+
 
   &::-webkit-scrollbar {
     display: none;
   }
+
+  img {
+    padding: 4px;
+    transition: ease-in-out 0.3s;
+  }
+
+  img:hover {
+    transition: ease-in-out 0.3s;
+    filter: drop-shadow(2px 4px 6px black);
+  }
 }
 
 .image-preview {
+
   img {
     object-fit: contain;
     max-width: 100%;

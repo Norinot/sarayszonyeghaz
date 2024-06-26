@@ -139,6 +139,6 @@ export class ProductDetailsPageComponent implements OnInit {
   }
 
   showDialog(imageUrl: string){
-    this.visible = !this.visible
+    this.visible = true
   }
 }

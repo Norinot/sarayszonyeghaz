@@ -1,8 +1,14 @@
-<p-dialog [style]="{ width: '50vw' }" [(visible)]="visible" [modal]="true" [draggable]="false" [resizable]="false">
-  <div class="image-preview">
-    <img [src]="selectedImage" alt="">
-  </div>
+<p-dialog [focusOnShow]="false" [dismissableMask]="true"
+  [style]="{ maxWidth: '50vw'}"
+  [(visible)]="visible" [modal]="true" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="headless">
+    <div class="image-preview">
+      <img [srcset]="selectedImage" alt="">
+    </div>
+  </ng-template>
 </p-dialog>
+
+
 <div class="product-container">
   <div class="custom-gallery">
     <div class="thumbnail-container">

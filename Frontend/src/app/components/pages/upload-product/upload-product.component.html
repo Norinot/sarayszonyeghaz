@@ -5,7 +5,7 @@
       <app-file-uploading [existingFiles]="existingFiles"></app-file-uploading>
     </div>
     <div class="preview">
-      <app-product-card [productName]="productForm.get('name')?.value ?? '<Példa cím>'"
+      <app-product-card [showButtons]="false" [productName]="productForm.get('name')?.value ?? '<Példa cím>'"
         [productPlaceOfOrigin]="productForm.get('origin')?.value ?? '<Példa származási hely>'"
         [productSize]="productForm.get('size')?.value ?? '<Példa méret>'"
         [productPrice]="productForm.get('price')?.value ?? 0"
@@ -17,8 +17,8 @@
     <h2>Szőnyeg tulajdonságok</h2>
 
     <p-floatLabel>
-      <p-dropdown [showClear]="true" required="true" [options]="categories" [checkmark]="true" optionLabel="name" inputId="float-label"
-        formControlName="category" />
+      <p-dropdown [showClear]="true" required="true" [options]="categories" [checkmark]="true" optionLabel="name"
+        inputId="float-label" formControlName="category" />
       <label for="float-label">Kategória</label>
       @if (isInvalid('category')) {
       <small id="name-help" class="p-error">A fenti mező kitöltése kötelező</small>
@@ -40,8 +40,8 @@
     <!-- Size -->
     <div>
       <p-floatLabel>
-        <p-chips id="size" formControlName="size" [style]="{'width': '100%'}" [ngClass]="{'ng-invalid': isInvalid('size')}" id="size"
-          required="true" />
+        <p-chips id="size" formControlName="size" [style]="{'width': '100%'}"
+          [ngClass]="{'ng-invalid': isInvalid('size')}" id="size" required="true" />
         <label for="size">Méretek</label>
       </p-floatLabel>
       @if (isInvalid('size')) {
