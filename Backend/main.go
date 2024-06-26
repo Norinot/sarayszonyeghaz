@@ -12,21 +12,17 @@ func main() {
 	router := gin.Default()
 	router.Use(middleware.CORSMiddleware())
 
-	//Public routes
 	router.GET("/products", handler.ListproductsHandler)
 	router.GET("/products/:id", handler.Getproductsbyid)
 	router.POST("/message-us", handler.MessageUs)
 
-	//Get the JWT middleware
 	authMiddleware, err := middleware.AuthMiddleware()
 	if err != nil {
 		panic("JWT Error:" + err.Error())
 	}
 
-	//Login
 	router.POST("/login", authMiddleware.LoginHandler)
 
-	//Authenticated routes
 	authRoutes := router.Group("")
 	authRoutes.Use(authMiddleware.MiddlewareFunc())
 	{
@@ -40,5 +36,4 @@ func main() {
 	router.StaticFile("/favicon.ico", "./resources/favicon.ico")
 
 	router.Run("localhost:8085")
-
 }
