@@ -1,46 +1,41 @@
-import { Component, OnInit, inject } from '@angular/core'
+import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core'
 import { ButtonModule } from 'primeng/button'
 import {
-    AutoCompleteCompleteEvent,
-    AutoCompleteModule,
+  AutoCompleteCompleteEvent,
+  AutoCompleteModule,
 } from 'primeng/autocomplete'
 import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
 } from '@angular/forms'
-import { RouterModule } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { SettingsService } from '../../services/settings.service'
 import { SidebarModule } from 'primeng/sidebar'
+import { BehaviorSubject, Subscriber } from 'rxjs'
 
 @Component({
-    selector: 'app-header',
-    standalone: true,
-    imports: [
-        ButtonModule,
-        AutoCompleteModule,
-        ReactiveFormsModule,
-        RouterModule,
-        SidebarModule,
-    ],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss',
+  selector: 'app-header',
+  standalone: true,
+  imports: [
+    ButtonModule,
+    AutoCompleteModule,
+    ReactiveFormsModule,
+    RouterModule,
+    SidebarModule,
+  ],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
 })
-export class HeaderComponent implements OnInit {
-    private fb = inject(FormBuilder)
-    public settingsService = inject(SettingsService)
+export class HeaderComponent {
+  public settingsService = inject(SettingsService)
+  private router = inject(Router)
+  countries: any[] | undefined
+  sidebarVisible: boolean = false
 
-    countries: any[] | undefined
-    sidebarVisible: boolean = false
-    formGroup: FormGroup = new FormGroup({})
-    filteredCountries!: any[]
-
-    ngOnInit() {
-        this.formGroup = this.fb.group({
-            selectedCountry: new FormControl(''),
-        })
-    }
-
-    filterCountry(event: AutoCompleteCompleteEvent) {}
+  closeSidebar(route: string){
+    this.router.navigate([route])
+    this.sidebarVisible = false
+  }
 }

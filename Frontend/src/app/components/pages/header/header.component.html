@@ -27,7 +27,7 @@
       <div>
         <div class="sidebar-header">
           <span>
-            <img class="logo" src="assets/logonew.svg" alt="" routerLink="/">
+            <img class="logo" src="assets/logonew.svg" alt="" (click)="closeSidebar('/')">
           </span>
           <span>
             <p-button type="button" (click)="sidebarVisible = false" icon="pi pi-times" [outlined]="true"
@@ -35,14 +35,15 @@
           </span>
         </div>
         <div class="sidebar-items">
-          <p-button label="Főoldal" [text]="true" [plain]="true" routerLink="/" class="firstButton"
-            [style]="{'width': '100%'}"></p-button>
-          <p-button label="Szolgáltatásaink" [text]="true" [plain]="true" [style]="{'width': '100%'}"></p-button>
-          <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" routerLink="/contact"
-            [style]="{'width': '100%'}"></p-button>
+          <p-button label="Főoldal" [text]="true" [plain]="true" class="firstButton" [style]="{'width': '100%'}"
+            (onClick)="closeSidebar('/')"></p-button>
+          <p-button label="Szolgáltatásaink" [text]="true" [plain]="true" [style]="{'width': '100%'}"
+            (onClick)="closeSidebar('/facilities')"></p-button>
+          <p-button label="Üzletünk elérhetőségei" [text]="true" [plain]="true" [style]="{'width': '100%'}"
+            (onClick)="closeSidebar('/contact')"></p-button>
           @if (settingsService.isLoggedIn()) {
-          <p-button label="Termék feltöltése" [text]="true" [plain]="true" routerLink="/upload-product"
-            [style]="{'width': '100%'}">
+          <p-button label="Termék feltöltése" [text]="true" [plain]="true" [style]="{'width': '100%'}"
+            (onClick)="closeSidebar('/upload-product')">
           </p-button>
           }
         </div>
