@@ -3,4 +3,5 @@ export interface IMessage {
   LastName: string;
   Email: string;
   Message: string;
+  PhoneNumber: string;
 }

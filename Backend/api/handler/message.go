@@ -18,7 +18,7 @@ func MessageUs(c *gin.Context) {
 		return
 	}
 
-	if m.FirstName == "" || m.LastName == "" || m.Email == "" || m.Message == "" {
+	if m.FirstName == "" || m.LastName == "" || m.Email == "" || m.Message == "" || m.PhoneNumber == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "All fields are required"})
 		return
 	}
@@ -35,7 +35,8 @@ func MessageUs(c *gin.Context) {
 		"Subject: Új üzenet érkezett: " + m.FirstName + " " + m.LastName + "\r\n" +
 		"\r\n" +
 		"Feladó: " + m.Email + "\r\n" +
-		"Üzenet: " + m.Message + "\r\n")
+		"Üzenet: " + m.Message + "\r\n" +
+		"Telefonszám: " + m.PhoneNumber + "\r\n")
 
 	err := smtp.SendMail("smtp.gmail.com:587", auth, "sender@email", to, msg)
 	if err != nil {
