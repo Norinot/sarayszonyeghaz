@@ -11,7 +11,8 @@
         <ng-template let-product pTemplate="item">
           <a [routerLink]="['/details', product.product_id]"
             style="display: flex; align-items: center; text-decoration: none; color: inherit;">
-            <img [src]="product.image_paths[0]" alt="{{product.name}}" style="width: 50px; height: 50px; margin-right: 10px;">
+            <img [src]="product.image_paths[0]" alt="{{product.name}}"
+              style="width: 50px; height: 50px; margin-right: 10px;">
             <span>{{product.name}}</span>
           </a> </ng-template>
       </p-autoComplete>

@@ -36,26 +36,36 @@
       </div>
       <table>
         <tbody>
+          @if (product.material && product.material != "null") {
           <tr>
             <td>Anyag:</td>
             <td>{{product.material}}</td>
           </tr>
+          }
+          @if (product.color && product.color != "null") {
           <tr>
             <td>Szín:</td>
             <td>{{product.color}}</td>
           </tr>
+          }
+          @if (product.design && product.design != "null") {
           <tr>
             <td>Stílus és design:</td>
             <td>{{product.design}}</td>
           </tr>
+          }
+          @if (product.origin && product.origin != "null") {
           <tr>
             <td>Származási hely:</td>
             <td>{{product.origin}}</td>
           </tr>
+          }
+          @if (product.cleaning && product.cleaning != "null") {
           <tr>
             <td>Tisztítási utasítások:</td>
             <td>{{product.cleaning}}</td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
