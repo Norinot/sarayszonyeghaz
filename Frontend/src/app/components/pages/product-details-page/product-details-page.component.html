@@ -69,8 +69,10 @@
         </tbody>
       </table>
     </div>
+    @if (product.price) {
     <div class="price-part">{{ product.price | currency:' ' : 'symbol' : '1.0-0' }} Ft </div>
     <small>*A fent látható ár csak tájékoztató jellegű, készletünk eltérhet az oldalon látott termékekről.</small>
+    }
   </div>
   }
 </div>
